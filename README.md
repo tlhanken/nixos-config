@@ -11,3 +11,5 @@ NixOS configuration for home devices
     Runs tests
 * nix flake show
     Show all packages and defines.  
+* nix flake metadata
+    Inputs defined, make sure they follow eachother.  Otherwise you have double dependencies (which could be intentended in some situations)

@@ -31,7 +31,7 @@ with config; {
   };
 
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = ["amdgpu"];
 
   hardware.nvidia = {
     modesetting.enable = true;

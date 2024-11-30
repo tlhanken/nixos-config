@@ -16,8 +16,8 @@ with config; {
     ../../../modules/desktop/apps/jetbrains.nix
   ];
 
-  networking.hostName = "inwin-tower"; # Define your hostname.
-  networking.hostId = "89cc1717"; # Generate using `head -c 8 /etc/machine-id`
+  networking.hostName = "gungnir-nix"; # Define your hostname.
+  networking.hostId = ""; # Generate using `head -c 8 /etc/machine-id`
 
   disko.devices = import ./devices.nix;
   customBoot.enable = true;

@@ -13,7 +13,7 @@ with config; {
     ./hardware-configuration.nix
 
     # Include any additional apps desired
-    ../../../modules/desktop/apps/jetbrains.nix
+    # ../../../modules/desktop/apps/jetbrains.nix
   ];
 
   networking.hostName = "gungnir-nix"; # Define your hostname.
@@ -30,17 +30,8 @@ with config; {
     enable = true;
   };
 
-  # Load nvidia driver for Xorg and Wayland
+  # Load driver for Xorg and Wayland
   services.xserver.videoDrivers = ["amdgpu"];
-
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    open = false;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.production;
-  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

@@ -9,7 +9,8 @@
 with config; {
   imports = [
     # Include the results of the hardware scan.
-    ./hardware-configuration.nix
+    # TODO
+    # ./hardware-configuration.nix
 
     # Include any additional apps desired
     ../../../modules/desktop/apps/jetbrains.nix
@@ -19,7 +20,8 @@ with config; {
   networking.hostName = "nixos-thinkpad"; # Define your hostname.
   networking.hostId = "a0d787a6"; # Generate using `head -c 8 /etc/machine-id`
 
-  disko.devices = import ./devices.nix;
+  # TODO
+  # disko.devices = import ./devices.nix;
   customBoot.enable = true;
 
   boot.binfmt.emulatedSystems = ["aarch64-linux"];

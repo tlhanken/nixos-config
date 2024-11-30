@@ -9,7 +9,8 @@
 with config; {
   imports = [
     # Include the results of the hardware scan.
-    ./hardware-configuration.nix
+    # TODO
+    # ./hardware-configuration.nix
     ../../../modules/hardware/raspberry-pi/pi4.nix
   ];
 

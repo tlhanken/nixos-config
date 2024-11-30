@@ -40,15 +40,16 @@ in {
       };
 
       # Servers
-      galar = inputs.nixpkgs.lib.nixosSystem {
-        modules = [./hosts/desktops/surface6/configuration.nix] ++ server_mods;
-      };
-      eitri = inputs.nixpkgs.lib.nixosSystem {
-        modules = [./hosts/desktops/eitri/configuration.nix] ++ server_mods;
-      };
-      brokkr = inputs.nixpkgs.lib.nixosSystem {
-        modules = [./hosts/desktops/brokkr/configuration.nix] ++ server_mods;
-      };
+      # TODO
+      # galar = inputs.nixpkgs.lib.nixosSystem {
+      #   modules = [./hosts/desktops/surface6/configuration.nix] ++ server_mods;
+      # };
+      # eitri = inputs.nixpkgs.lib.nixosSystem {
+      #   modules = [./hosts/desktops/eitri/configuration.nix] ++ server_mods;
+      # };
+      # brokkr = inputs.nixpkgs.lib.nixosSystem {
+      #   modules = [./hosts/desktops/brokkr/configuration.nix] ++ server_mods;
+      # };
       nixos-rpi4-1 = inputs.nixpkgs.lib.nixosSystem {
         modules =
           [

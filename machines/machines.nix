@@ -32,12 +32,13 @@ in {
   flake = {
     nixosConfigurations = {
       # Desktops
-      gungnir = inputs.nixpkgs.lib.nixosSystem {
-        modules = [./hosts/desktops/gungnir/configuration.nix] ++ desktop_mods;
-      };
-      surface6 = inputs.nixpkgs.lib.nixosSystem {
-        modules = [./hosts/desktops/surface6/configuration.nix] ++ desktop_mods;
-      };
+      # TODO
+      # gungnir = inputs.nixpkgs.lib.nixosSystem {
+      #   modules = [./hosts/desktops/gungnir/configuration.nix] ++ desktop_mods;
+      # };
+      # surface6 = inputs.nixpkgs.lib.nixosSystem {
+      #   modules = [./hosts/desktops/surface6/configuration.nix] ++ desktop_mods;
+      # };
 
       # Servers
       # TODO
@@ -50,17 +51,17 @@ in {
       # brokkr = inputs.nixpkgs.lib.nixosSystem {
       #   modules = [./hosts/desktops/brokkr/configuration.nix] ++ server_mods;
       # };
-      nixos-rpi4-1 = inputs.nixpkgs.lib.nixosSystem {
-        modules =
-          [
-            ./hosts/servers/nixos-rpi4-1/configuration.nix
-            inputs.nixos-hardware.nixosModules.raspberry-pi-4
-          ]
-          ++ server_mods;
-      };
-      syno-vm = inputs.nixpkgs.lib.nixosSystem {
-        modules = [./hosts/servers/syno-vm/configuration.nix] ++ server_mods;
-      };
+      # nixos-rpi4-1 = inputs.nixpkgs.lib.nixosSystem {
+      #   modules =
+      #     [
+      #       ./hosts/servers/nixos-rpi4-1/configuration.nix
+      #       inputs.nixos-hardware.nixosModules.raspberry-pi-4
+      #     ]
+      #     ++ server_mods;
+      # };
+      # syno-vm = inputs.nixpkgs.lib.nixosSystem {
+      #   modules = [./hosts/servers/syno-vm/configuration.nix] ++ server_mods;
+      # };
     };
   };
   perSystem = {

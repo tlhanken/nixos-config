@@ -6,7 +6,7 @@ with inputs; let
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
-        users.tghanken = import ./modules/users/tghanken/home-manager.nix;
+        users.tlhanken = import ./modules/users/tlhanken/home-manager.nix;
       };
     }
   ];

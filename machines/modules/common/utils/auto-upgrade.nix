@@ -1,7 +1,7 @@
 {
   system.autoUpgrade = {
     enable = true;
-    flake = "github:tghanken/nixos-config";
+    flake = "github:tlhanken/nixos-config";
     flags = [
       "-L" # print build logs
     ];

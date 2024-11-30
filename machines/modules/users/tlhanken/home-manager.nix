@@ -3,8 +3,8 @@
   pkgs,
   ...
 }: {
-  home.username = "tghanken";
-  home.homeDirectory = "/home/tghanken";
+  home.username = "tlhanken";
+  home.homeDirectory = "/home/tlhanken";
 
   # link the configuration file in current directory to the specified location in home directory
   # home.file.".config/i3/wallpaper.jpg".source = ./wallpaper.jpg;
@@ -108,8 +108,8 @@
 
   programs.git = {
     enable = true;
-    userName = "Taylor Hanken";
-    userEmail = "tghanken@gmail.com";
+    userName = "Trevor Hanken";
+    userEmail = "tlhanken@gmail.com";
   };
 
   programs.direnv = {

@@ -1,7 +1,7 @@
 {
-  users.users.tghanken = {
+  users.users.tlhanken = {
     isNormalUser = true;
-    description = "Taylor Hanken";
+    description = "Trevor Hanken";
     extraGroups = [
       "networkmanager"
       "wheel"

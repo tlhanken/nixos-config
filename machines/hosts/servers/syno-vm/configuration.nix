@@ -13,7 +13,7 @@ with config; {
     # ./hardware-configuration.nix
   ];
 
-  networking.hostName = "syno-vm"; # Define your hostname.
+  networking.hostName = "well-of-nix"; # Define your hostname.
   networking.hostId = "5433dcd9"; # Generate using `head -c 8 /etc/machine-id`
 
   # TODO

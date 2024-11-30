@@ -59,9 +59,9 @@ in {
       #     ]
       #     ++ server_mods;
       # };
-      # syno-vm = inputs.nixpkgs.lib.nixosSystem {
-      #   modules = [./hosts/servers/syno-vm/configuration.nix] ++ server_mods;
-      # };
+      syno-vm = inputs.nixpkgs.lib.nixosSystem {
+        modules = [./hosts/servers/syno-vm/configuration.nix] ++ server_mods;
+      };
     };
   };
   perSystem = {

@@ -9,13 +9,15 @@
 with config; {
   imports = [
     # Include the results of the hardware scan.
-    ./hardware-configuration.nix
+    # TODO
+    # ./hardware-configuration.nix
   ];
 
   networking.hostName = "syno-vm"; # Define your hostname.
   networking.hostId = "5433dcd9"; # Generate using `head -c 8 /etc/machine-id`
 
-  disko.devices = import ./devices.nix;
+  # TODO
+  # disko.devices = import ./devices.nix;
   customBoot.enable = true;
 
   boot.binfmt.emulatedSystems = ["aarch64-linux"];

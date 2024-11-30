@@ -17,7 +17,7 @@
 
   fileSystems."/mnt/jellyfin-media" = {
     # NFS set to wildcard hostname, readonly, map all users to admin.
-    device = "pinonnas.myth-chameleon.ts.net:/volume1/media-final";
+    device = "well-of-mimir.fenrir-altered.ts.net:/volume1/media";
     fsType = "nfs";
     options = [
       "nfsvers=4.1"

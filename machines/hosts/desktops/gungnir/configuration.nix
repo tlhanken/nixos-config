@@ -10,16 +10,18 @@
 with config; {
   imports = [
     # Include the results of the hardware scan.
-    ./hardware-configuration.nix
+    # TODO
+    # ./hardware-configuration.nix
 
     # Include any additional apps desired
-    ../../../modules/desktop/apps/jetbrains.nix
+    # ../../../modules/desktop/apps/jetbrains.nix
   ];
 
-  networking.hostName = "inwin-tower"; # Define your hostname.
-  networking.hostId = "89cc1717"; # Generate using `head -c 8 /etc/machine-id`
+  networking.hostName = "gungnir-nix"; # Define your hostname.
+  networking.hostId = ""; # Generate using `head -c 8 /etc/machine-id`
 
-  disko.devices = import ./devices.nix;
+  # TODO
+  # disko.devices = import ./devices.nix;
   customBoot.enable = true;
   boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
 
@@ -30,17 +32,8 @@ with config; {
     enable = true;
   };
 
-  # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
-
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    open = false;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.production;
-  };
+  # Load driver for Xorg and Wayland
+  services.xserver.videoDrivers = ["amdgpu"];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

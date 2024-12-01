@@ -16,38 +16,31 @@
   hosts = [
     # Servers First
     {
-      hostName = "syno-vm";
+      hostName = "well-of-nix";
       speedFactor = 2;
       maxJobs = 4;
     }
-    {
-      hostName = "nixos-rpi4-1";
-      maxJobs = 2;
-    }
-    {
-      hostName = "nixos-rpi4-2";
-      maxJobs = 2;
-    }
-    {
-      hostName = "nixos-rpi4-3";
-      maxJobs = 2;
-    }
+    # {
+    #   hostName = "nixos-rpi4-1";
+    #   maxJobs = 2;
+    # }
 
+    #TODO
     # Then Desktops
-    {
-      hostName = "inwin-tower";
-      speedFactor = 8;
-      maxJobs = 8;
-    }
-    {
-      hostName = "nixos-thinkpad";
-      speedFactor = 8;
-      maxJobs = 12;
-    }
+    # {
+    #   hostName = "gungnir";
+    #   speedFactor = 8;
+    #   maxJobs = 8;
+    # }
+    # {
+    #   hostName = "surface6";
+    #   speedFactor = 4;
+    #   maxJobs = 4;
+    # }
   ];
   filtered_hosts = builtins.filter (host: config.networking.hostName != host.hostName) hosts;
   build_hosts = builtins.map (host: defaultBuildConfig // host) filtered_hosts;
-  substituters = builtins.map (host: "http://${host.hostName}.myth-chameleon.ts.net:16893") build_hosts;
+  substituters = builtins.map (host: "http://${host.hostName}.fenrir-altered.ts.net:16893") build_hosts;
   sshHostsConfig =
     builtins.map (host: ''
       Host ${host.hostName}
@@ -66,6 +59,6 @@ in {
   nix.distributedBuilds = true;
   nix.settings = {
     builders-use-substitutes = true;
-    trusted-public-keys = [home-builders:U3PWObVWROdM+8rlJqk70qE9aeffp9RsKmoCojx7XQ0=];
+    # trusted-public-keys = [home-builders:U3PWObVWROdM+8rlJqk70qE9aeffp9RsKmoCojx7XQ0=]; #TODO
   };
 }

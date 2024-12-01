@@ -60,7 +60,7 @@ in {
       #     ++ server_mods;
       # };
       well-of-nix = inputs.nixpkgs.lib.nixosSystem {
-        modules = [./hosts/servers/well-of-nix/configuration.nix] ++ server_mods;
+        modules = [./hosts/servers/well-of-nix/configuration.nix] ++ install_mods;
       };
     };
   };

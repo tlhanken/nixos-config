@@ -5,13 +5,13 @@
 # Edit devices.nix
 # Edit install script to use lsblk disk name
 # Configuration.nix update host ID
-# Run Script
+# Run Script Commands manually
 
 sudo nix --extra-experimental-features nix-command --extra-experimental-features flakes \
     run 'github:nix-community/disko#disko-install' -- \
     # --flake 'github:tlhanken/nixos-config/feat--well-of-nix#well-of-nix' \
     --flake '.#well-of-nix' \
-    --disk boot /dev/sda/;
+    --disk boot /dev/disk/by-id/scsi-36001405711116cbde85bd4373da89cdf;
 
 # Must manually export zpools as disko doesn't handle correctly
 sudo zpool export zroot;

@@ -7,6 +7,9 @@ NixOS configuration for home devices
 * Github App and add key to github repo's secret on the web portal.  App permissions, and add to repo.
 
 ## Good Commands in dev portal
+### Utils
+* nix fmt
+    Format nix files
 ### Configs
 * nix flake check
     Runs tests

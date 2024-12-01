@@ -22,7 +22,7 @@
             priority = 2;
           };
           zfs = {
-            end = "-32G";
+            end = "-8G";
             content = {
               type = "zfs";
               pool = "zroot";

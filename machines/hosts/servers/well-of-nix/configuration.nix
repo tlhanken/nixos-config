@@ -9,15 +9,13 @@
 with config; {
   imports = [
     # Include the results of the hardware scan.
-    # TODO
-    # ./hardware-configuration.nix
+    ./hardware-configuration.nix
   ];
 
   networking.hostName = "well-of-nix"; # Define your hostname.
-  networking.hostId = "e22f655a"; # Generate using `head -c 8 /etc/machine-id`
+  networking.hostId = "135e9ec0"; # Generate using `head -c 8 /etc/machine-id`
 
-  # TODO
-  # disko.devices = import ./devices.nix;
+  disko.devices = import ./devices.nix;
   customBoot.enable = true;
 
   boot.binfmt.emulatedSystems = ["aarch64-linux"];

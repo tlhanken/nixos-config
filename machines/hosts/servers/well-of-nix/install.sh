@@ -3,7 +3,7 @@
 # cp /etc/nixos/hardware-configuration.nix ~/nixos-config/machines/hosts/servers/syno-vm/
 # lsblk
 # Edit devices.nix
-# Edit install script to use lsblk disk
+# Edit install script to use lsblk disk name
 # Configuration.nix update host ID
 # Run Script
 

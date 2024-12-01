@@ -9,7 +9,7 @@
 
 sudo nix --extra-experimental-features nix-command --extra-experimental-features flakes \
     run 'github:nix-community/disko#disko-install' -- \
-    --flake '.#well-of-nix' \
+    --flake 'github:tlhanken/nixos-config/feat--well-of-nix#well-of-nix' \
     --disk boot /dev/sda/;
 
 # Must manually export zpools as disko doesn't handle correctly

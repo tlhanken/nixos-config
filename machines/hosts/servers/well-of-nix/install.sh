@@ -4,6 +4,8 @@
 # lsblk
 # Edit devices.nix
 # Edit install script to use lsblk disk
+# Configuration.nix update host ID
+# Run Script
 
 sudo nix --extra-experimental-features nix-command --extra-experimental-features flakes \
     run 'github:nix-community/disko#disko-install' -- \

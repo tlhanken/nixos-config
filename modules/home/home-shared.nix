@@ -1,8 +1,8 @@
 { pkgs, osConfig, ... }:
 
 let 
-  userEmail = "trevor.hanken@gmail.com";
-  userName = "Trevor Hanken";
+  email = "trevor.hanken@gmail.com";
+  name = "Trevor Hanken";
 in
 {
 
@@ -28,16 +28,19 @@ in
 
   # Version Control
   programs.git = {
-    inherit userName userEmail;
     enable = true;
     lfs.enable = true;
+    settings = {
+      user = {
+        inherit name email;
+      };
+    };
   };
   programs.jujutsu = {
     enable = true;
     settings = {
       user = {
-        email = userEmail;
-        name = userName;
+        inherit name email;
       };
       aliases = {
         # Current branch

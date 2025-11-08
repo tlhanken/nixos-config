@@ -2,8 +2,12 @@
 {
 
   imports = [ 
-    inputs.self.nixosModules.host-shared 
+    inputs.self.nixosModules.01-bootstrap
+    inputs.self.nixosModules.02-bootstrap
+    inputs.self.nixosModules.common
+    inputs.self.nixosModules.desktop
     ./hardware-configuration.nix
+
   ];
 
   networking.hostName = "sleipnir"; # Define your hostname.
@@ -17,4 +21,5 @@
 
   # Temp
   boot.loader.grub.enable = pkgs.lib.mkDefault false;
+
 }

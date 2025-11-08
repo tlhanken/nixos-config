@@ -2,8 +2,8 @@
 {
 
   imports = [ 
-    inputs.self.nixosModules.01-bootstrap
-    inputs.self.nixosModules.02-bootstrap
+    inputs.self.nixosModules.bootstrap.bootstrap
+    inputs.self.nixosModules.bootstrap.install
     inputs.self.nixosModules.common
     inputs.self.nixosModules.desktop
     ./hardware-configuration.nix

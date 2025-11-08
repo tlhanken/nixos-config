@@ -3,13 +3,12 @@
 
   imports = [ 
     inputs.self.nixosModules.host-shared 
+    inputs.self.nixosModules.users.tlhanken
     ./hardware-configuration.nix
   ];
 
-  nixpkgs.hostPlatform = "x86_64-linux";
-
-  # on nixos this either isNormalUser or isSystemUser is required to create the user.
-  users.users.tlhanken.isNormalUser = true;
+  networking.hostName = "sleipnir"; # Define your hostname.
+  networking.hostId = "52cad215"; # Generate using `head -c 8 /etc/machine-id`
 
   system.stateVersion = "25.05"; # initial nixos state
 }

@@ -2,10 +2,10 @@
 {
 
   imports = [ 
-    inputs.self.nixosModules.bootstrap.bootstrap
-    inputs.self.nixosModules.bootstrap.install
-    inputs.self.nixosModules.common
-    inputs.self.nixosModules.desktop
+    inputs.self.modules.bootstrap.bootstrap
+    inputs.self.modules.bootstrapinstall.install
+    inputs.self.modules.common.common
+    inputs.self.modules.desktop.desktop
     ./hardware-configuration.nix
 
   ];

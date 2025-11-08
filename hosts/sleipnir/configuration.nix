@@ -3,7 +3,6 @@
 
   imports = [ 
     inputs.self.nixosModules.host-shared 
-    inputs.self.nixosModules.users.tlhanken
     ./hardware-configuration.nix
   ];
 
@@ -11,4 +10,11 @@
   networking.hostId = "52cad215"; # Generate using `head -c 8 /etc/machine-id`
 
   system.stateVersion = "25.05"; # initial nixos state
+
+  users.users.tlhanken.isNormalUser = true;
+
+  services.fwupd.enable = true;
+
+  # Temp
+  boot.loader.grub.enable = pkgs.lib.mkDefault false;
 }

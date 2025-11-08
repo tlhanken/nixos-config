@@ -1,6 +1,6 @@
-result
-result/
+# direnv
 .direnv/
-.DS_Store
-.pre-commit-config.yaml
-logs/
+
+# nix
+result
+result-*

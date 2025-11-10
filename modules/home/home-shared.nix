@@ -23,10 +23,10 @@ in
       google-chrome
 
       #Art
-      wonderdraft
-      gimp3
       krita
+      gimp3
       inkscape
+      # wonderdraft  # Need to manually add to nix store: "nix-store --add-fixed sha256 Wonderdraft-1.1.8.2b-Linux64.deb"
 
       #Dev
       vscode

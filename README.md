@@ -18,8 +18,10 @@ NixOS configuration for home devices
     Test this target's config
 * nh os test .#nixosConfigurations.sleipnir
     Test the sleipnir config
-* nh os ____ .#nixosConfigurations.sleipnir
+* nh os switch .#nixosConfigurations.sleipnir
     Update the sleipnir config
+* nh os switch .
+    Update the config of this hostname
 
 
 

@@ -6,7 +6,6 @@
     inputs.self.modules.bootstrapinstall.install
     inputs.self.modules.desktop.desktop
     inputs.self.modules.common.common
-    inputs.self.modules.apps.claude
     ./hardware-configuration.nix
   ];
 

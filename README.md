@@ -30,3 +30,4 @@ NixOS configuration for home devices
 -apps
 -cleanup
 -extra user groups
+-common.nix

@@ -22,9 +22,16 @@ in
       firefox
       google-chrome
 
+      #Art
+      wonderdraft
+      gimp3
+      krita
+      inkscape
+
       #Dev
       vscode
-      vscode-extensions.jnoortheen.nix-ide
+      vscode-extensions.jnoortheen.nix-ide\
+      claude-code
     ];
 
   # Version Control
@@ -76,7 +83,7 @@ in
       gitsync = "git checkout main; git pull; gitprune;";
     };
   };
-  ## starship - an customizable prompt for any shell
+  ## Starship - an customizable prompt for any shell
   programs.starship = {
     enable = true;
     settings = {

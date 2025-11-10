@@ -16,6 +16,7 @@ in
       btop
       iotop
       iftop
+      xrandr
 
       #Productivity
       firefox

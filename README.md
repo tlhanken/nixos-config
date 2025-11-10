@@ -13,3 +13,20 @@ NixOS configuration for home devices
     Show all packages and defines.  
 * nix flake metadata
     Inputs defined, make sure they follow eachother.  Otherwise you have double dependencies (which could be intentended in some situations)
+
+* nh os test .
+    Test this target's config
+* nh os test .#nixosConfigurations.sleipnir
+    Test the sleipnir config
+* nh os ____ .#nixosConfigurations.sleipnir
+    Update the sleipnir config
+
+
+
+## Next up
+-disko
+-encryption
+-tailscale
+-apps
+-cleanup
+-extra user groups

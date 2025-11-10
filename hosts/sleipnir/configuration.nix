@@ -17,11 +17,11 @@
   users.users.tlhanken = {
     isNormalUser = true;
     description = "Trevor Hanken";
-#    extraGroups = {
-#      "networkmanager"
-#        "docker"
-#        "wheels"
-#    };
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
     hashedPassword = "$6$QwxrgyqftaIVyPRS$1BcH0tM8DbFEzzvYcsz7AeQvZImxUUxwyj0SVYCpvZZTZ1BtKjlrUTg3ydGIX9doSKCOw/M91Y11ZtAaQZuPD1"; # Hash of a password can be found with "mkpasswd -m sha-512"
   };
 

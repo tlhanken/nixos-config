@@ -30,7 +30,7 @@ in
 
       #Dev
       vscode
-      vscode-extensions.jnoortheen.nix-ide\
+      vscode-extensions.jnoortheen.nix-ide
       claude-code
     ];
 

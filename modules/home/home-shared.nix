@@ -20,7 +20,7 @@ in
 
       #Productivity
       firefox
-      google-chrome
+      # google-chrome
 
       #Art
       krita

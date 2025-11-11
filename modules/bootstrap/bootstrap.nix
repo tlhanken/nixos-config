@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   imports = [
     # ./builders/builders.nix
+    # ./tailscale.nix
   ];
 
   # Allow unfree packages

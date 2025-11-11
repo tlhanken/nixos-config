@@ -27,8 +27,9 @@ NixOS configuration for home devices
 
 ## Next up
 -disko
--encryption
+-disk encryption
 -tailscale
+-secrets
 -apps
 -cleanup
 -extra user groups

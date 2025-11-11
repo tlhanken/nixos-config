@@ -11,17 +11,23 @@ in
 
   home.packages =
     with pkgs; [ 
-      #Util
+      #Util - Cmd
       which
       btop
       iotop
       iftop
       xrandr
 
+      #Util - GUI
+      mission-center
+
       #Productivity
       firefox
       google-chrome
       obsidian
+      libreoffice-qt6-fresh
+      kdePackages.ghostwriter
+      # nextcloud-client
 
       #Art
       krita
@@ -32,8 +38,8 @@ in
       #Dev
       vscode
       vscode-extensions.jnoortheen.nix-ide
-      vscode-extensions.rust-lang.rust-analyzer
-      vscode-extensions.ms-azuretools.vscode-docker
+      # vscode-extensions.rust-lang.rust-analyzer #Didn't work?
+      # vscode-extensions.ms-azuretools.vscode-docker #Didn't work?
       # vscode-extensions.tamasfe.even-better-toml
       claude-code
     ];

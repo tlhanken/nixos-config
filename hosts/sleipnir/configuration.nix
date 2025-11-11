@@ -1,11 +1,14 @@
 { pkgs, inputs, ... }:
 {
 
-  imports = [ 
+  imports = [
     inputs.self.modules.bootstrap.bootstrap
     inputs.self.modules.bootstrapinstall.install
     inputs.self.modules.desktop.desktop
     inputs.self.modules.common.common
+    inputs.self.modules.apps.jellyfin
+    inputs.self.modules.apps.steam
+    inputs.self.modules.apps.rust
     ./hardware-configuration.nix
   ];
 

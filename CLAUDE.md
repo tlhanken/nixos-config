@@ -65,6 +65,7 @@ Blueprint **auto-discovers** hosts and modules from directory structure, elimina
 
 ```
 ├── flake.nix                    # Minimal flake delegating to Blueprint
+├── guides/                      # Documentation and setup guides
 ├── hosts/                       # Per-machine configurations
 │   ├── sleipnir/               # Currently active host
 │   │   ├── configuration.nix   # Host-specific settings
@@ -117,6 +118,22 @@ imports = [ inputs.self.homeModules.home-shared ];
 2. Use standard NixOS module structure with `{ pkgs, ... }: { ... }`
 3. Import in host config via `inputs.self.modules.<category>.<filename-without-.nix>`
 4. For custom options, use `options` and `config` pattern (see `bootstrapinstall/bootloader.nix` for example)
+
+### Documentation and Guides
+
+All setup guides, migration guides, and other documentation should be placed in the `guides/` directory to keep the repository root clean. This includes:
+- Installation guides
+- Migration guides (e.g., Disko, ZFS)
+- Troubleshooting documentation
+- Feature-specific setup instructions
+
+**AI-Generated Content**: All AI-generated guides MUST include the following disclaimer at the very top of the file:
+
+```markdown
+> **⚠️ AI-Generated Content Disclaimer**
+>
+> This guide was generated with the assistance of artificial intelligence. While efforts have been made to ensure accuracy, please review all commands and configurations carefully before applying them to your system. Always maintain proper backups and verify information against official documentation.
+```
 
 ## Configuration Details
 

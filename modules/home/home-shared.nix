@@ -31,6 +31,9 @@ in
       #Dev
       vscode
       vscode-extensions.jnoortheen.nix-ide
+      vscode-extensions.rust-lang.rust-analyzer
+      vscode-extensions.ms-azuretools.vscode-docker
+      # vscode-extensions.tamasfe.even-better-toml
       claude-code
     ];
 

@@ -21,6 +21,7 @@ in
       #Productivity
       firefox
       google-chrome
+      obsidian
 
       #Art
       krita

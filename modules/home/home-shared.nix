@@ -22,6 +22,7 @@ in
       mission-center
 
       #Productivity
+      bitwarden-desktop
       firefox
       google-chrome
       obsidian
@@ -34,6 +35,10 @@ in
       gimp3
       inkscape
       # wonderdraft  # Need to manually add to nix store: "nix-store --add-fixed sha256 Wonderdraft-1.1.8.2b-Linux64.deb"
+
+      #Media
+      # vlc
+      # handbrake
 
       #Dev
       vscode

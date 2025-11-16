@@ -39,6 +39,7 @@ in
       #Media
       # vlc
       # handbrake
+      spotify
 
       #Dev
       vscode

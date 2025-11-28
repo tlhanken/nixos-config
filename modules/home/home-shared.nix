@@ -48,6 +48,15 @@ in
       # vscode-extensions.ms-azuretools.vscode-docker #Didn't work?
       # vscode-extensions.tamasfe.even-better-toml
       claude-code
+
+      #AI
+      # ollama
+      # open-webui
+      # librechat
+      # n8n
+      # qdrant?
+      # qdrant-web-ui?
+      # # TODO, ComfyUI for image gen?
     ];
 
   # Version Control

@@ -1,16 +1,30 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, flake, ... }:
 {
 
   imports = [
+    # Standard nixos-anywhere modules
+    inputs.disko.nixosModules.disko
+    inputs.nixos-facter-modules.nixosModules.facter
+    # {
+    #   config.facter.reportPath =
+    #     if builtins.pathExists ./facter.json
+    #     then ./facter.json
+    #     else throw "Have you forgotten to run nixos-anywhere with `--generate-hardware-config nixos-facter ./facter.json`?";
+    # }
+
+    # Hardware Imports
     inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
-    inputs.self.modules.bootstrap.bootstrap
-    inputs.self.modules.bootstrapinstall.install
-    inputs.self.modules.desktop.desktop
-    inputs.self.modules.common.common
-    inputs.self.modules.apps.jellyfin
-    inputs.self.modules.apps.steam
-    inputs.self.modules.apps.rust
     ./hardware-configuration.nix
+
+    # Additional NixOs modules from this flake
+    flake.nixosModules.host-shared
+    flake.modules.bootstrap.bootstrap
+    flake.modules.bootstrapinstall.install
+    flake.modules.desktop.desktop
+    flake.modules.common.common
+    flake.modules.apps.jellyfin
+    flake.modules.apps.steam
+    flake.modules.apps.rust
   ];
 
   networking.hostName = "sleipnir"; # Define your hostname.
@@ -31,8 +45,8 @@
 
   # Firmware and bootloader
   services.fwupd.enable = true;
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # boot.loader.systemd-boot.enable = true;
+  # boot.loader.efi.canTouchEfiVariables = true;
 
   # Temporary fix for accelerometer data rotating desktop when in tent mode on framework 12: https://github.com/FrameworkComputer/linux-docs/blob/main/framework12/nixOS.md
   boot.initrd.kernelModules = [ "pinctrl_tigerlake" ];

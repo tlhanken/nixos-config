@@ -58,10 +58,32 @@ in
   programs.vscode = {
     enable = true;
     extensions = with pkgs.vscode-extensions; [
+      # Nix development
       jnoortheen.nix-ide
+
+      # Rust development
       rust-lang.rust-analyzer
-      ms-azuretools.vscode-docker
       tamasfe.even-better-toml
+
+      # Docker
+      ms-azuretools.vscode-docker
+
+      # AI assistance
+      anthropic.claude-code
+
+      # Remote development & networking
+      tailscale.vscode-tailscale
+
+      # Git & version control
+      # github.vscode-pull-request-github
+      # eamodio.gitlens
+
+      # Code quality & formatting
+      # editorconfig.editorconfig
+
+      # Utilities
+      # usernamehw.errorlens
+      # gruntfuggly.todo-tree
     ];
   };
 

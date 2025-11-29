@@ -36,6 +36,7 @@ in
 
       #Art
       krita  # Replace with krita-with-ai below for AI Diffusion plugin
+      # krita-with-ai # Krita with AI Diffusion plugin (from external flake)
       gimp3
       inkscape
       # wonderdraft  # Need to manually add to nix store: "nix-store --add-fixed sha256 Wonderdraft-1.1.8.2b-Linux64.deb"
@@ -58,9 +59,6 @@ in
       # qdrant?
       # qdrant-web-ui?
       # # TODO, ComfyUI for image gen?
-    ] ++ [
-      # Krita with AI Diffusion plugin (from external flake)
-      # krita-with-ai
     ];
 
   # VS Code

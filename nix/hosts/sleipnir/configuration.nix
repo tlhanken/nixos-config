@@ -2,6 +2,7 @@
 {
 
   imports = [
+    inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
     inputs.self.modules.bootstrap.bootstrap
     inputs.self.modules.bootstrapinstall.install
     inputs.self.modules.desktop.desktop
@@ -33,6 +34,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Temporary fix for accelerometer data rotating desktop when in tent mode on framework 12: https://github.com/FrameworkComputer/linux-docs/blob/main/framework12/nixOS.md
+  boot.initrd.kernelModules = [ "pinctrl_tigerlake" ];
   nixpkgs.overlays = [
   (final: prev: {
     iio-sensor-proxy = prev.iio-sensor-proxy.overrideAttrs (oldAttrs: {

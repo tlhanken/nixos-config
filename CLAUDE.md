@@ -16,6 +16,9 @@ nix flake check
 # Show all packages and outputs
 nix flake show
 
+# Build the config, also checks for errors
+nh os build .
+
 # Test configuration for current host, deploying to current host temporarily
 nh os test .
 

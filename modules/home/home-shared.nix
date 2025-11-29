@@ -42,11 +42,6 @@ in
       spotify
 
       #Dev
-      vscode
-      vscode-extensions.jnoortheen.nix-ide
-      # vscode-extensions.rust-lang.rust-analyzer #Didn't work?
-      # vscode-extensions.ms-azuretools.vscode-docker #Didn't work?
-      # vscode-extensions.tamasfe.even-better-toml
       claude-code
 
       #AI
@@ -58,6 +53,17 @@ in
       # qdrant-web-ui?
       # # TODO, ComfyUI for image gen?
     ];
+
+  # VS Code
+  programs.vscode = {
+    enable = true;
+    extensions = with pkgs.vscode-extensions; [
+      jnoortheen.nix-ide
+      rust-lang.rust-analyzer
+      ms-azuretools.vscode-docker
+      tamasfe.even-better-toml
+    ];
+  };
 
   # Version Control
   programs.git = {

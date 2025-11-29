@@ -31,18 +31,20 @@ in
       google-chrome
       obsidian
       libreoffice-qt6-fresh
-      kdePackages.ghostwriter
+      # kdePackages.ghostwriter
       # nextcloud-client
 
       #Art
-      # krita  # Replaced with krita-with-ai below for AI Diffusion plugin
+      krita  # Replace with krita-with-ai below for AI Diffusion plugin
       gimp3
       inkscape
       # wonderdraft  # Need to manually add to nix store: "nix-store --add-fixed sha256 Wonderdraft-1.1.8.2b-Linux64.deb"
 
       #Media
-      # vlc
-      # handbrake
+      # vlc # Media player
+      mpv
+      celluloid
+      handbrake # Transcoding tool
       spotify
 
       #Dev
@@ -64,7 +66,7 @@ in
   # VS Code
   programs.vscode = {
     enable = true;
-    profiles.default.extensions = with pkgs.vscode-extensions; [
+    extensions = with pkgs.vscode-extensions; [
       # Nix development
       jnoortheen.nix-ide
 

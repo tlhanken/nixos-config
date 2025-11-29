@@ -1,8 +1,12 @@
 { pkgs, osConfig, ... }:
 
-let 
+let
   email = "trevor.hanken@gmail.com";
   name = "Trevor Hanken";
+
+  # Import Krita AI Diffusion plugin via external flake
+  # nix-comfyui = builtins.getFlake "github:dyscorv/nix-comfyui";
+  # krita-with-ai = nix-comfyui.packages.${pkgs.system}.krita-with-extensions;
 in
 {
 
@@ -16,7 +20,7 @@ in
       btop
       iotop
       iftop
-      xrandr
+      # xrandr
 
       #Util - GUI
       mission-center
@@ -31,7 +35,7 @@ in
       # nextcloud-client
 
       #Art
-      krita
+      # krita  # Replaced with krita-with-ai below for AI Diffusion plugin
       gimp3
       inkscape
       # wonderdraft  # Need to manually add to nix store: "nix-store --add-fixed sha256 Wonderdraft-1.1.8.2b-Linux64.deb"
@@ -52,12 +56,15 @@ in
       # qdrant?
       # qdrant-web-ui?
       # # TODO, ComfyUI for image gen?
+    ] ++ [
+      # Krita with AI Diffusion plugin (from external flake)
+      # krita-with-ai
     ];
 
   # VS Code
   programs.vscode = {
     enable = true;
-    extensions = with pkgs.vscode-extensions; [
+    profiles.default.extensions = with pkgs.vscode-extensions; [
       # Nix development
       jnoortheen.nix-ide
 
@@ -69,7 +76,7 @@ in
       ms-azuretools.vscode-docker
 
       # AI assistance
-      anthropic.claude-code
+      # anthropic.claude-code
 
       # Remote development & networking
       tailscale.vscode-tailscale
@@ -91,11 +98,8 @@ in
   programs.git = {
     enable = true;
     lfs.enable = true;
-    settings = {
-      user = {
-        inherit name email;
-      };
-    };
+    userName = name;
+    userEmail = email;
   };
   programs.jujutsu = {
     enable = true;

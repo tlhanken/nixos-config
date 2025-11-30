@@ -1,7 +1,7 @@
-{pkgs, ...}: {
+{pkgs, inputs, ...}: {
   imports = [
+    inputs.agenix.nixosModules.default
     # ./builders/builders.nix
-    # ./tailscale.nix
   ];
 
   # Allow unfree packages

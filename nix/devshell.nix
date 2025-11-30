@@ -4,5 +4,6 @@ perSystem.devshell.mkShell {
   devshell.packages = [
     perSystem.nixos-anywhere.default
     perSystem.nix-fast-build.default
+    perSystem.agenix.default
   ];
 }

@@ -30,11 +30,10 @@ NixOS configuration for home devices
 
 
 ## Next up
--disko
--disk encryption
--tailscale
--secrets
--apps
--cleanup
--extra user groups
--common.nix
+* secrets
+* tailscale
+* apps
+* cleanup
+* extra user groups
+* common.nix
+* disk encryption

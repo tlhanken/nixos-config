@@ -25,6 +25,8 @@ NixOS configuration for home devices
 * nh os switch .
     Update the config of this computer to the config matching the hostname
 
+## Create new host
+* nixos-anywhere root@<ip> -f .#<config-name> --generate-hardware-config nixos-facter ./nix/hosts/<host-name>/facter.json
 
 
 ## Next up

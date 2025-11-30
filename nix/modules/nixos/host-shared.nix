@@ -23,7 +23,8 @@
   services.openssh.enable = true;
   users.users.root.openssh.authorizedKeys.keys = [
     # change this to your ssh key
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICh921bOnrGEySjw/eRrUAj1UbV2sf1YIcm5X74r6gTh"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICh921bOnrGEySjw/eRrUAj1UbV2sf1YIcm5X74r6gTh"  # Taylor Desktop
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOHrxGPx3dgap4sUwWyHbQsMJiv9tSNG05BEMNkNLDZF"  # Taylor Thinkpad
   ];
 
   nix.settings = {

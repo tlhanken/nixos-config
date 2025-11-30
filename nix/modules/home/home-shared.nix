@@ -59,6 +59,9 @@ in
       # qdrant?
       # qdrant-web-ui?
       # # TODO, ComfyUI for image gen?
+
+      #Games
+      # prismlauncher
     ];
 
   # VS Code

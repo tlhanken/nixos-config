@@ -37,3 +37,4 @@ NixOS configuration for home devices
 * extra user groups
 * common.nix
 * disk encryption
+* galar device

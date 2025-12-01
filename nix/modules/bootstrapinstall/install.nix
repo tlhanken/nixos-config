@@ -2,7 +2,7 @@
   imports = [
     ./bootloader.nix
     ./locale.nix
-    # ./tailscale.nix
+    ./tailscale.nix
     ../../../secrets/mod.nix
   ];
 }

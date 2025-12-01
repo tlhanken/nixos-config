@@ -43,8 +43,8 @@ in
 
       #Media
       # vlc # Media player
-      mpv
-      celluloid
+      # mpv
+      # celluloid
       handbrake # Transcoding tool
       spotify
 

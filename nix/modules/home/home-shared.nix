@@ -50,6 +50,8 @@ in
 
       #Dev
       claude-code
+      python3
+      uv
 
       #AI
       # ollama

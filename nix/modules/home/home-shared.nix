@@ -30,16 +30,16 @@ in
       firefox
       google-chrome
       obsidian
-      libreoffice-qt6-fresh
       # kdePackages.ghostwriter
       # nextcloud-client
+      # arrow
 
       #Art
-      krita  # Replace with krita-with-ai below for AI Diffusion plugin
-      # krita-with-ai # Krita with AI Diffusion plugin (from external flake)
+      krita  # ToDo: https://github.com/Acly/krita-ai-diffusion?tab=readme-ov-file
+      # krita-with-ai 
       gimp3
       inkscape
-      # wonderdraft  # Need to manually add to nix store: "nix-store --add-fixed sha256 Wonderdraft-1.1.8.2b-Linux64.deb"
+      wonderdraft  # Need to manually add to nix store: "nix-store --add-fixed sha256 Wonderdraft-1.1.8.2b-Linux64.deb"
 
       #Media
       # vlc # Media player
@@ -49,11 +49,14 @@ in
       spotify
 
       #Dev
+      # antigravity
       claude-code
       python3
       uv
 
       #AI
+      libreoffice-qt6-fresh
+      # lmstudio
       # ollama
       # open-webui
       # librechat
@@ -64,6 +67,7 @@ in
 
       #Games
       # prismlauncher
+      # worldpainter
     ];
 
   # VS Code
@@ -83,12 +87,16 @@ in
       # AI assistance
       # anthropic.claude-code
 
+      # Python development
+      ms-python.python
+      ms-python.vscode-pylance
+      ms-python.debugpy
+
       # Remote development & networking
       tailscale.vscode-tailscale
 
       # Git & version control
       # github.vscode-pull-request-github
-      # eamodio.gitlens
 
       # Code quality & formatting
       # editorconfig.editorconfig

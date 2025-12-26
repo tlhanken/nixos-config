@@ -14,7 +14,7 @@ let
 
   all = users ++ machines;
 in {
-  # "keys/nix_store_signing_key.age".publicKeys = all;
-  # "keys/github_pat.age".publicKeys = all;
-  "keys/tailscale_key.age".publicKeys = all;
+  # "encrypted/nix_store_signing_key.age".publicKeys = all;
+  # "encrypted/github_pat.age".publicKeys = all;
+  "encrypted/tailscale_key.age".publicKeys = all;
 }

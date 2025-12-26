@@ -3,6 +3,6 @@
     ./bootloader.nix
     ./locale.nix
     ./tailscale.nix
-    ../../../secrets/mod.nix
+    ../secrets/mod.nix
   ];
 }

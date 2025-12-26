@@ -20,7 +20,6 @@ in
       btop
       iotop
       iftop
-      # xrandr
 
       #Util - GUI
       mission-center
@@ -29,10 +28,12 @@ in
       bitwarden-desktop
       firefox
       google-chrome
+      libreoffice-qt6-fresh
       obsidian
       # kdePackages.ghostwriter
-      # nextcloud-client
       # arrow
+      # synology-drive-client
+      # nextcloud-client
 
       #Art
       krita  # ToDo: https://github.com/Acly/krita-ai-diffusion?tab=readme-ov-file
@@ -42,21 +43,17 @@ in
       wonderdraft  # Need to manually add to nix store: "nix-store --add-fixed sha256 Wonderdraft-1.1.8.2b-Linux64.deb"
 
       #Media
-      # vlc # Media player
-      # mpv
-      # celluloid
       handbrake # Transcoding tool
       spotify
 
-      #Dev
-      # antigravity
+      #Coding
+      antigravity-fhs
       claude-code
       python3
       uv
 
       #AI
-      libreoffice-qt6-fresh
-      # lmstudio
+      lmstudio
       # ollama
       # open-webui
       # librechat
@@ -74,6 +71,16 @@ in
   programs.vscode = {
     enable = true;
     extensions = with pkgs.vscode-extensions; [
+      # Remote development & networking
+      tailscale.vscode-tailscale
+
+      # Docker
+      ms-azuretools.vscode-docker
+
+      # AI assistance
+      # anthropic.claude-code
+      kilocode.kilo-code
+      
       # Nix development
       jnoortheen.nix-ide
 
@@ -81,19 +88,10 @@ in
       rust-lang.rust-analyzer
       tamasfe.even-better-toml
 
-      # Docker
-      ms-azuretools.vscode-docker
-
-      # AI assistance
-      # anthropic.claude-code
-
       # Python development
       ms-python.python
       ms-python.vscode-pylance
       ms-python.debugpy
-
-      # Remote development & networking
-      tailscale.vscode-tailscale
 
       # Git & version control
       # github.vscode-pull-request-github

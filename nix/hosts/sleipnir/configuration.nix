@@ -37,6 +37,8 @@
   # Firmware and bootloader
   services.fwupd.enable = true;
   # Temporary fix for accelerometer data rotating desktop when in tent mode on framework 12: https://github.com/FrameworkComputer/linux-docs/blob/main/framework12/nixOS.md
+  boot.supportedFilesystems = [ "nfs" ];
+  environment.systemPackages = [ pkgs.nfs-utils ];
   boot.initrd.kernelModules = [ "pinctrl_tigerlake" ];
   nixpkgs.overlays = [
   (final: prev: {
@@ -48,7 +50,25 @@
   })
 ];
 
-users.users.tlhanken = {
+
+  systemd.mounts = [{
+    type = "nfs";
+    mountConfig = {
+      Options = "ro,noauto";
+    };
+    what = "well-of-mimir.fenrir-altered.ts.net:/volume1/media";
+    where = "/mnt/jellyfin-media";
+  }];
+
+  systemd.automounts = [{
+    wantedBy = [ "multi-user.target" ];
+    automountConfig = {
+      TimeoutIdleSec = "600";
+    };
+    where = "/mnt/jellyfin-media";
+  }];
+
+  users.users.tlhanken = {
     isNormalUser = true;
     description = "Trevor Hanken";
     extraGroups = [

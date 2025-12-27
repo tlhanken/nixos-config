@@ -16,21 +16,18 @@
     ];
   };
 
-  fileSystems."/mnt/jellyfin-media" = {
-    # NFS set to wildcard hostname, readonly, map all users to admin.
-    device = "well-of-mimir.fenrir-altered.ts.net:/volume1/media";
-    fsType = "nfs";
-    options = [
-      "nfsvers=4.1"
-      "ro"
-      "x-systemd.automount"
-      "noauto"
-    ];
-  };
+
 
   services.jellyfin = {
     enable = true;
     openFirewall = true;
+  };
+
+  users.users.jellyfin = {
+    extraGroups = [
+      "video"
+      "render"
+    ];
   };
 
   environment.systemPackages = with pkgs; [

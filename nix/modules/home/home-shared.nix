@@ -48,6 +48,7 @@ in
 
       #Coding
       antigravity-fhs
+      # gemini-cli
       claude-code
       python3
       uv
@@ -75,9 +76,10 @@ in
       tailscale.vscode-tailscale
 
       # Docker
-      ms-azuretools.vscode-docker
+      ms-azuretools.vscode-containers
 
       # AI assistance
+      # Google.gemini-cli-vscode-ide-companion
       # anthropic.claude-code
       kilocode.kilo-code
       
@@ -161,20 +163,6 @@ in
       line_break.disabled = true;
     };
   };
-
-  # Desktop Environment Settings
-  dconf.settings = {
-    "org/cinnamon/desktop/background" = {
-      picture-uri = "file:///home/tlhanken/Workspace/nixos-config/backgrounds/1920x1200/sunset_mountain_lake.jpg";
-      picture-options = "zoom";
-    };
-    "org/cinnamon/desktop/screensaver" = {
-      picture-uri = "file:///home/tlhanken/Workspace/nixos-config/backgrounds/1920x1200/fuji.jpg";
-      picture-options = "zoom";
-    };
-  };
-
-
 
   home.stateVersion = "25.05"; # initial home-manager state
 }

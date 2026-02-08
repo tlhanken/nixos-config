@@ -42,4 +42,8 @@
   hardware.graphics = {
     enable = true;
   };
+
+  environment.systemPackages = [
+    pkgs.trayscale
+  ];
 }

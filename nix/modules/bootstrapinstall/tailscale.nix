@@ -80,6 +80,9 @@ in {
 
       # allow the Tailscale UDP port through the firewall
       allowedUDPPorts = [config.services.tailscale.port];
+
+      # Relax reverse path filtering to allow for Tailscale exit node traffic
+      checkReversePath = "loose";
     };
   };
 }

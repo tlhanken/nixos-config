@@ -38,8 +38,12 @@
   services.fwupd.enable = true;
   # Temporary fix for accelerometer data rotating desktop when in tent mode on framework 12: https://github.com/FrameworkComputer/linux-docs/blob/main/framework12/nixOS.md
   boot.supportedFilesystems = [ "nfs" ];
-  environment.systemPackages = [ pkgs.nfs-utils ];
+  environment.systemPackages = [ pkgs.nfs-utils pkgs.polychromatic ];
   boot.initrd.kernelModules = [ "pinctrl_tigerlake" ];
+
+  # Razr Support
+  hardware.openrazer.enable = true;
+  hardware.openrazer.users = [ "tlhanken" ];
   nixpkgs.overlays = [
   (final: prev: {
     iio-sensor-proxy = prev.iio-sensor-proxy.overrideAttrs (oldAttrs: {

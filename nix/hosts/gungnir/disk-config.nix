@@ -1,0 +1,101 @@
+{
+  disk = {
+    boot = {
+      type = "disk";
+      device = "/dev/nvme0n1";
+      content = {
+        type = "gpt";
+        partitions = {
+          boot = {
+            name = "boot";
+            size = "1M";
+            type = "EF02";
+            priority = 1;
+          };
+          ESP = {
+            size = "512M";
+            type = "EF00";
+            content = {
+              type = "filesystem";
+              format = "vfat";
+              mountpoint = "/boot";
+            };
+            priority = 2;
+          };
+          zfs = {
+            end = "-175G";
+            content = {
+              type = "zfs";
+              pool = "zroot";
+            };
+            priority = 3;
+          };
+          encryptedSwap = {
+            size = "8G";
+            content = {
+              type = "swap";
+              randomEncryption = true;
+              priority = 100;
+            };
+          };
+          plainSwap = {
+            size = "100%";
+            content = {
+              type = "swap";
+              discardPolicy = "both";
+              resumeDevice = true;
+            };
+          };
+        };
+      };
+    };
+    # TODO: Add the two 4TB SSDs here once device IDs are confirmed
+    # data1 = { ... };
+    # data2 = { ... };
+  };
+  zpool = {
+    zroot = {
+      type = "zpool";
+      mode = {
+        topology = {
+          type = "topology";
+          cache = [];
+          vdev = [
+            {
+              members = ["boot"];
+            }
+          ];
+        };
+      };
+      rootFsOptions = {
+        # ashift = "12";
+        xattr = "sa";
+        compression = "lz4";
+        atime = "off";
+        recordsize = "64K";
+        "com.sun:auto-snapshot" = "true";
+      };
+      mountpoint = "/";
+      datasets = {
+        nix = {
+          type = "zfs_fs";
+          mountpoint = "/nix";
+          options."com.sun:auto-snapshot" = "false";
+        };
+        var = {
+          type = "zfs_fs";
+          mountpoint = "/var";
+        };
+        home = {
+          type = "zfs_fs";
+          mountpoint = "/home";
+        };
+        reserved = {
+          type = "zfs_fs";
+          options.refreservation = "10G";
+          options.mountpoint = "none";
+        };
+      };
+    };
+  };
+}

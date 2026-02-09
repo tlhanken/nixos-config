@@ -45,6 +45,11 @@
     where = "/mnt/well-of-mimir/media";
   }];
 
+  services.nfs.server.enable = true;
+  services.nfs.server.exports = ''
+    /mnt/vault 100.109.178.115(rw,fsid=0,no_subtree_check)
+  '';
+
   systemd.automounts = [{
     wantedBy = [ "multi-user.target" ];
     automountConfig = {

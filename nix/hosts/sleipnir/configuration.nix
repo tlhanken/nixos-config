@@ -57,7 +57,7 @@
       Options = "ro,noauto";
     };
     what = "well-of-mimir.fenrir-altered.ts.net:/volume1/media";
-    where = "/mnt/jellyfin-media";
+    where = "/mnt/well-of-mimir/media";
   }];
 
   systemd.automounts = [{
@@ -65,8 +65,16 @@
     automountConfig = {
       TimeoutIdleSec = "600";
     };
-    where = "/mnt/jellyfin-media";
+    where = "/mnt/well-of-mimir/media";
   }];
+
+  fileSystems."/mnt/galar/vault" = {
+    device = "galar.fenrir-altered.ts.net:/mnt/vault";
+    fsType = "nfs";
+    options = [ "rw" "noauto" "x-systemd.automount" "x-systemd.idle-timeout=600" ];
+  };
+
+
 
   users.users.tlhanken = {
     isNormalUser = true;
@@ -75,6 +83,7 @@
       "networkmanager"
       "wheel"
       "docker"
+
     ];
     hashedPassword = "$6$QwxrgyqftaIVyPRS$1BcH0tM8DbFEzzvYcsz7AeQvZImxUUxwyj0SVYCpvZZTZ1BtKjlrUTg3ydGIX9doSKCOw/M91Y11ZtAaQZuPD1"; # Hash of a password can be found with "mkpasswd -m sha-512"
   };

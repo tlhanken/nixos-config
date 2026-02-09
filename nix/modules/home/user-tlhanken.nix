@@ -10,5 +10,21 @@
       picture-uri = "file://${../../../backgrounds/1920x1200/fuji.jpg}";
       picture-options = "zoom";
     };
+    "org/cinnamon/desktop/interface" = {
+      gtk-theme = "Mint-Y-Dark-Teal";
+      icon-theme = "Mint-Y-Teal";
+    };
+    "org/cinnamon/theme" = {
+      name = "Mint-Y-Dark-Teal";
+    };
+    "org/cinnamon/desktop/wm/preferences" = {
+      theme = "Mint-Y-Dark-Teal";
+    };
+    "org/cinnamon/desktop/keybindings/media-keys" = {
+      screensaver = ["<Super>l" "XF86ScreenSaver"];
+    };
+    "org/cinnamon/desktop/keybindings/vm" = {
+      looking-glass-key = [];
+    };
   };
 }

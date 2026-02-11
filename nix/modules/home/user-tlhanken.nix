@@ -24,7 +24,7 @@
       screensaver = ["<Super>l" "XF86ScreenSaver"];
     };
     "org/cinnamon/desktop/keybindings/vm" = {
-      looking-glass-key = [];
+      looking-glass-key = ["<Super>F12"];
     };
   };
 }

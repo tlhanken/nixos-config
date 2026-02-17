@@ -32,6 +32,7 @@
   boot.kernelModules = [ "kvm-intel" ];
 
   system.stateVersion = "25.05"; # initial nixos state
+  nixpkgs.hostPlatform = "x86_64-linux";
 
   boot.supportedFilesystems = [ "nfs" ];
   environment.systemPackages = [ pkgs.nfs-utils ];

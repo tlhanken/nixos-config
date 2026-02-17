@@ -13,7 +13,7 @@
     }
 
     # Hardware Imports
-    inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
+    inputs.nixos-hardware.nixosModules.framework-12-13th-gen-intel
     # ./hardware-configuration.nix
 
     # Additional NixOs modules from this flake

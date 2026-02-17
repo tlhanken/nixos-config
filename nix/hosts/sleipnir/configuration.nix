@@ -36,7 +36,11 @@
   nixpkgs.hostPlatform = "x86_64-linux";
 
   # Firmware and bootloader
-  services.fwupd.enable = true;
+  services.fwupd = {
+    enable = true;
+    extraRemotes = [ "lvfs-testing" ];
+    uefiCapsuleSettings.DisableCapsuleUpdateOnDisk = true;
+  };
   # Temporary fix for accelerometer data rotating desktop when in tent mode on framework 12: https://github.com/FrameworkComputer/linux-docs/blob/main/framework12/nixOS.md
   boot.supportedFilesystems = [ "nfs" ];
   environment.systemPackages = [ pkgs.nfs-utils pkgs.polychromatic ];
@@ -45,15 +49,8 @@
   # Razr Support
   hardware.openrazer.enable = true;
   hardware.openrazer.users = [ "tlhanken" ];
-  nixpkgs.overlays = [
-  (final: prev: {
-    iio-sensor-proxy = prev.iio-sensor-proxy.overrideAttrs (oldAttrs: {
-      postPatch = oldAttrs.postPatch + ''
-      sed -i -e 's/.*iio-buffer-accel/#&/' data/80-iio-sensor-proxy.rules
-      '';
-    });
-  })
-];
+  # Enable sensor support for rotation
+  hardware.sensor.iio.enable = true;
 
 
   systemd.mounts = [{

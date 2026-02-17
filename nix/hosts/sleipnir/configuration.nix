@@ -62,6 +62,13 @@
     };
     what = "well-of-mimir.fenrir-altered.ts.net:/volume1/media";
     where = "/mnt/well-of-mimir/media";
+  } {
+    type = "nfs";
+    mountConfig = {
+      Options = "rw,noauto";
+    };
+    what = "galar.fenrir-altered.ts.net:/mnt/vault";
+    where = "/mnt/galar/vault";
   }];
 
   systemd.automounts = [{
@@ -70,13 +77,15 @@
       TimeoutIdleSec = "600";
     };
     where = "/mnt/well-of-mimir/media";
+  } {
+    wantedBy = [ "multi-user.target" ];
+    automountConfig = {
+      TimeoutIdleSec = "600";
+    };
+    where = "/mnt/galar/vault";
   }];
 
-  fileSystems."/mnt/galar/vault" = {
-    device = "galar.fenrir-altered.ts.net:/mnt/vault";
-    fsType = "nfs";
-    options = [ "rw" "noauto" "x-systemd.automount" "x-systemd.idle-timeout=600" ];
-  };
+
 
 
 

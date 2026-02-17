@@ -27,4 +27,14 @@
       looking-glass-key = ["<Super>F12"];
     };
   };
+
+  xdg.configFile."autostart/trayscale.desktop".text = ''
+    [Desktop Entry]
+    Type=Application
+    Name=Trayscale
+    Exec=${pkgs.trayscale}/bin/trayscale --hide-window
+    Icon=trayscale
+    Comment=Trayscale
+    X-GNOME-Autostart-enabled=true
+  '';
 }

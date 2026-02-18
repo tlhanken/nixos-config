@@ -5,10 +5,10 @@ let
   # krita-with-ai = nix-comfyui.packages.${pkgs.system}.krita-with-extensions;
 in
 {
-  imports = 
-    if builtins.pathExists ../../local/art-extras.nix 
-    then [ ../../local/art-extras.nix ] 
-    else [];
+  # imports = 
+  #   if builtins.pathExists ../../local/art-extras.nix 
+  #   then [ ../../local/art-extras.nix ] 
+  #   else [];
 
   home.packages = with pkgs; [
     # Art

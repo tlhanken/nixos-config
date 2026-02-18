@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     # Util - GUI
     mission-center
+    baobab
 
     # Productivity
     bitwarden-desktop

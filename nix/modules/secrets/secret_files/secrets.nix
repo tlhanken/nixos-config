@@ -7,9 +7,11 @@ let
 
   # Add machine keys from /etc/ssh
   sleipnir = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILsMaSfMph3IA2jkIIbGycKVXsmsxRK9rkc5TwY4nA/r";
+  galar = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJJb3JgdFvwa0jyl/5ijE3mBaGWZHLfslCoDWe0szzHx";
 
   machines = [
     sleipnir
+    galar
   ];
 
   all = users ++ machines;

@@ -9,6 +9,9 @@ NixOS configuration for home devices
 ## Commands
 Useful commands are managed via `just`. Run `just` to see all available commands.
 
+## Deployment
+See [Deployment Guide](docs/deployment.md) for instructions on how to install NixOS on new machines using Linux Mint.
+
 ## Next up
 * apps
 * cleanup

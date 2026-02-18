@@ -39,6 +39,11 @@ test target=".":
 switch target=".":
     nh os switch {{target}}
 
+# Switch a remote host configuration via Tailscale
+[group("System")]
+remote-switch host:
+    nixos-rebuild switch --flake .#{{host}} --target-host root@{{host}}.fenrir-altered.ts.net
+
 # Install NixOS onto a new host using nixos-anywhere
 [group("System")]
 install ip config host:

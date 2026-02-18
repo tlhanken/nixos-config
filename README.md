@@ -6,10 +6,16 @@ NixOS configuration for home devices
 * Garnix account and tie to gitlab
 * Github App and add key to github repo's secret on the web portal.  App permissions, and add to repo.
 
-## Good Commands in dev portal
-* nix flake check
-    Runs tests
-* nix flake show
-    Show all packages and defines.  
-* nix flake metadata
-    Inputs defined, make sure they follow eachother.  Otherwise you have double dependencies (which could be intentended in some situations)
+## Commands
+Useful commands are managed via `just`. Run `just` to see all available commands.
+
+## Deployment
+See [Deployment Guide](docs/deployment.md) for instructions on how to install NixOS on new machines using Linux Mint.
+
+## Next up
+* apps
+* cleanup
+* extra user groups
+* common.nix
+* disk encryption
+* galar device

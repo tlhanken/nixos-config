@@ -129,7 +129,17 @@
         atime = "off";
         xattr = "sa";
       };
-      mountpoint = "/mnt/vault";
+      mountpoint = "/mnt/local";
+      datasets = {
+        vault = {
+          type = "zfs_fs";
+          mountpoint = "/mnt/local/vault";
+        };
+        media = {
+          type = "zfs_fs";
+          mountpoint = "/mnt/local/media";
+        };
+      };
     };
   };
 }

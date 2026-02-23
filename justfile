@@ -54,7 +54,7 @@ install ip config host:
 [group("Secrets")]
 rekey-secrets:
     @echo "Rekeying secrets..."
-    @agenix -rekey
+    @agenix -r -i ~/.ssh/id_ed25519
 
 # Edit an encrypted secret file
 [working-directory: 'nix/modules/secrets/secret_files']

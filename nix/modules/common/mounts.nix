@@ -51,10 +51,15 @@ in
       }];
     })
     (lib.mkIf (cfg.media.enable && cfg.media.mode == "local") {
-      fileSystems."/mnt/media" = {
-        device = cfg.media.localPath;
-        options = [ "bind" ];
-      };
+      systemd.mounts = [{
+        type = "none";
+        what = cfg.media.localPath;
+        where = "/mnt/media";
+        mountConfig.Options = "bind";
+        after = [ "zfs-mount.service" ];
+        requires = [ "zfs-mount.service" ];
+        wantedBy = [ "multi-user.target" ];
+      }];
     })
 
     # ============================================================================
@@ -74,10 +79,15 @@ in
       }];
     })
     (lib.mkIf (cfg.vault.enable && cfg.vault.mode == "local") {
-      fileSystems."/mnt/vault" = {
-        device = cfg.vault.localPath;
-        options = [ "bind" ];
-      };
+      systemd.mounts = [{
+        type = "none";
+        what = cfg.vault.localPath;
+        where = "/mnt/vault";
+        mountConfig.Options = "bind";
+        after = [ "zfs-mount.service" ];
+        requires = [ "zfs-mount.service" ];
+        wantedBy = [ "multi-user.target" ];
+      }];
     })
 
     # ============================================================================
@@ -97,10 +107,15 @@ in
       }];
     })
     (lib.mkIf (cfg.backup.enable && cfg.backup.mode == "local") {
-      fileSystems."/mnt/backup" = {
-        device = cfg.backup.localPath;
-        options = [ "bind" ];
-      };
+      systemd.mounts = [{
+        type = "none";
+        what = cfg.backup.localPath;
+        where = "/mnt/backup";
+        mountConfig.Options = "bind";
+        after = [ "zfs-mount.service" ];
+        requires = [ "zfs-mount.service" ];
+        wantedBy = [ "multi-user.target" ];
+      }];
     })
 
     # ============================================================================

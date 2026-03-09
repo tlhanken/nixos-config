@@ -1,4 +1,5 @@
 {pkgs, ...}: {
+  # Web UI available at http://<host>:8096
   nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override {enableHybridCodec = true;};
   };
@@ -15,9 +16,6 @@
       # intel-media-sdk # QSV up to 11th gen - DISABLED: marked insecure due to CVEs
     ];
   };
-
-
-
   services.jellyfin = {
     enable = true;
     openFirewall = true;

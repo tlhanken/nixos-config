@@ -21,6 +21,7 @@
     flake.modules.desktop.desktop
     flake.modules.common.common
     flake.modules.apps.jellyfin
+    flake.modules.apps.immich
   ];
 
   # ============================================================================

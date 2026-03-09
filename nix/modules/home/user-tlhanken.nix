@@ -26,6 +26,11 @@
     "org/cinnamon/desktop/keybindings/vm" = {
       looking-glass-key = ["<Super>F12"];
     };
+    # Disable onboard on-screen keyboard from auto-starting on boot
+    # (can still be launched manually from the panel or app menu)
+    "org/gnome/desktop/a11y/applications" = {
+      screen-keyboard-enabled = false;
+    };
   };
 
   xdg.configFile."autostart/trayscale.desktop".text = ''

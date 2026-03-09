@@ -1,8 +1,21 @@
-{ ... }: {
+{ lib, ... }:
+let
+  port = 8082;
+  hosts = [
+    "localhost"
+    "127.0.0.1"
+    "galar"
+    "galar.fenrir-altered.ts.net"
+    # Add any host that should be able to serve the homepage here
+  ];
+  allowedHosts = lib.concatStringsSep "," (map (h: "${h}:${toString port}") hosts);
+in
+{
   # Web UI available at http://<host>:8082
   services.homepage-dashboard = {
     enable = true;
     openFirewall = true;
+    allowedHosts = allowedHosts;
 
     settings = {
       title = "Home";
@@ -37,14 +50,14 @@
         "Media" = [
           {
             "Jellyfin" = {
-              href = "http://galar:8096";
+              href = "http://galar.fenrir-altered.ts.net:8096";
               description = "Media server";
               icon = "jellyfin.png";
             };
           }
           {
             "Immich" = {
-              href = "http://galar:2283";
+              href = "http://galar.fenrir-altered.ts.net:2283";
               description = "Photo library";
               icon = "immich.png";
             };

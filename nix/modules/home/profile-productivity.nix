@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+  imports = [ ./claude-desktop.nix ];
   home.packages = with pkgs; [
     # Util - GUI
     mission-center

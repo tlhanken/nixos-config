@@ -24,6 +24,11 @@ show:
 metadata:
     nix flake metadata
 
+# Update all flake inputs
+[group("Flake")]
+update:
+    nix flake update
+
 # Build the specified configuration (defaults to '.')
 [group("System")]
 build path=".":

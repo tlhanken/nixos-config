@@ -19,7 +19,18 @@
   services.jellyfin = {
     enable = true;
     openFirewall = true;
+    dataDir = "/mnt/local/appdata/jellyfin";
+    cacheDir = "/mnt/local/cache/jellyfin";
   };
+
+  # Ensure the appdata/cache directories exist with correct ownership
+  # configDir and logDir default to subdirs of dataDir, so they are created automatically
+  systemd.tmpfiles.rules = [
+    "d /mnt/local/appdata             0755 root     root     -"
+    "d /mnt/local/appdata/jellyfin    0700 jellyfin jellyfin -"
+    "d /mnt/local/cache               0755 root     root     -"
+    "d /mnt/local/cache/jellyfin      0700 jellyfin jellyfin -"
+  ];
 
   users.users.jellyfin = {
     extraGroups = [

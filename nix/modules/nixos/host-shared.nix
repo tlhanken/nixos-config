@@ -22,6 +22,7 @@
       pkgs.curl
       pkgs.git
       pkgs.nano
+      pkgs.wget
     ];
     environment.variables.EDITOR = "nano";
 

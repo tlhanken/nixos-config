@@ -10,6 +10,11 @@ let
   # Helper to define the enhanced mount options
   mkMountOpt = name: defaultLocalPath: {
     enable = lib.mkEnableOption "${name} Mount";
+    writable = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Whether to mount read-write (remote mode only; server must also export rw).";
+    };
     mode = lib.mkOption {
       type = lib.types.enum [ "remote" "local" ];
       default = "remote";
@@ -42,7 +47,7 @@ in
         type = "nfs";
         what = "${servers.media_server}:/mnt/media";
         where = "/mnt/media";
-        mountConfig = { Options = "ro,noauto,timeo=14,_netdev"; };
+        mountConfig = { Options = "${if cfg.media.writable then "rw" else "ro"},noauto,timeo=14,_netdev"; };
       }];
       systemd.automounts = [{
         where = "/mnt/media";

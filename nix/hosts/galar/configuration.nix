@@ -83,7 +83,7 @@
   # ============================================================================
   services.nfs.server.enable = true;
   services.nfs.server.exports = ''
-    /mnt/media 100.64.0.0/255.192.0.0(ro,no_subtree_check)
+    /mnt/media 100.64.0.0/255.192.0.0(rw,no_subtree_check)
     /mnt/vault 100.64.0.0/255.192.0.0(rw,no_subtree_check)
   '';
 

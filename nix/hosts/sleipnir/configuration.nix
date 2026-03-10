@@ -69,7 +69,10 @@
   # Host Features
   # ============================================================================
   # Enable Cross-Device Mounts
-  my.mounts.media.enable = true;
+  my.mounts.media = {
+    enable = true;
+    writable = true;
+  };
   # my.mounts.vault.enable = true;
   # my.mounts.backup.enable = true;
   my.mounts.legacyPaths.enable = true;

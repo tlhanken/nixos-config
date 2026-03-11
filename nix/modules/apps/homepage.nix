@@ -64,6 +64,17 @@ in
           }
         ];
       }
+      {
+        "Tools" = [
+          {
+            "IT Tools" = {
+              href = "http://sleipnir.fenrir-altered.ts.net:8400";
+              description = "Developer utilities";
+              icon = "it-tools.png";
+            };
+          }
+        ];
+      }
     ];
   };
 }

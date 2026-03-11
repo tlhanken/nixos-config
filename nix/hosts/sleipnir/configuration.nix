@@ -24,6 +24,7 @@
     flake.modules.apps.jellyfin
     flake.modules.apps.steam
     flake.modules.apps.rust
+    flake.modules.apps.it-tools
   ];
 
   # ============================================================================

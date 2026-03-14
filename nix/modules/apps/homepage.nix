@@ -30,7 +30,7 @@ in
         resources = {
           cpu = true;
           memory = true;
-          disk = "/";
+          disk = [ "/" "/mnt/local" ];
         };
       }
       {

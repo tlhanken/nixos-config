@@ -14,8 +14,8 @@
     obsidian
     # kdePackages.ghostwriter
     # arrow
-    # synology-drive-client
-    # nextcloud-client
+    synology-drive-client
+    nextcloud-client
 
     # Media (Music)
     spotify

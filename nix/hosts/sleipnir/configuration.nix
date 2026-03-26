@@ -46,7 +46,6 @@
   # Boot & Filesystems
   # ============================================================================
   # Temporary fix for accelerometer data rotating desktop when in tent mode on framework 12
-  boot.supportedFilesystems = [ "nfs" ];
   boot.initrd.kernelModules = [ "pinctrl_tigerlake" ];
 
   # ============================================================================
@@ -92,7 +91,7 @@
     hashedPassword = "$6$QwxrgyqftaIVyPRS$1BcH0tM8DbFEzzvYcsz7AeQvZImxUUxwyj0SVYCpvZZTZ1BtKjlrUTg3ydGIX9doSKCOw/M91Y11ZtAaQZuPD1"; # Hash of a password can be found with "mkpasswd -m sha-512"
   };
 
-  environment.systemPackages = [ pkgs.nfs-utils pkgs.polychromatic ];
+  environment.systemPackages = [ pkgs.polychromatic ];
 
   # ============================================================================
   # Custom Services

@@ -6,6 +6,11 @@ let
     nas = "well-of-mimir.fenrir-altered.ts.net";
     media_server = "galar.fenrir-altered.ts.net";
   };
+  anyNfsEnabled =
+    (cfg.media.enable && cfg.media.mode == "remote") ||
+    (cfg.vault.enable && cfg.vault.mode == "remote") ||
+    (cfg.backup.enable && cfg.backup.mode == "remote") ||
+    cfg.legacyPaths.enable;
 
   # Helper to define the enhanced mount options
   mkMountOpt = name: defaultLocalPath: {
@@ -39,6 +44,14 @@ in
   };
 
   config = lib.mkMerge [
+    # ============================================================================
+    # NFS SUPPORT (auto-enabled when any remote mount is active)
+    # ============================================================================
+    (lib.mkIf anyNfsEnabled {
+      boot.supportedFilesystems = [ "nfs" ];
+      environment.systemPackages = [ pkgs.nfs-utils ];
+    })
+
     # ============================================================================
     # MEDIA
     # ============================================================================

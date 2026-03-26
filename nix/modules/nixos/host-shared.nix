@@ -17,6 +17,20 @@
     # Allow unfree packages
     nixpkgs.config.allowUnfree = true;
 
+    # Pull antigravity from unstable — stable lags behind supported API versions
+    nixpkgs.overlays = [
+      (final: prev:
+        let
+          unstable = import inputs.nixpkgs-unstable {
+            inherit (prev) system;
+            config.allowUnfree = true;
+          };
+        in {
+          inherit (unstable) antigravity antigravity-fhs;
+        }
+      )
+    ];
+
     # System packages used for bootstrapping
     environment.systemPackages = map lib.lowPrio [
       pkgs.curl

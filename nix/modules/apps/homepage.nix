@@ -31,6 +31,7 @@ in
           cpu = true;
           memory = true;
           disk = [ "/" "/mnt/local" ];
+          expanded = true;
         };
       }
       {

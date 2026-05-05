@@ -23,6 +23,7 @@
     flake.modules.apps.jellyfin
     flake.modules.apps.immich
     flake.modules.apps.homepage
+    # flake.modules.apps.nextcloud
   ];
 
   # ============================================================================

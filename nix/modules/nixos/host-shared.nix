@@ -72,6 +72,10 @@
       ];
     };
 
+    nix.extraOptions = ''
+      !include ${config.age.secrets.github-token.path}
+    '';
+
     # Store manager
     programs.nh = {
       enable = true;

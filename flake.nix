@@ -49,6 +49,12 @@
       url = "github:aaddrick/claude-desktop-debian";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-comfyui = {
+      url = "github:dyscorv/nix-comfyui";
+    };
+    hermes-agent = {
+      url = "github:NousResearch/hermes-agent";
+    };
     nixos-anywhere = {
       url = "github:nix-community/nixos-anywhere";
       inputs.disko.follows = "disko";

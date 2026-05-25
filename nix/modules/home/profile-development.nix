@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   home.packages = with pkgs; [
     # AI Code Tools
@@ -13,14 +13,7 @@
     python3
     uv
 
-    # AI
-    # ollama
-    # open-webui
-    # librechat
-    # n8n
-    # qdrant?
-    # qdrant-web-ui?
-    # # TODO, ComfyUI for image gen?
+    # AI (Services managed system-wide in nix/modules/apps/)
   ];
 
   programs.gemini-cli.enable = true;
@@ -39,7 +32,7 @@
       # AI assistance
       Google.gemini-cli-vscode-ide-companion
       # anthropic.claude-code
-      kilocode.kilo-code
+      # kilocode.kilo-code
       
       # Nix development
       jnoortheen.nix-ide

@@ -1,20 +1,16 @@
 {pkgs, ...}: {
   users.users.ollama = {
-    isNormalUser = false;
+    isSystemUser = true;
     description = "Ollama";
   };
   services.ollama = {
     enable = true;
-    home = "/mnt/ollama";
-    acceleration = "rocm";  #cuda for nvidia, ROCm for amd
+    home = "/mnt/local/appdata/ollama";
+    # acceleration = "rocm";  # Uncomment for AMD GPU, or use "cuda" for Nvidia. Leave disabled for Intel/CPU.
     user = "ollama";
   };
 
-  # Enable ROCm
-  hardware.opengl = {
-    enable = true;
-    extraPackages = with pkgs; [
-      rocmPackages.clr.icd
-    ];
-  };
+  systemd.tmpfiles.rules = [
+    "d /mnt/local/appdata/ollama 0770 ollama ollama -"
+  ];
 }

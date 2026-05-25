@@ -76,6 +76,24 @@ in
           }
         ];
       }
+      {
+        "AI" = [
+          {
+            "Open-WebUI" = {
+              href = "http://sleipnir.fenrir-altered.ts.net:8080";
+              description = "LLM Chat Interface";
+              icon = "si-openai"; # Simple icons often has openai, can fallback to chat if needed
+            };
+          }
+          {
+            "ComfyUI" = {
+              href = "http://sleipnir.fenrir-altered.ts.net:8188";
+              description = "Stable Diffusion UI";
+              icon = "si-stabilityai";
+            };
+          }
+        ];
+      }
     ];
   };
 }

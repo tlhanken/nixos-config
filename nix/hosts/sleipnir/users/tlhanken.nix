@@ -6,6 +6,7 @@ in
 {  
   imports = [ 
     inputs.self.homeModules.home-shared
+    inputs.self.homeModules.profile-ai
     inputs.self.homeModules.profile-art
     inputs.self.homeModules.profile-productivity
     inputs.self.homeModules.profile-development

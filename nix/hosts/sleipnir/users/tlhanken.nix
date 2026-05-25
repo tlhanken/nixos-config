@@ -19,8 +19,11 @@ in
   # Identity
   programs.git = {
     enable = true;
-    userName = name;
-    userEmail = email;
+    settings = {
+      user = {
+        inherit name email;
+      };
+    };
   };
 
   programs.jujutsu = {

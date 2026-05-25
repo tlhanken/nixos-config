@@ -19,4 +19,5 @@ in {
   # "encrypted/nix_store_signing_key.age".publicKeys = all;
   "encrypted/github-token.age".publicKeys = all;
   "encrypted/tailscale_key.age".publicKeys = all;
+  "encrypted/ai-api-keys.age".publicKeys = all;
 }

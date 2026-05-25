@@ -9,5 +9,10 @@
       group = "users";
     };
     tailscale_key.file = ./secret_files/encrypted/tailscale_key.age;
+    ai-api-keys = {
+      file = ./secret_files/encrypted/ai-api-keys.age;
+      mode = "0440";
+      group = "users";
+    };
   };
 }

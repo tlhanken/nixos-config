@@ -7,16 +7,6 @@
     enable = true;
     addToSystemPackages = true;
 
-    # ── Container Mode ─────────────────────────────────────────────────
-    container = {
-      enable = true;
-      hostUsers = [ "tlhanken" ];
-      # Mount your workspace into the container so the agent can read/write it
-      extraVolumes = [
-        "/home/tlhanken/workspace:/workspace:rw"
-      ];
-    };
-
     # ── Secrets ────────────────────────────────────────────────────────
     # API keys (OPENROUTER_API_KEY, ANTHROPIC_API_KEY, etc.) are never
     # embedded in Nix — they live in the agenix-managed env file.
@@ -29,8 +19,8 @@
       };
       toolsets = [ "all" ];
       terminal = {
-        # Tell the agent to default to the mounted workspace folder
-        cwd = "/workspace";
+        # Actual host workspace path (not a container mount)
+        cwd = "/home/tlhanken/workspace";
       };
     };
 
@@ -44,21 +34,20 @@
       sounddevice
       numpy
     ];
+
+    # ── Scrapling ──────────────────────────────────────────────────────
+    # Scrapling is not in nixpkgs so it lives in a uv tool venv managed
+    # by home-manager's activation script in profile-ai.nix.
+    # The hermes wrapper uses ${PYTHONPATH:+...} — it prepends to whatever
+    # PYTHONPATH is already set — so setting it here causes scrapling's
+    # site-packages to be visible to the agent's Python at runtime.
+    # UV_PYTHON is pinned to python312 in profile-ai.nix so the paths align.
+    environment = {
+      PYTHONPATH = "/home/tlhanken/.local/share/uv/tools/scrapling/lib/python3.12/site-packages";
+      # Point Hermes at the local SearXNG instance for free web search
+      SEARXNG_URL = "http://127.0.0.1:8888";
+    };
   };
 
   environment.localBinInPath = true;
-
-  # Install scrapling into the container on every service start.
-  # pip is idempotent so this is a fast no-op after the first run.
-  # The container's writable layer keeps it installed across restarts.
-  systemd.services.hermes-agent.serviceConfig.ExecStartPost =
-    pkgs.writeShellScript "hermes-install-scrapling" ''
-      # Wait until the container is responsive (up to 30s)
-      for i in $(seq 1 30); do
-        ${pkgs.docker}/bin/docker exec hermes-agent true 2>/dev/null && break
-        sleep 1
-      done
-      ${pkgs.docker}/bin/docker exec hermes-agent \
-        pip install 'scrapling[ai]' --quiet || true
-    '';
 }

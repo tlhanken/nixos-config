@@ -35,6 +35,11 @@ in
   home.sessionVariables = {
     PLAYWRIGHT_BROWSERS_PATH = "${pkgs.playwright-driver.browsers}";
     PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = "1";
+    # Scrapling lives in a uv tool venv (installed by home.activation below).
+    # Prepend its site-packages so the Nix-managed hermes Python can find it.
+    PYTHONPATH = "/home/tlhanken/.local/share/uv/tools/scrapling/lib/python3.12/site-packages";
+    # Point Hermes at the local SearXNG instance for free web search.
+    SEARXNG_URL = "http://127.0.0.1:8888";
   };
 
   # Install scrapling (and its Python deps) as a uv tool. Runs idempotently on

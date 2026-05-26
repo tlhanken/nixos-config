@@ -14,5 +14,10 @@
       mode = "0440";
       group = "users";
     };
+    searxng-secrets = {
+      file = ./secret_files/encrypted/searxng-secrets.age;
+      mode = "0440";
+      group = "users";
+    };
   };
 }

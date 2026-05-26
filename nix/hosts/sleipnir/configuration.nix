@@ -24,6 +24,7 @@
     flake.modules.apps.jellyfin
     flake.modules.apps.steam
     flake.modules.apps.rust
+    flake.modules.apps.searxng
     flake.modules.apps.it-tools
     # flake.modules.apps.ollama
     # flake.modules.apps.open-webui

@@ -1,4 +1,4 @@
-{ pkgs, inputs, flake, ... }:
+{ pkgs, inputs, ... }:
 {
   imports = [
     # Standard nixos-anywhere modules
@@ -14,16 +14,16 @@
     # Hardware Imports
     # ./hardware-configuration.nix
 
-    # Additional NixOs modules from this flake
-    flake.nixosModules.host-shared
-    flake.modules.bootstrap.bootstrap
-    flake.modules.bootstrapinstall.install
-    flake.modules.desktop.desktop
-    flake.modules.common.common
-    flake.modules.apps.jellyfin
-    flake.modules.apps.immich
-    flake.modules.apps.homepage
-    # flake.modules.apps.nextcloud
+    # Additional NixOS modules from this flake (see CLAUDE.md)
+    inputs.self.modules.nixos.host-shared
+    inputs.self.modules.bootstrap.bootstrap
+    inputs.self.modules.bootstrapinstall.install
+    inputs.self.modules.desktop.desktop
+    inputs.self.modules.common.common
+    # Jellyfin: primary instance on galar; sleipnir also runs a copy for debug/dev.
+    inputs.self.modules.apps.jellyfin
+    inputs.self.modules.apps.immich
+    inputs.self.modules.apps.homepage
   ];
 
   # ============================================================================
@@ -35,9 +35,10 @@
   # ============================================================================
   # System Basics
   # ============================================================================
-  system.stateVersion = "25.05"; # initial nixos state
+  # Pin to the NixOS release when this host was first installed; do not match nixpkgs channel.
+  system.stateVersion = "25.05";
   nixpkgs.hostPlatform = "x86_64-linux";
-  
+
   # Required for nixos-anywhere
   disko.devices = import ./disk-config.nix;
 
@@ -72,14 +73,6 @@
     "d /mnt/local/vault 0755 root root -"
   ];
 
-
-  # ============================================================================
-  # Environment
-  # ============================================================================
-
-  # ============================================================================
-  # Services
-  # ============================================================================
   services.nfs.server.enable = true;
   services.nfs.server.exports = ''
     /mnt/media 100.64.0.0/255.192.0.0(rw,no_subtree_check)
@@ -91,8 +84,6 @@
     settings.PasswordAuthentication = false;
     settings.KbdInteractiveAuthentication = false;
   };
-
-
 
   # ============================================================================
   # Users

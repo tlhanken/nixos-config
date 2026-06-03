@@ -1,3 +1,5 @@
+# Optional GRUB+ZFS override. Normal Disko hosts rely on modules.nixos.host-shared
+# for boot.loader.grub. Enable customBoot only when host-shared layout does not apply.
 {
   lib,
   config,
@@ -6,7 +8,7 @@
   cfg = config.customBoot;
 in {
   options = {
-    customBoot.enable = lib.mkEnableOption "Enable Custom Bootloader";
+    customBoot.enable = lib.mkEnableOption "Override host-shared GRUB/ZFS boot settings";
   };
 
   config = lib.mkIf cfg.enable {
@@ -14,12 +16,9 @@ in {
       supportedFilesystems = ["zfs"];
       zfs.devNodes = "/dev/disk/by-partlabel";
       loader = {
-        efi = {
-          canTouchEfiVariables = true;
-        };
+        efi.canTouchEfiVariables = true;
         grub = {
           enable = true;
-          # shell_on_fail = true;
           configurationLimit = 10;
           zfsSupport = true;
           efiSupport = true;

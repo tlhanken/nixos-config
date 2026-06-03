@@ -51,9 +51,11 @@
     };
     nix-comfyui = {
       url = "github:dyscorv/nix-comfyui";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     hermes-agent = {
       url = "github:NousResearch/hermes-agent";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-anywhere = {
       url = "github:nix-community/nixos-anywhere";

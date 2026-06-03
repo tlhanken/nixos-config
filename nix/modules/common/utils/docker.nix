@@ -3,7 +3,7 @@
   config,
   ...
 }: let
-  cfg = config.customBoot;
+  zfsRoot = config.boot.supportedFilesystems.zfs or false;
 in {
   virtualisation.docker = {
     enable = true;
@@ -11,7 +11,7 @@ in {
       enable = false;
       setSocketVariable = true;
     };
-    storageDriver = lib.mkIf cfg.enable "zfs";
+    storageDriver = lib.mkIf zfsRoot "zfs";
     autoPrune = {
       enable = true;
       flags = [];

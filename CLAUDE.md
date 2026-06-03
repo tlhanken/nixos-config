@@ -73,6 +73,8 @@ outputs = inputs:
 
 Blueprint **auto-discovers** hosts and modules from the `nix/hosts/` and `nix/modules/` directories. Modules are exposed as `inputs.self.modules.<category>.<name>` and home-manager configs as `inputs.self.homeModules.<name>`.
 
+Prefer `inputs.self.*` in host and user configs (not `flake.*`); both can work in Blueprint eval, but `inputs.self` matches flake input docs and copy-paste from guides.
+
 ### Directory Structure
 
 ```
@@ -118,7 +120,7 @@ imports = [
   inputs.self.modules.bootstrapinstall.install
   inputs.self.modules.desktop.desktop
   inputs.self.modules.common.common
-  inputs.self.modules.nixos.host-shared
+  inputs.self.modules.nixos.host-shared  # shared baseline; bootstrap is install-only
   ./hardware-configuration.nix
 ];
 ```
@@ -136,12 +138,12 @@ imports = [
 
 | Module | Path | Purpose |
 |--------|------|---------|
-| `bootstrap` | `modules/bootstrap/` | Base system, Nix settings, binary caches |
+| `bootstrap` | `modules/bootstrap/` | Install-time essentials only (curl, git, flakes) |
+| `nixos/host-shared` | `modules/nixos/host-shared.nix` | Shared host baseline: Nix caches, nh, SSH, GRUB/ZFS |
 | `bootstrapinstall` | `modules/bootstrapinstall/` | ZFS boot, locale, tailscale, bootloader |
 | `common` | `modules/common/` | Docker, auto-upgrade, mounts, ZFS services |
 | `common/mounts` | `modules/common/mounts.nix` | Cross-host NFS and bind mount configuration |
 | `desktop` | `modules/desktop/` | Cinnamon, X11, sound |
-| `nixos/host-shared` | `modules/nixos/host-shared.nix` | Shared baseline for all NixOS hosts |
 | `apps/*` | `modules/apps/` | Optional per-host applications |
 | `home/home-shared` | `modules/home/home-shared.nix` | Shared HM baseline (git, direnv, starship) |
 | `home/profile-*` | `modules/home/` | User profiles: art, development, productivity |

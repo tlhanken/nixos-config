@@ -1,10 +1,23 @@
-{ pkgs, inputs, ... }:
-{
+{ pkgs, inputs, lib, ... }:
+let
+  unstable = import inputs.nixpkgs-unstable {
+    system = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfreePredicate = pkg:
+      builtins.elem (lib.getName pkg) [
+        "antigravity"
+        "claude-code"
+        "code"
+        "cursor"
+        "lmstudio"
+        "vscode"
+      ];
+  };
+in {
   home.packages = with pkgs; [
     # AI Code Tools
-    claude-code
-    antigravity-fhs
-    lmstudio
+    unstable.code-cursor-fhs
+    unstable.antigravity-fhs
+    unstable.lmstudio
 
     # Node.js
     nodejs
@@ -17,7 +30,10 @@
   ];
 
   programs.gemini-cli.enable = true;
-  programs.claude-code.enable = true;
+  programs.claude-code = {
+    enable = true;
+    package = unstable.claude-code;
+  };
 
   # VS Code
   programs.vscode = {

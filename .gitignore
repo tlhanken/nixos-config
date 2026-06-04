@@ -7,3 +7,6 @@ result-*
 
 # logs
 *.log
+
+# local scratch
+.gemini-scratch/

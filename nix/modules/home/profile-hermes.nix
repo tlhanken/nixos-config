@@ -6,7 +6,7 @@ let
 in {
   home.packages = with pkgs; [
     # sounddevice pulls cffi, which collides with hermes' sealed venv — use numpy only
-    (inputs.hermes-agent.packages.${pkgs.system}.default.override {
+    (inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
       extraPythonPackages = with pkgs.python312Packages; [numpy];
     })
     searxng

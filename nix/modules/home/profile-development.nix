@@ -23,7 +23,7 @@ in {
 
   programs.vscode = {
     enable = true;
-    extensions = with pkgs.vscode-extensions; [
+    profiles.default.extensions = with pkgs.vscode-extensions; [
       tailscale.vscode-tailscale
       ms-azuretools.vscode-containers
       Google.gemini-cli-vscode-ide-companion

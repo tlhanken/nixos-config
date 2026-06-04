@@ -16,8 +16,7 @@ in {
   };
 
   config = {
-    nixpkgs.config.allowUnfree = true;
-
+    # allowUnfree is set on the NixOS host (host-shared); HM uses global pkgs.
     services.ssh-agent.enable = pkgs.stdenv.isLinux;
 
     home.packages = with pkgs; [

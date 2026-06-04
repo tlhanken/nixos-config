@@ -2,8 +2,22 @@
   age.identityPaths = ["/etc/ssh/ssh_host_ed25519_key"];
   # Secrets
   age.secrets = {
-    # github_pat.file = ./encrypted/github_pat.age;
     # nix_store_signing_key.file = ./encrypted/nix_store_signing_key.age;
+    github-token = {
+      file = ./secret_files/encrypted/github-token.age;
+      mode = "0440";
+      group = "users";
+    };
     tailscale_key.file = ./secret_files/encrypted/tailscale_key.age;
+    ai-api-keys = {
+      file = ./secret_files/encrypted/ai-api-keys.age;
+      mode = "0440";
+      group = "users";
+    };
+    searxng-secrets = {
+      file = ./secret_files/encrypted/searxng-secrets.age;
+      mode = "0440";
+      group = "users";
+    };
   };
 }

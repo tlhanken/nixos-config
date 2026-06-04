@@ -1,10 +1,23 @@
-{ pkgs, ... }:
-{
+{ pkgs, inputs, lib, ... }:
+let
+  unstable = import inputs.nixpkgs-unstable {
+    system = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfreePredicate = pkg:
+      builtins.elem (lib.getName pkg) [
+        "antigravity"
+        "claude-code"
+        "code"
+        "cursor"
+        "lmstudio"
+        "vscode"
+      ];
+  };
+in {
   home.packages = with pkgs; [
     # AI Code Tools
-    claude-code
-    antigravity-fhs
-    lmstudio
+    unstable.code-cursor-fhs
+    unstable.antigravity-fhs
+    unstable.lmstudio
 
     # Node.js
     nodejs
@@ -13,18 +26,14 @@
     python3
     uv
 
-    # AI
-    # ollama
-    # open-webui
-    # librechat
-    # n8n
-    # qdrant?
-    # qdrant-web-ui?
-    # # TODO, ComfyUI for image gen?
+    # AI (Services managed system-wide in nix/modules/apps/)
   ];
 
   programs.gemini-cli.enable = true;
-  programs.claude-code.enable = true;
+  programs.claude-code = {
+    enable = true;
+    package = unstable.claude-code;
+  };
 
   # VS Code
   programs.vscode = {
@@ -39,7 +48,7 @@
       # AI assistance
       Google.gemini-cli-vscode-ide-companion
       # anthropic.claude-code
-      kilocode.kilo-code
+      # kilocode.kilo-code
       
       # Nix development
       jnoortheen.nix-ide

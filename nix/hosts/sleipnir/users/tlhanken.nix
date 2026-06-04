@@ -6,6 +6,7 @@ in
 {  
   imports = [ 
     inputs.self.homeModules.home-shared
+    inputs.self.homeModules.profile-ai
     inputs.self.homeModules.profile-art
     inputs.self.homeModules.profile-productivity
     inputs.self.homeModules.profile-development
@@ -18,8 +19,11 @@ in
   # Identity
   programs.git = {
     enable = true;
-    userName = name;
-    userEmail = email;
+    settings = {
+      user = {
+        inherit name email;
+      };
+    };
   };
 
   programs.jujutsu = {

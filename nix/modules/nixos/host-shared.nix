@@ -17,11 +17,14 @@
     # Allow unfree packages
     nixpkgs.config.allowUnfree = true;
 
+
+
     # System packages used for bootstrapping
     environment.systemPackages = map lib.lowPrio [
       pkgs.curl
       pkgs.git
       pkgs.nano
+      pkgs.wget
     ];
     environment.variables.EDITOR = "nano";
 
@@ -56,6 +59,10 @@
         "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
       ];
     };
+
+    nix.extraOptions = ''
+      !include ${config.age.secrets.github-token.path}
+    '';
 
     # Store manager
     programs.nh = {

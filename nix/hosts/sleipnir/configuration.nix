@@ -1,6 +1,5 @@
 { pkgs, inputs, flake, ... }:
 {
-
   imports = [
     # Standard nixos-anywhere modules
     inputs.disko.nixosModules.disko
@@ -25,64 +24,83 @@
     flake.modules.apps.jellyfin
     flake.modules.apps.steam
     flake.modules.apps.rust
+    flake.modules.apps.searxng
+    flake.modules.apps.it-tools
+    # flake.modules.apps.ollama
+    # flake.modules.apps.open-webui
+    # flake.modules.apps.comfyui
   ];
 
-  # Required for nixos-anywhere
-  disko.devices = import ./disk-config.nix;
+  # ============================================================================
+  # Host Identity & Networking
+  # ============================================================================
   networking.hostName = "sleipnir"; # Define your hostname.
   networking.hostId = "52cad215"; # Generate using `head -c 8 /etc/machine-id`
-
+  
+  # ============================================================================
+  # System Basics
+  # ============================================================================
   system.stateVersion = "25.05"; # initial nixos state
   nixpkgs.hostPlatform = "x86_64-linux";
+  
+  # Required for nixos-anywhere
+  disko.devices = import ./disk-config.nix;
 
+  # ============================================================================
+  # Boot & Filesystems
+  # ============================================================================
+  # Temporary fix for accelerometer data rotating desktop when in tent mode on framework 12
+  boot.initrd.kernelModules = [ "pinctrl_tigerlake" ];
+
+  # ============================================================================
+  # Hardware & Kernel
+  # ============================================================================
   # Firmware and bootloader
   services.fwupd = {
     enable = true;
     extraRemotes = [ "lvfs-testing" ];
     uefiCapsuleSettings.DisableCapsuleUpdateOnDisk = true;
   };
-  # Temporary fix for accelerometer data rotating desktop when in tent mode on framework 12: https://github.com/FrameworkComputer/linux-docs/blob/main/framework12/nixOS.md
-  boot.supportedFilesystems = [ "nfs" ];
-  environment.systemPackages = [ pkgs.nfs-utils pkgs.polychromatic ];
-  boot.initrd.kernelModules = [ "pinctrl_tigerlake" ];
 
-  # Razr Support
+  # Razer Support
   hardware.openrazer.enable = true;
   hardware.openrazer.users = [ "tlhanken" ];
-  # Enable sensor support for rotation
+
+  # Sensors & Rotation
   hardware.sensor.iio.enable = true;
 
+  # ============================================================================
+  # Host Features
+  # ============================================================================
+  # Enable Cross-Device Mounts
+  my.mounts.media = {
+    enable = true;
+    writable = true;
+  };
+  # my.mounts.vault.enable = true;
+  # my.mounts.backup.enable = true;
+  my.mounts.legacyPaths.enable = true;
 
-  systemd.mounts = [{
-    type = "nfs";
-    mountConfig = {
-      Options = "ro,noauto";
-    };
-    what = "well-of-mimir.fenrir-altered.ts.net:/volume1/media";
-    where = "/mnt/well-of-mimir/media";
-  } {
-    type = "nfs";
-    mountConfig = {
-      Options = "rw,noauto";
-    };
-    what = "galar.fenrir-altered.ts.net:/mnt/vault";
-    where = "/mnt/galar/vault";
-  }];
+  # ============================================================================
+  # Users & Environment
+  # ============================================================================
+  users.users.tlhanken = {
+    isNormalUser = true;
+    description = "Trevor Hanken";
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
+    hashedPassword = "$6$QwxrgyqftaIVyPRS$1BcH0tM8DbFEzzvYcsz7AeQvZImxUUxwyj0SVYCpvZZTZ1BtKjlrUTg3ydGIX9doSKCOw/M91Y11ZtAaQZuPD1"; # Hash of a password can be found with "mkpasswd -m sha-512"
+  };
 
-  systemd.automounts = [{
-    wantedBy = [ "multi-user.target" ];
-    automountConfig = {
-      TimeoutIdleSec = "600";
-    };
-    where = "/mnt/well-of-mimir/media";
-  } {
-    wantedBy = [ "multi-user.target" ];
-    automountConfig = {
-      TimeoutIdleSec = "600";
-    };
-    where = "/mnt/galar/vault";
-  }];
+  environment.systemPackages = [ pkgs.polychromatic ];
 
+  # ============================================================================
+  # Custom Services
+  # ============================================================================
+  # Rotation fix script
   systemd.user.services.auto-rotate = {
     description = "Auto-rotate screen based on accelerometer";
     wantedBy = [ "graphical-session.target" ];
@@ -122,21 +140,4 @@
       RestartSec = "500ms";
     };
   };
-
-
-
-
-
-  users.users.tlhanken = {
-    isNormalUser = true;
-    description = "Trevor Hanken";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "docker"
-
-    ];
-    hashedPassword = "$6$QwxrgyqftaIVyPRS$1BcH0tM8DbFEzzvYcsz7AeQvZImxUUxwyj0SVYCpvZZTZ1BtKjlrUTg3ydGIX9doSKCOw/M91Y11ZtAaQZuPD1"; # Hash of a password can be found with "mkpasswd -m sha-512"
-  };
-
 }

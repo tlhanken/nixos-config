@@ -1,6 +1,7 @@
 { pkgs, osConfig, ... }:
 
 {
+  nixpkgs.config.allowUnfree = true;
 
   # only available on linux, disabled on macos
   services.ssh-agent.enable = pkgs.stdenv.isLinux;

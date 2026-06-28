@@ -4,6 +4,7 @@ let
     inherit inputs lib;
     system = pkgs.stdenv.hostPlatform.system;
   };
+  openspec = import ./openspec.nix { inherit pkgs lib; };
 in {
   home.packages = with pkgs; [
     unstable.code-cursor-fhs
@@ -13,6 +14,8 @@ in {
     nodejs
     python3
     uv
+
+    openspec
   ];
 
   programs.gemini-cli.enable = true;

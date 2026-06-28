@@ -29,6 +29,10 @@ in {
         color-scheme='prefer-dark'
         enable-hot-corners=false
 
+        # Framework touchpad has physical click regions; fingers mode breaks LMB/RMB.
+        [org.gnome.desktop.peripherals.touchpad]
+        click-method='areas'
+
         [org.gnome.settings-daemon.plugins.media-keys]
         screensaver=['<Super>l', 'XF86ScreenSaver']
 

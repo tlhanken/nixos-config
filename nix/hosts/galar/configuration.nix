@@ -66,6 +66,18 @@
 
   my.mounts.legacyPaths.enable = true;
 
+  # Canonical AI store: /mnt/ai ← /mnt/local/ai (ZFS). Export /mnt/ai to sleipnir.
+  # On an existing galar install, create the dataset once if missing:
+  #   zfs create -o mountpoint=/mnt/local/ai zvault/ai
+  # Future mimir: set physicalSource = "well-of-mimir.fenrir-altered.ts.net:/volume1/ai";
+  my.mounts.ai = {
+    enable = true;
+    mode = "local";
+    localPath = "/mnt/local/ai";
+    exportNfs = true;
+    nfsClientIps = ["100.109.178.115"]; # sleipnir
+  };
+
   # Ensure local mount source dirs exist (non-destructive: 'd' only creates if missing)
   systemd.tmpfiles.rules = [
     "d /mnt/local       0755 root root -"

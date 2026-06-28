@@ -139,6 +139,10 @@
           type = "zfs_fs";
           mountpoint = "/mnt/local/media";
         };
+        ai = {
+          type = "zfs_fs";
+          mountpoint = "/mnt/local/ai";
+        };
       };
     };
   };

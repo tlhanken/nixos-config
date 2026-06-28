@@ -9,13 +9,14 @@ Tracked improvements not yet implemented.
 
 ## AI stack on sleipnir (re-enable when ready)
 
-- [ ] `inputs.self.modules.apps.ollama`
+- [ ] `inputs.self.modules.apps.ollama` (models → `/mnt/ai/models/llm` via `my.mounts.ai`)
 - [ ] `inputs.self.modules.apps.open-webui`
-- [ ] `inputs.self.modules.apps.comfyui` (requires `nix-comfyui` input)
+- [x] `inputs.self.modules.apps.comfyui` on sleipnir (requires `nix-comfyui` input)
+- [x] `my.mounts.ai` — `/mnt/ai` shared store (galar local, sleipnir NFS)
 
 ## Hermes (sleipnir / `profile-hermes`)
 
-- [ ] Add sound support for hermes-agent — `sounddevice` was dropped from `extraPythonPackages` because it pulls `cffi`, which collides with hermes’ sealed venv; find a supported approach (upstream fix, different audio dep, or runtime install outside the override)
+- [ ] Verify Hermes voice mode end-to-end — `extraDependencyGroups = [ "edge-tts" "voice" ]`, `portaudio`, and `LD_LIBRARY_PATH` to the HM profile lib dir (workaround for Python 3.13+ `find_library` not using ldconfig)
 
 ## Claude Desktop
 

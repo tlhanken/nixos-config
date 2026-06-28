@@ -5,12 +5,15 @@ let
     "${config.home.homeDirectory}/.local/share/uv/tools/scrapling/lib/python3.12/site-packages";
 in {
   home.packages = with pkgs; [
-    # sounddevice pulls cffi, which collides with hermes' sealed venv — use numpy only
     (inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-      extraPythonPackages = with pkgs.python312Packages; [numpy];
+      extraDependencyGroups = [ "edge-tts" "voice" ];
     })
     searxng
     hermes-mod
+    # PortAudio — required by sounddevice (Hermes voice mode). find_library
+    # doesn't use ldconfig on Linux Python 3.13+; LD_LIBRARY_PATH makes ld
+    # find profile-installed libs like libportaudio.so.
+    portaudio
   ];
 
   home.sessionPath = [
@@ -22,6 +25,9 @@ in {
     PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = "1";
     PYTHONPATH = scraplingSitePackages;
     SEARXNG_URL = "http://127.0.0.1:8888";
+    # Makes ctypes.util.find_library discover profile-installed shared libs
+    # (e.g. libportaudio.so) via ld's -L search.
+    LD_LIBRARY_PATH = "/etc/profiles/per-user/${config.home.username}/lib";
   };
 
   home.activation.installScrapling = lib.hm.dag.entryAfter ["writeBoundary"] ''

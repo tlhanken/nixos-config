@@ -14,11 +14,11 @@ in {
     ./networking.nix
     ./sound.nix
     ./cinnamon.nix
-    # ./gnome.nix
+    ./gnome.nix
   ];
 
   config = {
-    services.xserver.enable = cfg.session == "cinnamon";
+    services.xserver.enable = cfg.session == "cinnamon" || cfg.session == "gnome";
 
     services.xserver.xkb = {
       layout = "us";

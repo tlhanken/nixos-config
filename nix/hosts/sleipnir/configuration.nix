@@ -30,6 +30,9 @@
     inputs.self.modules.apps.comfyui
   ];
 
+  # Desktop session: cinnamon or gnome
+  my.desktop.session = "gnome";
+
   # ============================================================================
   # Host Identity & Networking
   # ============================================================================
@@ -55,6 +58,8 @@
   # ============================================================================
   # Hardware & Kernel
   # ============================================================================
+  services.hardware.bolt.enable = true;
+
   # Firmware and bootloader
   services.fwupd = {
     enable = true;

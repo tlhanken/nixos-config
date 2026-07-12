@@ -1,4 +1,7 @@
-{ pkgs, inputs, config, ... }: {
+{ pkgs, inputs, config, lib, ... }:
+let
+  qmd = pkgs.callPackage ../../packages/qmd.nix { };
+in {
   imports = [
     inputs.hermes-agent.nixosModules.default
   ];
@@ -28,6 +31,7 @@
     # Inject tools directly into the agent's isolated PATH
     extraPackages = with pkgs; [
       searxng
+      qmd
     ];
 
     extraPythonPackages = with pkgs.python312Packages; [

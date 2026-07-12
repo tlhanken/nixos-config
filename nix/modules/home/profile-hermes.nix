@@ -1,6 +1,7 @@
 { pkgs, inputs, lib, config, ... }:
 let
   hermes-mod = import ./hermes-mod.nix pkgs;
+  qmd = pkgs.callPackage ../../packages/qmd.nix { };
   scraplingSitePackages =
     "${config.home.homeDirectory}/.local/share/uv/tools/scrapling/lib/python3.12/site-packages";
 in {
@@ -10,6 +11,7 @@ in {
     })
     searxng
     hermes-mod
+    qmd
     # PortAudio — required by sounddevice (Hermes voice mode). find_library
     # doesn't use ldconfig on Linux Python 3.13+; LD_LIBRARY_PATH makes ld
     # find profile-installed libs like libportaudio.so.

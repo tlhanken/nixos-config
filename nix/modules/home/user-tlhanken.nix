@@ -77,6 +77,8 @@ in {
         clock-show-weekday = true;
         clock-show-date = true;
         clock-format = "12h";
+        text-scaling-factor = 0.8;
+        icon-theme = "Adwaita";
       };
       "org/gnome/desktop/peripherals/touchpad" = {
         tap-to-click = true;

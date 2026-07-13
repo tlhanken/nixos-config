@@ -28,7 +28,26 @@ just rekey-secrets        # Rekey all secrets after key changes (alias: rs)
 
 ## Deployment
 
-See [docs/deployment.md](docs/deployment.md) for full instructions on installing NixOS on a new machine.
+See [docs/deployment.md](docs/deployment.md) for full instructions on installing NixOS on a new machine using a Linux Mint Live USB.
+
+### Fresh Installation (Quick Method)
+
+If you are using the standard **NixOS Minimal ISO**, the deployment process is extremely simple:
+
+1. Boot the target machine using the NixOS Minimal ISO.
+2. When the terminal appears, start SSH and set a temporary root password:
+   ```bash
+   sudo systemctl start sshd
+   sudo passwd root
+   ```
+3. Type `ip a` to get the machine's IP address.
+4. From your development machine inside this repo, run:
+   ```bash
+   just install <IP_ADDRESS> <CONFIG_NAME> <HOST_NAME>
+   ```
+   *(Example: `just install 192.168.1.50 well-of-mimir well-of-mimir`)*
+
+The script will automatically SSH in, wipe the disks, format everything, generate the hardware configuration (`facter.json`), and install the OS.
 
 ## Setup (First Time)
 

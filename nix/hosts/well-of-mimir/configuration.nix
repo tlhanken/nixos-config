@@ -11,29 +11,19 @@
         else throw "Have you forgotten to run nixos-anywhere with `--generate-hardware-config nixos-facter ./facter.json`?";
     }
 
-    # Hardware Imports
-    # ./hardware-configuration.nix
-
     # Additional NixOS modules from this flake (see CLAUDE.md)
     inputs.self.modules.nixos.host-shared
     inputs.self.modules.bootstrap.bootstrap
     inputs.self.modules.bootstrapinstall.install
     inputs.self.modules.desktop.desktop
     inputs.self.modules.common.common
-    # Jellyfin: primary instance on galar; sleipnir also runs a copy for debug/dev.
-    inputs.self.modules.apps.jellyfin
-    inputs.self.modules.apps.immich
-    inputs.self.modules.apps.homepage
   ];
-
-  # Desktop session: cinnamon or gnome
-  my.desktop.session = "cinnamon";
 
   # ============================================================================
   # Host Identity & Networking
   # ============================================================================
-  networking.hostName = "galar"; # Define your hostname.
-  networking.hostId = "8425e349"; # Generate using `head -c 8 /etc/machine-id`
+  networking.hostName = "well-of-mimir"; # Define your hostname.
+  networking.hostId = "c76cad63"; # Generated using `openssl rand -hex 4`
 
   # ============================================================================
   # System Basics
@@ -46,53 +36,15 @@
   disko.devices = import ./disk-config.nix;
 
   # ============================================================================
-  # Boot & Filesystems
+  # Desktop (Temporary for setup)
   # ============================================================================
-  boot.kernelModules = [ "kvm-intel" ];
+  my.desktop.session = "cinnamon";
 
   # ============================================================================
   # Host Features
   # ============================================================================
   # Enable Cross-Device Mounts
-  my.mounts.media = {
-    enable = true;
-    mode = "local";
-    localPath = "/mnt/local/media";
-  };
-  my.mounts.vault = {
-    enable = true;
-    mode = "local";
-    localPath = "/mnt/local/vault";
-  };
-
-  # my.mounts.backup.enable = true;
-
   my.mounts.legacyPaths.enable = true;
-
-  # Canonical AI store: /mnt/ai ← /mnt/local/ai (ZFS). Export /mnt/ai to sleipnir.
-  # On an existing galar install, create the dataset once if missing:
-  #   zfs create -o mountpoint=/mnt/local/ai zvault/ai
-  # Future mimir: set physicalSource = "well-of-mimir.fenrir-altered.ts.net:/volume1/ai";
-  my.mounts.ai = {
-    enable = true;
-    mode = "local";
-    localPath = "/mnt/local/ai";
-    exportNfs = true;
-    nfsClientIps = ["100.109.178.115"]; # sleipnir
-  };
-
-  # Ensure local mount source dirs exist (non-destructive: 'd' only creates if missing)
-  systemd.tmpfiles.rules = [
-    "d /mnt/local       0755 root root -"
-    "d /mnt/local/media 0755 root root -"
-    "d /mnt/local/vault 0755 root root -"
-  ];
-
-  services.nfs.server.enable = true;
-  services.nfs.server.exports = ''
-    /mnt/media 100.64.0.0/255.192.0.0(rw,no_subtree_check)
-    /mnt/vault 100.64.0.0/255.192.0.0(rw,no_subtree_check)
-  '';
 
   # Services.openssh is enabled in host-shared, but we ensure settings here
   services.openssh = {
@@ -111,7 +63,7 @@
       "wheel"
       "docker"
     ];
-    hashedPassword = "$6$61Y4qra.nxzyVg.9$50lhU3Ni7k9bpv7lAmvsWlwQZUfRtvk9KAqrlHXyAX8AlPfD.LTc1pR635HhvOHks6/hDwoSiaYff6hyBPZNb."; # Hash of a password can be found with "mkpasswd -m sha-512"
+    hashedPassword = "$6$61Y4qra.nxzyVg.9$50lhU3Ni7k9bpv7lAmvsWlwQZUfRtvk9KAqrlHXyAX8AlPfD.LTc1pR635HhvOHks6/hDwoSiaYff6hyBPZNb."; # Copied from galar
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIND8Y+AKToEbNI9gyaC9yi6Y5OfZ38cP3wHYqbi2tmTu trevor.hanken@gmail.com"
     ];

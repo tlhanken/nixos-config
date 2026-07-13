@@ -31,7 +31,7 @@
   ];
 
   # Desktop session: cinnamon or gnome
-  my.desktop.session = "gnome";
+  my.desktop.session = "cinnamon";
 
   # ============================================================================
   # Host Identity & Networking

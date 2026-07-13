@@ -17,6 +17,15 @@
     inputs.self.modules.bootstrapinstall.install
     inputs.self.modules.desktop.desktop
     inputs.self.modules.common.common
+
+    # Server applications
+    inputs.self.modules.apps.nginx
+    inputs.self.modules.apps.immich
+    inputs.self.modules.apps.nextcloud
+    inputs.self.modules.apps.it-tools
+    inputs.self.modules.apps.homepage
+    inputs.self.modules.apps.comfyui
+    inputs.self.modules.apps.open-webui
   ];
 
   # ============================================================================
@@ -28,25 +37,70 @@
   # ============================================================================
   # System Basics
   # ============================================================================
-  # Pin to the NixOS release when this host was first installed; do not match nixpkgs channel.
   system.stateVersion = "25.05";
   nixpkgs.hostPlatform = "x86_64-linux";
 
-  # Required for nixos-anywhere
   disko.devices = import ./disk-config.nix;
 
   # ============================================================================
-  # Desktop (Temporary for setup)
+  # Boot & Filesystems
+  # ============================================================================
+  boot.kernelModules = [ "kvm-amd" ];
+
+  # ============================================================================
+  # Storage — NAS for the fleet
+  # ============================================================================
+  # Media stays local on galar (its own drive). Vault and AI live here.
+
+  my.mounts.vault = {
+    enable = true;
+    mode = "local";
+    localPath = "/mnt/local/vault";
+  };
+
+  my.mounts.ai = {
+    enable = true;
+    mode = "local";
+    localPath = "/mnt/local/ai";
+    exportNfs = true;
+    nfsClientIps = [
+      "100.109.178.115" # sleipnir
+      # TODO: add galar Tailscale IP during migration
+    ];
+  };
+
+  systemd.tmpfiles.rules = [
+    "d /mnt/local      0755 root root -"
+    "d /mnt/local/vault 0755 root root -"
+  ];
+
+  # NFS server — export vault and AI to the Tailscale network
+  services.nfs.server.enable = true;
+  services.nfs.server.exports = ''
+    /mnt/vault 100.64.0.0/255.192.0.0(rw,no_subtree_check)
+  '';
+
+  # ============================================================================
+  # AI Services
+  # ============================================================================
+  # ComfyUI: runs on NAS; models on /mnt/ai, state in /mnt/local/appdata.
+  my.comfyui = {
+    enable = true;
+    cpuOnly = true;
+    sharedModels = true;
+    expose = "tailscale";
+    dataDir = "/mnt/local/appdata/comfyui";
+    useStateDirectory = false;
+  };
+
+  # ============================================================================
+  # Desktop
   # ============================================================================
   my.desktop.session = "cinnamon";
 
   # ============================================================================
-  # Host Features
+  # SSH
   # ============================================================================
-  # Enable Cross-Device Mounts
-  my.mounts.legacyPaths.enable = true;
-
-  # Services.openssh is enabled in host-shared, but we ensure settings here
   services.openssh = {
     settings.PasswordAuthentication = false;
     settings.KbdInteractiveAuthentication = false;

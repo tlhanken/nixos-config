@@ -8,12 +8,12 @@ let
   # Add machine keys from /etc/ssh
   sleipnir = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILsMaSfMph3IA2jkIIbGycKVXsmsxRK9rkc5TwY4nA/r";
   galar = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEib+Lqe97BIJypT8LLjLwX0fn1AiFJUJazbmC0s+Aef";
-  well-of-mimir = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBS/IeLGwUm/5lx8XU3xwXc2i91dIiJ8g5AQoZSv2Apk";
+  well-of-mimir-2 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAdrpMmY37sptGN758E/z0BKnNhxKlgx7tR+0Yvll3da";
 
   machines = [
     sleipnir
     galar
-    well-of-mimir
+    well-of-mimir-2
   ];
 
   all = users ++ machines;

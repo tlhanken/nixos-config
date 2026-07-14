@@ -2,7 +2,7 @@
   disk = {
     nvme0 = {
       type = "disk";
-      device = "/dev/nvme0n1";
+      device = "/dev/disk/by-id/nvme-WD_BLACK_SN7100_4TB_25500V800128";
       content = {
         type = "gpt";
         partitions = {
@@ -43,7 +43,7 @@
     };
     nvme1 = {
       type = "disk";
-      device = "/dev/nvme1n1";
+      device = "/dev/disk/by-id/nvme-WD_BLACK_SN7100_4TB_254223800645";
       content = {
         type = "gpt";
         partitions = {

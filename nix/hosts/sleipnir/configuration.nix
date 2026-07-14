@@ -21,13 +21,10 @@
     inputs.self.modules.bootstrapinstall.install
     inputs.self.modules.desktop.desktop
     inputs.self.modules.common.common
-    # Jellyfin: galar is primary; sleipnir instance supports local debug/dev.
-    inputs.self.modules.apps.jellyfin
     inputs.self.modules.apps.steam
     inputs.self.modules.apps.rust
     inputs.self.modules.apps.searxng
     inputs.self.modules.apps.it-tools
-    inputs.self.modules.apps.comfyui
   ];
 
   # Desktop session: cinnamon or gnome
@@ -82,22 +79,12 @@
     enable = true;
     writable = true;
   };
-  # my.mounts.vault.enable = true;
+  my.mounts.vault.enable = true;
   # my.mounts.backup.enable = true;
   my.mounts.legacyPaths.enable = true;
-
-  # Shared AI models from galar at /mnt/ai (stable path if backing store moves to mimir).
   my.mounts.ai = {
     enable = true;
     writable = true;
-  };
-
-  # ComfyUI: Framework 12 Intel — CPU inference; state in /var/lib, models on /mnt/ai.
-  my.comfyui = {
-    enable = true;
-    cpuOnly = true;
-    sharedModels = true;
-    expose = "tailscale";
   };
 
   # ============================================================================

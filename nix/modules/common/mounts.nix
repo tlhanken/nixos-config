@@ -3,7 +3,8 @@
 let
   cfg = config.my.mounts;
   servers = {
-    nas = "well-of-mimir.fenrir-altered.ts.net";
+    nas = "well-of-mimir-2.fenrir-altered.ts.net";
+    legacy_nas = "well-of-mimir.fenrir-altered.ts.net";
     media_server = "galar.fenrir-altered.ts.net";
   };
 
@@ -77,10 +78,9 @@ in {
       };
       remoteSource = lib.mkOption {
         type = lib.types.str;
-        default = "${servers.media_server}:${aiMountPoint}";
+        default = "${servers.nas}:${aiMountPoint}";
         description = ''
-          NFS source for remote clients (sleipnir). Unchanged when galar moves
-          its backing store — galar still exports /mnt/ai.
+          NFS source for remote clients (sleipnir, galar).
         '';
       };
       nfsClientIps = lib.mkOption {
@@ -226,7 +226,7 @@ in {
       systemd.mounts = [
         {
           type = "nfs";
-          what = "${servers.media_server}:/mnt/vault";
+          what = "${servers.nas}:/mnt/vault";
           where = cfg.vault.mountPoint;
           mountConfig = {Options = "rw,noauto,timeo=14,_netdev";};
         }
@@ -294,7 +294,7 @@ in {
       systemd.mounts = [
         {
           type = "nfs";
-          what = "${servers.nas}:/volume1/media";
+          what = "${servers.legacy_nas}:/volume1/media";
           where = "/mnt/well-of-mimir/media";
           mountConfig = {Options = "ro,noauto,timeo=14,_netdev";};
         }

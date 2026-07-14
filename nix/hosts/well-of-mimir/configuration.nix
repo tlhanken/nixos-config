@@ -21,11 +21,11 @@
     # Server applications
     inputs.self.modules.apps.nginx
     inputs.self.modules.apps.immich
-    inputs.self.modules.apps.nextcloud
+    # inputs.self.modules.apps.nextcloud
     inputs.self.modules.apps.it-tools
     inputs.self.modules.apps.homepage
     inputs.self.modules.apps.comfyui
-    inputs.self.modules.apps.open-webui
+    # inputs.self.modules.apps.open-webui
   ];
 
   # ============================================================================
@@ -52,6 +52,10 @@
   # ============================================================================
   # Media stays local on galar (its own drive). Vault and AI live here.
 
+  my.mounts.legacyPaths = {
+    enable = true;
+  };
+
   my.mounts.vault = {
     enable = true;
     mode = "local";
@@ -65,7 +69,7 @@
     exportNfs = true;
     nfsClientIps = [
       "100.109.178.115" # sleipnir
-      # TODO: add galar Tailscale IP during migration
+      "100.67.158.77"   # galar
     ];
   };
 

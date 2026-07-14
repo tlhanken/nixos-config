@@ -20,10 +20,8 @@
     inputs.self.modules.bootstrapinstall.install
     inputs.self.modules.desktop.desktop
     inputs.self.modules.common.common
-    # Jellyfin: primary instance on galar; sleipnir also runs a copy for debug/dev.
+    # Jellyfin: media server — stays on galar
     inputs.self.modules.apps.jellyfin
-    inputs.self.modules.apps.immich
-    inputs.self.modules.apps.homepage
   ];
 
   # Desktop session: cinnamon or gnome
@@ -59,39 +57,21 @@
     mode = "local";
     localPath = "/mnt/local/media";
   };
-  my.mounts.vault = {
-    enable = true;
-    mode = "local";
-    localPath = "/mnt/local/vault";
-  };
 
+  my.mounts.vault.enable = true;
   # my.mounts.backup.enable = true;
-
   my.mounts.legacyPaths.enable = true;
-
-  # Canonical AI store: /mnt/ai ← /mnt/local/ai (ZFS). Export /mnt/ai to sleipnir.
-  # On an existing galar install, create the dataset once if missing:
-  #   zfs create -o mountpoint=/mnt/local/ai zvault/ai
-  # Future mimir: set physicalSource = "well-of-mimir.fenrir-altered.ts.net:/volume1/ai";
-  my.mounts.ai = {
-    enable = true;
-    mode = "local";
-    localPath = "/mnt/local/ai";
-    exportNfs = true;
-    nfsClientIps = ["100.109.178.115"]; # sleipnir
-  };
+  my.mounts.ai.enable = true;
 
   # Ensure local mount source dirs exist (non-destructive: 'd' only creates if missing)
   systemd.tmpfiles.rules = [
     "d /mnt/local       0755 root root -"
     "d /mnt/local/media 0755 root root -"
-    "d /mnt/local/vault 0755 root root -"
   ];
 
   services.nfs.server.enable = true;
   services.nfs.server.exports = ''
     /mnt/media 100.64.0.0/255.192.0.0(rw,no_subtree_check)
-    /mnt/vault 100.64.0.0/255.192.0.0(rw,no_subtree_check)
   '';
 
   # Services.openssh is enabled in host-shared, but we ensure settings here

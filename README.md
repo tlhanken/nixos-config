@@ -7,7 +7,8 @@ NixOS configuration for home devices, built on the [Blueprint](https://github.co
 | Host | Role | Hardware |
 |------|------|----------|
 | `sleipnir` | Primary workstation / daily driver | Framework Laptop 12 (Intel) |
-| `galar` | Home server — media, NFS, Jellyfin | Custom build |
+| `galar` | Media server — Jellyfin | Minisforum N100D |
+| `well-of-mimir` | NAS — Immich, Nextcloud, vault, AI store, NFS | Minisforum UM890 Pro |
 
 ## Quick Start
 
@@ -84,6 +85,6 @@ See [docs/TODO.md](docs/TODO.md) for security, AI apps, and packaging follow-ups
 Other ideas:
 
 - **Disk encryption (LUKS)** — especially for sleipnir (laptop)
-- **`well-of-mimir` NixOS config** — machine exists but isn't managed by this flake yet
+- ~~**`well-of-mimir` NixOS config** — live with Immich, Nextcloud, IT Tools, NFS storage~~
 - **Nextcloud** — self-hosted file sync / productivity suite
 - **Restic backups** — automated encrypted backups with a restic server or remote target

@@ -96,6 +96,18 @@
           type = "zfs_fs";
           mountpoint = "/home";
         };
+        vault = {
+          type = "zfs_fs";
+          mountpoint = "/mnt/local/vault";
+        };
+        ai = {
+          type = "zfs_fs";
+          mountpoint = "/mnt/local/ai";
+        };
+        appdata = {
+          type = "zfs_fs";
+          mountpoint = "/mnt/local/appdata";
+        };
         reserved = {
           type = "zfs_fs";
           options.refreservation = "10G";

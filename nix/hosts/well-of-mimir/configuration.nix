@@ -31,7 +31,7 @@
   # ============================================================================
   # Host Identity & Networking
   # ============================================================================
-  networking.hostName = "well-of-mimir"; # Define your hostname.
+  networking.hostName = "well-of-mimir-2"; # Matches Tailscale DNS in mounts.nix
   networking.hostId = "c76cad63"; # Generated using `openssl rand -hex 4`
 
   # ============================================================================

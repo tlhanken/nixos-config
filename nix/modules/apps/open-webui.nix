@@ -8,6 +8,7 @@
   };
 
   systemd.tmpfiles.rules = [
+    "d /mnt/local/appdata 0755 root root -"
     "d /mnt/local/appdata/open-webui 0770 open-webui open-webui -"
   ];
 

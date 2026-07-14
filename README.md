@@ -7,7 +7,8 @@ NixOS configuration for home devices, built on the [Blueprint](https://github.co
 | Host | Role | Hardware |
 |------|------|----------|
 | `sleipnir` | Primary workstation / daily driver | Framework Laptop 12 (Intel) |
-| `galar` | Home server — media, NFS, Jellyfin | Custom build |
+| `galar` | Media server — Jellyfin | Minisforum N100D |
+| `well-of-mimir` | NAS — Immich, Nextcloud, vault, AI store, NFS | Minisforum UM890 Pro |
 
 ## Quick Start
 
@@ -28,7 +29,26 @@ just rekey-secrets        # Rekey all secrets after key changes (alias: rs)
 
 ## Deployment
 
-See [docs/deployment.md](docs/deployment.md) for full instructions on installing NixOS on a new machine.
+See [docs/deployment.md](docs/deployment.md) for full instructions on installing NixOS on a new machine using a Linux Mint Live USB.
+
+### Fresh Installation (Quick Method)
+
+If you are using the standard **NixOS Minimal ISO**, the deployment process is extremely simple:
+
+1. Boot the target machine using the NixOS Minimal ISO.
+2. When the terminal appears, start SSH and set a temporary root password:
+   ```bash
+   sudo systemctl start sshd
+   sudo passwd root
+   ```
+3. Type `ip a` to get the machine's IP address.
+4. From your development machine inside this repo, run:
+   ```bash
+   just install <IP_ADDRESS> <CONFIG_NAME> <HOST_NAME>
+   ```
+   *(Example: `just install 192.168.1.50 well-of-mimir well-of-mimir`)*
+
+The script will automatically SSH in, wipe the disks, format everything, generate the hardware configuration (`facter.json`), and install the OS.
 
 ## Setup (First Time)
 
@@ -46,11 +66,11 @@ nix/
 │   ├── sleipnir/   # Framework 12 workstation
 │   └── galar/      # Home server
 └── modules/
-    ├── bootstrap/        # Base Nix + system settings
-    ├── bootstrapinstall/ # Boot, locale, Tailscale
+    ├── bootstrap/        # Install-time essentials only (curl, git, flakes)
+    ├── bootstrapinstall/ # Boot overrides, locale, Tailscale, secrets
     ├── common/           # Shared services, mounts
-    ├── desktop/          # Cinnamon + X11
-    ├── nixos/            # Shared NixOS baseline
+    ├── desktop/          # Cinnamon or GNOME + X11 (see `my.desktop.session`)
+    ├── nixos/            # Shared host baseline (Nix, SSH, GRUB/ZFS)
     ├── apps/             # System level applications (servers, etc.)
     ├── home/             # Home-manager + user profiles
     └── secrets/          # agenix encrypted secrets
@@ -58,12 +78,13 @@ nix/
 
 See [CLAUDE.md](CLAUDE.md) for full architecture details and development guidance.
 
-## Potential Next Steps
+## Backlog
 
-- **Disk encryption (LUKS)** — neither host encrypts at rest; especially important for sleipnir (laptop)
-- **Move passwords to agenix** — `hashedPassword` is currently hardcoded in `configuration.nix`; should be encrypted secrets
-- **SSH authorized keys to agenix** — pull keys from encrypted secrets rather than plaintext in config
-- **`well-of-mimir` NixOS config** — machine exists but isn't managed by this flake yet
+See [docs/TODO.md](docs/TODO.md) for security, AI apps, and packaging follow-ups.
+
+Other ideas:
+
+- **Disk encryption (LUKS)** — especially for sleipnir (laptop)
+- ~~**`well-of-mimir` NixOS config** — live with Immich, Nextcloud, IT Tools, NFS storage~~
 - **Nextcloud** — self-hosted file sync / productivity suite
-- **Immich** — self-hosted photo library (likely on galar)
 - **Restic backups** — automated encrypted backups with a restic server or remote target

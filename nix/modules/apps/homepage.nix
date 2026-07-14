@@ -4,14 +4,12 @@ let
   hosts = [
     "localhost"
     "127.0.0.1"
-    "galar"
-    "galar.fenrir-altered.ts.net"
-    # Add any host that should be able to serve the homepage here
+    "well-of-mimir-2"
+    "well-of-mimir-2.fenrir-altered.ts.net"
   ];
   allowedHosts = lib.concatStringsSep "," (map (h: "${h}:${toString port}") hosts);
 in
 {
-  # Web UI available at http://<host>:8082
   services.homepage-dashboard = {
     enable = true;
     openFirewall = true;
@@ -58,7 +56,7 @@ in
           }
           {
             "Immich" = {
-              href = "http://galar.fenrir-altered.ts.net:2283";
+              href = "http://well-of-mimir-2.fenrir-altered.ts.net:2283";
               description = "Photo library";
               icon = "immich.png";
             };
@@ -69,7 +67,7 @@ in
         "Tools" = [
           {
             "IT Tools" = {
-              href = "http://sleipnir.fenrir-altered.ts.net:8400";
+              href = "http://well-of-mimir-2.fenrir-altered.ts.net:8400";
               description = "Developer utilities";
               icon = "it-tools.png";
             };
@@ -80,14 +78,14 @@ in
         "AI" = [
           {
             "Open-WebUI" = {
-              href = "http://sleipnir.fenrir-altered.ts.net:8080";
+              href = "http://well-of-mimir-2.fenrir-altered.ts.net:8080";
               description = "LLM Chat Interface";
-              icon = "si-openai"; # Simple icons often has openai, can fallback to chat if needed
+              icon = "si-openai";
             };
           }
           {
             "ComfyUI" = {
-              href = "http://sleipnir.fenrir-altered.ts.net:8188";
+              href = "http://well-of-mimir-2.fenrir-altered.ts.net:8188";
               description = "Stable Diffusion UI";
               icon = "si-stabilityai";
             };
@@ -95,5 +93,17 @@ in
         ];
       }
     ];
+  };
+
+  # Reverse proxy: http://well-of-mimir/ → homepage at localhost:8082
+  services.nginx.virtualHosts."default" = {
+    default = true;
+    listen = [
+      { addr = "0.0.0.0"; port = 80; }
+    ];
+    locations."/" = {
+      proxyPass = "http://127.0.0.1:${toString port}";
+      proxyWebsockets = true;
+    };
   };
 }

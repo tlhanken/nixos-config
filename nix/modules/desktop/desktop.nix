@@ -1,34 +1,34 @@
-{ pkgs, ... }:
-{
+{ config, lib, pkgs, ... }:
+let
+  cfg = config.my.desktop;
+in {
+  options.my.desktop = {
+    session = lib.mkOption {
+      type = lib.types.enum ["cinnamon" "gnome"];
+      default = "cinnamon";
+      description = "Desktop session. Set to gnome and import gnome.nix to use GNOME instead of Cinnamon.";
+    };
+  };
+
   imports = [
     ./networking.nix
     ./sound.nix
+    ./cinnamon.nix
+    ./gnome.nix
   ];
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  config = {
+    services.xserver.enable = cfg.session == "cinnamon" || cfg.session == "gnome";
 
-  # Enable the Cinnamon Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.cinnamon.enable = true;
-  services.cinnamon.apps.enable = true;
+    services.xserver.xkb = {
+      layout = "us";
+      variant = "";
+    };
 
+    services.printing.enable = true;
 
+    hardware.graphics.enable = true;
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
+    environment.systemPackages = [pkgs.trayscale];
   };
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  hardware.graphics = {
-    enable = true;
-  };
-
-  environment.systemPackages = [
-    pkgs.trayscale
-  ];
 }

@@ -1,4 +1,4 @@
-{ pkgs, inputs, flake, ... }:
+{ pkgs, inputs, ... }:
 {
   imports = [
     # Standard nixos-anywhere modules
@@ -15,21 +15,20 @@
     inputs.nixos-hardware.nixosModules.framework-12-13th-gen-intel
     # ./hardware-configuration.nix
 
-    # Additional NixOs modules from this flake
-    flake.nixosModules.host-shared
-    flake.modules.bootstrap.bootstrap
-    flake.modules.bootstrapinstall.install
-    flake.modules.desktop.desktop
-    flake.modules.common.common
-    flake.modules.apps.jellyfin
-    flake.modules.apps.steam
-    flake.modules.apps.rust
-    flake.modules.apps.searxng
-    flake.modules.apps.it-tools
-    # flake.modules.apps.ollama
-    # flake.modules.apps.open-webui
-    # flake.modules.apps.comfyui
+    # Additional NixOS modules from this flake (see CLAUDE.md)
+    inputs.self.modules.nixos.host-shared
+    inputs.self.modules.bootstrap.bootstrap
+    inputs.self.modules.bootstrapinstall.install
+    inputs.self.modules.desktop.desktop
+    inputs.self.modules.common.common
+    inputs.self.modules.apps.steam
+    inputs.self.modules.apps.rust
+    inputs.self.modules.apps.searxng
+    inputs.self.modules.apps.it-tools
   ];
+
+  # Desktop session: cinnamon or gnome
+  my.desktop.session = "cinnamon";
 
   # ============================================================================
   # Host Identity & Networking
@@ -40,7 +39,8 @@
   # ============================================================================
   # System Basics
   # ============================================================================
-  system.stateVersion = "25.05"; # initial nixos state
+  # Pin to the NixOS release when this host was first installed; do not match nixpkgs channel.
+  system.stateVersion = "25.05";
   nixpkgs.hostPlatform = "x86_64-linux";
   
   # Required for nixos-anywhere
@@ -55,6 +55,8 @@
   # ============================================================================
   # Hardware & Kernel
   # ============================================================================
+  services.hardware.bolt.enable = true;
+
   # Firmware and bootloader
   services.fwupd = {
     enable = true;
@@ -77,9 +79,13 @@
     enable = true;
     writable = true;
   };
-  # my.mounts.vault.enable = true;
+  my.mounts.vault.enable = true;
   # my.mounts.backup.enable = true;
   my.mounts.legacyPaths.enable = true;
+  my.mounts.ai = {
+    enable = true;
+    writable = true;
+  };
 
   # ============================================================================
   # Users & Environment

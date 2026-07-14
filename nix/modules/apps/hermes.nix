@@ -1,4 +1,7 @@
-{ pkgs, inputs, config, ... }: {
+{ pkgs, inputs, config, lib, ... }:
+let
+  qmd = pkgs.callPackage ../../packages/qmd.nix { };
+in {
   imports = [
     inputs.hermes-agent.nixosModules.default
   ];
@@ -28,6 +31,7 @@
     # Inject tools directly into the agent's isolated PATH
     extraPackages = with pkgs; [
       searxng
+      qmd
     ];
 
     extraPythonPackages = with pkgs.python312Packages; [
@@ -37,11 +41,11 @@
 
     # ── Scrapling ──────────────────────────────────────────────────────
     # Scrapling is not in nixpkgs so it lives in a uv tool venv managed
-    # by home-manager's activation script in profile-ai.nix.
+    # by home-manager's activation script in profile-hermes.nix.
     # The hermes wrapper uses ${PYTHONPATH:+...} — it prepends to whatever
     # PYTHONPATH is already set — so setting it here causes scrapling's
     # site-packages to be visible to the agent's Python at runtime.
-    # UV_PYTHON is pinned to python312 in profile-ai.nix so the paths align.
+    # UV_PYTHON is pinned to python312 in profile-hermes.nix so the paths align.
     environment = {
       PYTHONPATH = "/home/tlhanken/.local/share/uv/tools/scrapling/lib/python3.12/site-packages";
       # Point Hermes at the local SearXNG instance for free web search

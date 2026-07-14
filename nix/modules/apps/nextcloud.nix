@@ -41,15 +41,6 @@ in {
     after = ["postgresql.service"];
   };
 
-  # Nginx reverse proxy (required by the Nextcloud NixOS module)
-  services.nginx = {
-    enable = true;
-    recommendedGzipSettings = true;
-    recommendedOptimisation = true;
-    recommendedProxySettings = true;
-    recommendedTlsSettings = true;
-  };
-
   # Open HTTP/HTTPS ports
   networking.firewall.allowedTCPPorts = [80 443];
 

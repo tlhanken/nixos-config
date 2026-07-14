@@ -1,8 +1,8 @@
 {
   disk = {
-    boot = {
+    nvme0 = {
       type = "disk";
-      device = "/dev/nvme0n1";
+      device = "/dev/disk/by-id/nvme-WD_BLACK_SN7100_4TB_25500V800128";
       content = {
         type = "gpt";
         partitions = {
@@ -22,36 +22,28 @@
             };
             priority = 2;
           };
+          swap = {
+            size = "128G";
+            content = {
+              type = "swap";
+              discardPolicy = "both";
+            };
+            priority = 3;
+          };
           zfs = {
-            end = "-24G";
+            size = "100%";
             content = {
               type = "zfs";
               pool = "zroot";
             };
-            priority = 3;
-          };
-          encryptedSwap = {
-            size = "8G";
-            content = {
-              type = "swap";
-              randomEncryption = true;
-              priority = 100; # prefer to encrypt as long as we have space for it
-            };
-          };
-          plainSwap = {
-            size = "100%";
-            content = {
-              type = "swap";
-              discardPolicy = "both";
-              resumeDevice = true; # resume from hibernation from this device
-            };
+            priority = 4;
           };
         };
       };
     };
-    vault = {
+    nvme1 = {
       type = "disk";
-      device = "/dev/sda";
+      device = "/dev/disk/by-id/nvme-WD_BLACK_SN7100_4TB_254223800645";
       content = {
         type = "gpt";
         partitions = {
@@ -59,7 +51,7 @@
             size = "100%";
             content = {
               type = "zfs";
-              pool = "zvault";
+              pool = "zroot";
             };
           };
         };
@@ -75,7 +67,8 @@
           cache = [];
           vdev = [
             {
-              members = ["boot"];
+              # Striped VDEV (RAID 0) across both nvme drives for max performance
+              members = [ "nvme0" "nvme1" ];
             }
           ];
         };
@@ -103,45 +96,22 @@
           type = "zfs_fs";
           mountpoint = "/home";
         };
-        reserved = {
-          type = "zfs_fs";
-          options.refreservation = "10G";
-          options.mountpoint = "none";
-        };
-      };
-    };
-    zvault = {
-      type = "zpool";
-      mode = {
-         topology = {
-           type = "topology";
-           vdev = [
-             {
-               members = [ "vault" ];
-             }
-           ];
-         };
-      };
-      rootFsOptions = {
-        compression = "lz4";
-        "com.sun:auto-snapshot" = "false";
-        recordsize = "1M";
-        atime = "off";
-        xattr = "sa";
-      };
-      mountpoint = "/mnt/local";
-      datasets = {
         vault = {
           type = "zfs_fs";
           mountpoint = "/mnt/local/vault";
         };
-        media = {
-          type = "zfs_fs";
-          mountpoint = "/mnt/local/media";
-        };
         ai = {
           type = "zfs_fs";
           mountpoint = "/mnt/local/ai";
+        };
+        appdata = {
+          type = "zfs_fs";
+          mountpoint = "/mnt/local/appdata";
+        };
+        reserved = {
+          type = "zfs_fs";
+          options.refreservation = "10G";
+          options.mountpoint = "none";
         };
       };
     };

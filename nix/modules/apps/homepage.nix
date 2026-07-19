@@ -28,7 +28,7 @@ in
         resources = {
           cpu = true;
           memory = true;
-          disk = [ "/" "/mnt/local" ];
+          disk = "/";
           expanded = true;
         };
       }
@@ -93,6 +93,12 @@ in
         ];
       }
     ];
+  };
+
+  # Docker socket access — resources widget needs Docker stats for CPU/memory/disk
+  systemd.services.homepage-dashboard.serviceConfig = {
+    SupplementaryGroups = [ "docker" ];
+    BindReadOnlyPaths = [ "/var/run/docker.sock:/var/run/docker.sock" ];
   };
 
   # Reverse proxy: http://well-of-mimir/ → homepage at localhost:8082

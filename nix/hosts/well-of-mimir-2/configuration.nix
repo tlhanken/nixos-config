@@ -20,12 +20,15 @@
 
     # Server applications
     inputs.self.modules.apps.nginx
+    inputs.self.modules.apps.homepage
+    inputs.self.modules.apps.it-tools
     inputs.self.modules.apps.immich
     # inputs.self.modules.apps.nextcloud
-    inputs.self.modules.apps.it-tools
-    inputs.self.modules.apps.homepage
     inputs.self.modules.apps.comfyui
     # inputs.self.modules.apps.open-webui
+    # inputs.self.modules.apps.hermes
+    # inputs.self.modules.apps.searxng
+    # inputs.self.modules.apps.vaultwarden
   ];
 
   # ============================================================================

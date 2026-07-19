@@ -164,7 +164,7 @@ in {
           what = cfg.ai.remoteSource;
           where = cfg.ai.mountPoint;
           mountConfig = {
-            Options = "${if cfg.ai.writable then "rw" else "ro"},noauto,timeo=14,_netdev";
+            Options = "${if cfg.ai.writable then "rw" else "ro"},noauto,x-systemd.mount-timeout=5,noatime,nodiratime,actimeo=60,soft,_netdev";
           };
         }
       ];
@@ -193,7 +193,7 @@ in {
           what = "${servers.media_server}:/mnt/media";
           where = cfg.media.mountPoint;
           mountConfig = {
-            Options = "${if cfg.media.writable then "rw" else "ro"},noauto,timeo=14,_netdev";
+            Options = "${if cfg.media.writable then "rw" else "ro"},noauto,x-systemd.mount-timeout=5,noatime,nodiratime,actimeo=60,soft,_netdev";
           };
         }
       ];
@@ -228,7 +228,7 @@ in {
           type = "nfs";
           what = "${servers.nas}:/mnt/vault";
           where = cfg.vault.mountPoint;
-          mountConfig = {Options = "rw,noauto,timeo=14,_netdev";};
+          mountConfig = {Options = "rw,noauto,x-systemd.mount-timeout=5,noatime,nodiratime,actimeo=60,soft,_netdev";};
         }
       ];
       systemd.automounts = [
@@ -262,7 +262,7 @@ in {
           type = "nfs";
           what = "${servers.nas}:/volume1/backup";
           where = cfg.backup.mountPoint;
-          mountConfig = {Options = "rw,noauto,timeo=14,_netdev";};
+          mountConfig = {Options = "rw,noauto,x-systemd.mount-timeout=5,noatime,nodiratime,actimeo=60,soft,_netdev";};
         }
       ];
       systemd.automounts = [
@@ -296,7 +296,7 @@ in {
           type = "nfs";
           what = "${servers.legacy_nas}:/volume1/media";
           where = "/mnt/well-of-mimir/media";
-          mountConfig = {Options = "ro,noauto,timeo=14,_netdev";};
+          mountConfig = {Options = "ro,noauto,x-systemd.mount-timeout=5,noatime,nodiratime,actimeo=60,soft,_netdev";};
         }
       ];
       systemd.automounts = [

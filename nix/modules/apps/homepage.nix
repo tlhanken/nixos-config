@@ -66,10 +66,31 @@ in
       {
         "Tools" = [
           {
+            "Vaultwarden" = {
+              href = "http://well-of-mimir-2.fenrir-altered.ts.net:8222";
+              description = "Password Manager";
+              icon = "vaultwarden.png";
+            };
+          }
+          {
+            "Nextcloud" = {
+              href = "https://nextcloud.local";
+              description = "Cloud Storage & Sync";
+              icon = "nextcloud.png";
+            };
+          }
+          {
             "IT Tools" = {
               href = "http://well-of-mimir-2.fenrir-altered.ts.net:8400";
               description = "Developer utilities";
               icon = "it-tools.png";
+            };
+          }
+          {
+            "SearXNG" = {
+              href = "http://well-of-mimir-2.fenrir-altered.ts.net:8888";
+              description = "Private Search Engine";
+              icon = "searxng.png";
             };
           }
         ];
@@ -80,14 +101,21 @@ in
             "Open-WebUI" = {
               href = "http://well-of-mimir-2.fenrir-altered.ts.net:8080";
               description = "LLM Chat Interface";
-              icon = "si-openai";
+              icon = "open-webui.png";
             };
           }
           {
             "ComfyUI" = {
               href = "http://well-of-mimir-2.fenrir-altered.ts.net:8188";
               description = "Stable Diffusion UI";
-              icon = "si-stabilityai";
+              icon = "comfyui.png";
+            };
+          }
+          {
+            "Hermes" = {
+              href = "http://well-of-mimir-2.fenrir-altered.ts.net:9119";
+              description = "Agent UI";
+              icon = "mdi-robot-outline";
             };
           }
         ];

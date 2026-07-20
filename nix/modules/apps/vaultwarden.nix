@@ -10,6 +10,9 @@
     };
   };
 
+  # Allow the service to write to its external data folder
+  systemd.services.vaultwarden.serviceConfig.ReadWritePaths = [ "/mnt/local/appdata/vaultwarden" ];
+
   # Open firewall for vaultwarden
   networking.firewall.allowedTCPPorts = [ 8222 ];
 

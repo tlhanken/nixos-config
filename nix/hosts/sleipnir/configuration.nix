@@ -51,6 +51,7 @@
   # ============================================================================
   # Temporary fix for accelerometer data rotating desktop when in tent mode on framework 12
   boot.initrd.kernelModules = [ "pinctrl_tigerlake" ];
+  boot.kernelModules = [ "thunderbolt" ];
 
   # ============================================================================
   # Hardware & Kernel

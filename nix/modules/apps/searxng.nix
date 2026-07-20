@@ -14,6 +14,7 @@
       search = {
         safe_search = 0;
         default_lang = "en";
+        formats = [ "html" "json" ];
       };
       # Curated engine list for agent research use
       engines = [

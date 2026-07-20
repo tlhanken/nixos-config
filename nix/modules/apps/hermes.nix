@@ -34,10 +34,7 @@ in {
       qmd
     ];
 
-    extraPythonPackages = with pkgs.python312Packages; [
-      sounddevice
-      numpy
-    ];
+
 
     # ── Scrapling ──────────────────────────────────────────────────────
     # Scrapling is not in nixpkgs so it lives in a uv tool venv managed

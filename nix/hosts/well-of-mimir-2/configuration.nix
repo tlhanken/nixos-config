@@ -26,9 +26,9 @@
     # inputs.self.modules.apps.nextcloud
     inputs.self.modules.apps.comfyui
     # inputs.self.modules.apps.open-webui
-    # inputs.self.modules.apps.hermes
-    # inputs.self.modules.apps.searxng
-    # inputs.self.modules.apps.vaultwarden
+    inputs.self.modules.apps.hermes
+    inputs.self.modules.apps.searxng
+    inputs.self.modules.apps.vaultwarden
   ];
 
   # ============================================================================

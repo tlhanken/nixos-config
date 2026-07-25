@@ -1,6 +1,17 @@
 { pkgs, ... }:
 {
   imports = [ /* ./claude-desktop.nix */ ];
+  
+  programs.firefox = {
+    enable = true;
+    profiles.default = {
+      isDefault = true;
+      settings = {
+        "ui.systemUsesDarkTheme" = 1;
+      };
+    };
+  };
+
   home.packages = with pkgs; [
     # Util - GUI
     mission-center
@@ -8,7 +19,6 @@
 
     # Productivity
     bitwarden-desktop
-    firefox
     google-chrome
     libreoffice-qt6-fresh
     obsidian

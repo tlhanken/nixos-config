@@ -60,7 +60,6 @@
     nixos-anywhere = {
       url = "github:nix-community/nixos-anywhere";
       inputs.disko.follows = "disko";
-      inputs.flake-parts.follows = "flake-parts";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.nixos-stable.follows = "nixpkgs";
       inputs.treefmt-nix.follows = "treefmt-nix";

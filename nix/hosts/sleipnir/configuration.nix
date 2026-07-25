@@ -50,8 +50,11 @@
   # Boot & Filesystems
   # ============================================================================
   # Temporary fix for accelerometer data rotating desktop when in tent mode on framework 12
-  boot.initrd.kernelModules = [ "pinctrl_tigerlake" ];
+  boot.initrd.kernelModules = [ "pinctrl_tigerlake" "i915" ];
   boot.kernelModules = [ "thunderbolt" ];
+  
+  # Enable IOMMU for proper Thunderbolt 4 / USB4 PCIe tunneling and DisplayPort Alt Mode
+  boot.kernelParams = [ "intel_iommu=on" "iommu=pt" ];
 
   # ============================================================================
   # Hardware & Kernel
@@ -85,6 +88,11 @@
   my.mounts.legacyPaths.enable = true;
   my.mounts.ai = {
     enable = true;
+    writable = true;
+  };
+  my.mounts.hermes = {
+    enable = true;
+    mode = "remote";
     writable = true;
   };
 

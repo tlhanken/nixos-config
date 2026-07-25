@@ -1,4 +1,7 @@
 { pkgs, inputs, ... }:
+let
+  net = import ../../lib/network.nix;
+in
 {
   imports = [
     # Standard nixos-anywhere modules
@@ -71,9 +74,17 @@
     localPath = "/mnt/local/ai";
     exportNfs = true;
     nfsClientIps = [
-      "100.109.178.115" # sleipnir
-      "100.67.158.77"   # galar
+      net.hosts.sleipnir.ip
+      net.hosts.galar.ip
     ];
+  };
+
+  my.mounts.hermes = {
+    enable = true;
+    mode = "local";
+    localPath = "/mnt/local/appdata/hermes";
+    exportNfs = true;
+    nfsClientIps = [ net.hosts.sleipnir.ip ];
   };
 
   systemd.tmpfiles.rules = [

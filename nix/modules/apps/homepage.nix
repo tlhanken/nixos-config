@@ -1,11 +1,12 @@
 { lib, ... }:
 let
+  net = import ../../lib/network.nix;
   port = 8082;
   hosts = [
     "localhost"
     "127.0.0.1"
     "well-of-mimir-2"
-    "well-of-mimir-2.fenrir-altered.ts.net"
+    net.hosts.well-of-mimir-2.magicDns
   ];
   allowedHosts = lib.concatStringsSep "," (map (h: "${h}:${toString port}") hosts);
 in
@@ -49,14 +50,14 @@ in
         "Media" = [
           {
             "Jellyfin" = {
-              href = "http://galar.fenrir-altered.ts.net:8096";
+              href = "http://${net.hosts.galar.magicDns}:8096";
               description = "Media server";
               icon = "jellyfin.png";
             };
           }
           {
             "Immich" = {
-              href = "http://well-of-mimir-2.fenrir-altered.ts.net:2283";
+              href = "http://${net.hosts.well-of-mimir-2.magicDns}:2283";
               description = "Photo library";
               icon = "immich.png";
             };
@@ -67,7 +68,7 @@ in
         "Tools" = [
           {
             "Vaultwarden" = {
-              href = "http://well-of-mimir-2.fenrir-altered.ts.net:8222";
+              href = "http://${net.hosts.well-of-mimir-2.magicDns}:8222";
               description = "Password Manager";
               icon = "vaultwarden.png";
             };
@@ -81,14 +82,14 @@ in
           }
           {
             "IT Tools" = {
-              href = "http://well-of-mimir-2.fenrir-altered.ts.net:8400";
+              href = "http://${net.hosts.well-of-mimir-2.magicDns}:8400";
               description = "Developer utilities";
               icon = "it-tools.png";
             };
           }
           {
             "SearXNG" = {
-              href = "http://well-of-mimir-2.fenrir-altered.ts.net:8888";
+              href = "http://${net.hosts.well-of-mimir-2.magicDns}:8888";
               description = "Private Search Engine";
               icon = "searxng.png";
             };
@@ -99,21 +100,21 @@ in
         "AI" = [
           {
             "Open-WebUI" = {
-              href = "http://well-of-mimir-2.fenrir-altered.ts.net:8080";
+              href = "http://${net.hosts.well-of-mimir-2.magicDns}:8080";
               description = "LLM Chat Interface";
               icon = "open-webui.png";
             };
           }
           {
             "ComfyUI" = {
-              href = "http://well-of-mimir-2.fenrir-altered.ts.net:8188";
+              href = "http://${net.hosts.well-of-mimir-2.magicDns}:8188";
               description = "Stable Diffusion UI";
               icon = "comfyui.png";
             };
           }
           {
             "Hermes" = {
-              href = "http://well-of-mimir-2.fenrir-altered.ts.net:9119";
+              href = "http://${net.hosts.well-of-mimir-2.magicDns}:9119";
               description = "Agent UI";
               icon = "mdi-robot-outline";
             };

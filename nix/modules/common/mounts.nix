@@ -2,10 +2,11 @@
 
 let
   cfg = config.my.mounts;
+  net = import ../../lib/network.nix;
   servers = {
-    nas = "well-of-mimir-2.fenrir-altered.ts.net";
-    legacy_nas = "well-of-mimir.fenrir-altered.ts.net";
-    media_server = "galar.fenrir-altered.ts.net";
+    nas = net.hosts.well-of-mimir-2.magicDns;
+    legacy_nas = net.hosts.legacy_nas.magicDns;
+    media_server = net.hosts.galar.magicDns;
   };
 
   aiMountPoint = "/mnt/ai";
@@ -19,6 +20,7 @@ let
     || (cfg.vault.enable && cfg.vault.mode == "remote")
     || (cfg.backup.enable && cfg.backup.mode == "remote")
     || (cfg.ai.enable && cfg.ai.mode == "remote")
+    || (cfg.hermes.enable && cfg.hermes.mode == "remote")
     || cfg.legacyPaths.enable;
 
   # mountPoint: stable path apps use (e.g. /mnt/ai). localPath: backing store on disk.
@@ -92,6 +94,24 @@ in {
           Use per-node Tailscale IPs (not MagicDNS hostnames): nfs-server resolves
           export entries at boot before Tailscale DNS is ready.
         '';
+      };
+    };
+
+    hermes = mkMountOpt "Hermes" "/mnt/local/appdata/hermes" "/mnt/hermes" // {
+      exportNfs = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+        description = "Export mountPoint on the Tailscale network.";
+      };
+      remoteSource = lib.mkOption {
+        type = lib.types.str;
+        default = "${servers.nas}:/mnt/hermes";
+        description = "NFS source for remote clients.";
+      };
+      nfsClientIps = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [];
+        description = "Tailscale IPs allowed to mount mountPoint when exportNfs is true.";
       };
     };
 
@@ -180,6 +200,59 @@ in {
     (lib.mkIf (cfg.ai.enable && cfg.ai.exportNfs) {
       services.nfs.server.exports = lib.mkOrder 900 (
         lib.concatMapStringsSep "\n" (ip: "${cfg.ai.mountPoint} ${ip}(rw,no_subtree_check)") cfg.ai.nfsClientIps
+      );
+    })
+
+    # ============================================================================
+    # HERMES — AppData for local editing
+    # ============================================================================
+    (lib.mkIf (cfg.hermes.enable && cfg.hermes.exportNfs) {
+      assertions = [
+        {
+          assertion = cfg.hermes.nfsClientIps != [];
+          message = "my.mounts.hermes.exportNfs requires at least one entry in my.mounts.hermes.nfsClientIps";
+        }
+      ];
+    })
+
+    (lib.mkIf (cfg.hermes.enable && cfg.hermes.mode == "local") {
+      # Tmpfiles are managed in hermes.nix directly since it requires the hermes user/group to exist
+      systemd.mounts = [
+        {
+          type = "none";
+          what = cfg.hermes.localPath;
+          where = cfg.hermes.mountPoint;
+          mountConfig.Options = "bind";
+          after = ["zfs-mount.service"];
+          requires = ["zfs-mount.service"];
+          wantedBy = ["multi-user.target"];
+        }
+      ];
+    })
+
+    (lib.mkIf (cfg.hermes.enable && cfg.hermes.mode == "remote") {
+      systemd.mounts = [
+        {
+          type = "nfs";
+          what = cfg.hermes.remoteSource;
+          where = cfg.hermes.mountPoint;
+          mountConfig = {
+            Options = "${if cfg.hermes.writable then "rw" else "ro"},noauto,x-systemd.mount-timeout=5,noatime,nodiratime,actimeo=60,soft,_netdev";
+          };
+        }
+      ];
+      systemd.automounts = [
+        {
+          where = cfg.hermes.mountPoint;
+          wantedBy = ["multi-user.target"];
+          automountConfig = {TimeoutIdleSec = "600";};
+        }
+      ];
+    })
+
+    (lib.mkIf (cfg.hermes.enable && cfg.hermes.exportNfs) {
+      services.nfs.server.exports = lib.mkOrder 900 (
+        lib.concatMapStringsSep "\n" (ip: "${cfg.hermes.mountPoint} ${ip}(rw,no_subtree_check,all_squash,anonuid=1000,anongid=100)") cfg.hermes.nfsClientIps
       );
     })
 

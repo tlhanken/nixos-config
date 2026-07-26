@@ -15,6 +15,8 @@
   ];
 
   config = {
+    home-manager.backupFileExtension = "backup";
+
     services.tailscale_user.auth_key_path = config.age.secrets."tailscale_key".path;
 
     nixpkgs.config.allowUnfree = true;

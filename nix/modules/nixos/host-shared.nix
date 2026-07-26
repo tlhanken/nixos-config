@@ -12,6 +12,7 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     inputs.agenix.nixosModules.default
+    inputs.home-manager.nixosModules.default
   ];
 
   config = {
@@ -20,6 +21,11 @@
     services.tailscale_user.auth_key_path = config.age.secrets."tailscale_key".path;
 
     nixpkgs.config.allowUnfree = true;
+    # TODO: Clean up permittedInsecurePackages when upstream flake inputs update dependencies
+    nixpkgs.config.permittedInsecurePackages = [
+      "docker-28.5.2"   # Fallback if docker 28 derivation evaluated in nixpkgs closure
+      "electron-39.8.10" # Used by desktop apps (Obsidian/Claude-Desktop/Bitwarden)
+    ];
 
     environment.systemPackages = map lib.lowPrio [
       pkgs.curl

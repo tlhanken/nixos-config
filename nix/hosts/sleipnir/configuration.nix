@@ -68,9 +68,9 @@
     uefiCapsuleSettings.DisableCapsuleUpdateOnDisk = true;
   };
 
-  # Razer Support
-  hardware.openrazer.enable = true;
-  hardware.openrazer.users = [ "tlhanken" ];
+  # TODO: Re-enable hardware.openrazer when openrazer patch lands for Linux 6.12+ (or switch boot.kernelPackages to LTS 6.6)
+  hardware.openrazer.enable = false;
+  # hardware.openrazer.users = [ "tlhanken" ];
 
   # Sensors & Rotation
   hardware.sensor.iio.enable = true;

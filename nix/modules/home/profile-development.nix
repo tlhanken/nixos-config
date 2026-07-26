@@ -8,7 +8,7 @@ let
 in {
   home.packages = with pkgs; [
     unstable.code-cursor-fhs
-    unstable.antigravity-fhs
+    (unstable.antigravity-ide-fhs or unstable.antigravity-fhs)
     unstable.lmstudio
 
     nodejs

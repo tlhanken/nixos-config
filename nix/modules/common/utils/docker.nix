@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   config,
   ...
 }: let
@@ -7,6 +8,7 @@
 in {
   virtualisation.docker = {
     enable = true;
+    package = pkgs.docker_29 or pkgs.docker;
     rootless = {
       enable = false;
       setSocketVariable = true;

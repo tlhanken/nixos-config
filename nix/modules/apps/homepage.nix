@@ -114,7 +114,7 @@ in
           }
           {
             "Hermes" = {
-              href = "http://${net.hosts.well-of-mimir-2.magicDns}:9119";
+              href = "http://${net.hosts.well-of-mimir-2.magicDns}:8642";
               description = "Agent UI";
               icon = "mdi-robot-outline";
             };

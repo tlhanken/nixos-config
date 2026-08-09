@@ -9,20 +9,11 @@ let
     extraDependencyGroups = [ "edge-tts" "voice" "messaging" "web" ];
   };
 
-  pkgsPatched = pkgs.extend (self: super: {
-    fetchurl = args:
-      if (builtins.isAttrs args && lib.hasInfix "headers.tar.gz" (args.url or ""))
-      then super.fetchurl (args // { sha256 = "sha256-0nUJBQDEikyYntZwq+ycH32mzEQtQmz3ICz9eeTMpJk="; })
-      else super.fetchurl args;
-  });
-
-  hermesDesktop = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.desktop.override {
-    pkgs = pkgsPatched;
-  };
+  hermesDesktop = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.desktop;
 
   hermesDesktopItem = pkgs.makeDesktopItem {
-    name = "hermes";
-    desktopName = "Hermes AI";
+    name = "hermes-cli";
+    desktopName = "Hermes AI (CLI)";
     genericName = "AI Assistant";
     exec = "${hermesAgent}/bin/hermes";
     icon = "utilities-terminal";

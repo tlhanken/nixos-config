@@ -33,9 +33,22 @@ in {
         enabled = true;
         threshold = 0.75;
       };
+      gateway = {
+        enabled = true;
+        platforms = {
+          telegram = {
+            enabled = true;
+          };
+        };
+      };
+      web = {
+        enabled = true;
+        port = 8642;
+      };
     };
 
-
+    # ── Dependency Groups ──────────────────────────────────────────────
+    extraDependencyGroups = [ "edge-tts" "voice" "messaging" "web" ];
 
     # ── Packages & Dependencies ────────────────────────────────────────
     # Inject tools directly into the agent's isolated PATH

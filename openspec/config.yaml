@@ -1,0 +1,16 @@
+# OpenSpec Configuration
+schema_version: "1.0"
+project:
+  name: nixos-config
+  description: NixOS configuration repository using Blueprint framework and Home Manager
+
+paths:
+  specs: openspec/specs
+  changes: openspec/changes
+
+agents:
+  default: antigravity
+  supported:
+    - antigravity
+    - hermes
+    - claude

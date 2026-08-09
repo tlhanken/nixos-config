@@ -6,7 +6,18 @@ let
     "${config.home.homeDirectory}/.local/share/uv/tools/scrapling/lib/python3.12/site-packages";
 
   hermesAgent = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-    extraDependencyGroups = [ "edge-tts" "voice" ];
+    extraDependencyGroups = [ "edge-tts" "voice" "messaging" "web" ];
+  };
+
+  pkgsPatched = pkgs.extend (self: super: {
+    fetchurl = args:
+      if (builtins.isAttrs args && lib.hasInfix "headers.tar.gz" (args.url or ""))
+      then super.fetchurl (args // { sha256 = "sha256-0nUJBQDEikyYntZwq+ycH32mzEQtQmz3ICz9eeTMpJk="; })
+      else super.fetchurl args;
+  });
+
+  hermesDesktop = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.desktop.override {
+    pkgs = pkgsPatched;
   };
 
   hermesDesktopItem = pkgs.makeDesktopItem {
@@ -23,6 +34,7 @@ let
 in {
   home.packages = with pkgs; [
     hermesAgent
+    hermesDesktop
     hermesDesktopItem
     searxng
     hermes-mod

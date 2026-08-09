@@ -6,6 +6,15 @@ This file provides guidance to AI coding agents (Hermes, Claude, Antigravity, et
 
 This is a NixOS configuration repository for multiple home devices using the **Blueprint** framework from numtide. Blueprint provides a flake-based architecture that auto-discovers hosts and modules from directory structure. All Nix configuration lives under the `nix/` directory (set via `prefix = "nix/"` in `flake.nix`).
 
+## Agent Workflow & OpenSpec Standard
+
+**OpenSpec** (`@fission-ai/openspec`) is enabled and set as the **default specification and change management workflow** for Antigravity and all AI coding agents working in this repository.
+
+- **Specs & Configuration**: System specifications live under `openspec/specs/` and configuration lives in `openspec/config.yaml`.
+- **Change Proposals**: Multi-step or non-trivial architectural and feature changes should be drafted as change proposals under `openspec/changes/`.
+- **Validation**: All changes proposed or applied by agents must pass `just check` (`nix flake check`) cleanly before completion.
+
+
 ## Common Commands
 
 ### Just (Preferred)

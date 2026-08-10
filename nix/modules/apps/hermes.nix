@@ -96,4 +96,37 @@ in {
 
   # Ensure the hermes user has POSIX permission to read/write files owned by the users group
   users.users.hermes.extraGroups = [ "users" ];
+
+  # ── Hermes Web Dashboard Service ────────────────────────────────────
+  systemd.services.hermes-dashboard = {
+    description = "Hermes Agent Web Dashboard";
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+    environment = {
+      HOME = "/mnt/local/appdata/hermes";
+    };
+    serviceConfig = {
+      ExecStart = "${inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/hermes dashboard --port 8643 --host 127.0.0.1 --no-open --skip-build";
+      User = "hermes";
+      Group = "users";
+      WorkingDirectory = "/mnt/local/appdata/hermes";
+      Restart = "always";
+      RestartSec = 5;
+    };
+  };
+
+  # ── Nginx Reverse Proxy for Hermes Web UI (Port 8642) ──────────────
+  services.nginx.virtualHosts."hermes-dashboard" = {
+    listen = [{ addr = "0.0.0.0"; port = 8642; ssl = false; }];
+    locations."/" = {
+      proxyPass = "http://127.0.0.1:8643";
+      proxyWebsockets = true;
+      extraConfig = ''
+        proxy_set_header Host 127.0.0.1;
+        proxy_set_header Origin http://127.0.0.1;
+      '';
+    };
+  };
+
+  networking.firewall.allowedTCPPorts = [ 8642 ];
 }

@@ -71,7 +71,7 @@ in
         "Tools" = [
           {
             "Vaultwarden" = {
-              href = "http://${net.hosts.well-of-mimir-2.magicDns}:8222";
+              href = "https://${net.hosts.well-of-mimir-2.magicDns}:8443";
               description = "Password Manager";
               icon = "vaultwarden.png";
             };

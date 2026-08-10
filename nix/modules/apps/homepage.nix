@@ -7,8 +7,11 @@ let
     "127.0.0.1"
     "well-of-mimir-2"
     net.hosts.well-of-mimir-2.magicDns
+    net.hosts.well-of-mimir-2.ip
   ];
-  allowedHosts = lib.concatStringsSep "," (map (h: "${h}:${toString port}") hosts);
+  allowedHosts = lib.concatStringsSep "," (
+    lib.concatMap (h: [ h "${h}:${toString port}" ]) hosts
+  );
 in
 {
   services.homepage-dashboard = {

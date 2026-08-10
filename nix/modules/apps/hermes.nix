@@ -9,6 +9,8 @@ in {
   services.hermes-agent = {
     enable = true;
     addToSystemPackages = true;
+    stateDir = "/mnt/local/appdata/hermes";
+    workingDirectory = "/mnt/local/appdata/hermes/workspace";
 
     # ── Secrets ────────────────────────────────────────────────────────
     # API keys (OPENROUTER_API_KEY, ANTHROPIC_API_KEY, etc.) are never
@@ -19,7 +21,10 @@ in {
     # ── Declarative Settings ───────────────────────────────────────────
     settings = {
       model = {
-        default = "openrouter/deepseek/deepseek-v4-flash";
+        default = "deepseek/deepseek-v4-flash-0731";
+        provider = "openrouter";
+        base_url = "https://openrouter.ai/api/v1";
+        api_mode = "chat_completions";
       };
       toolsets = [ "bash" "filesystem" "searxng" ];
       terminal = {
@@ -37,7 +42,7 @@ in {
         enabled = true;
         platforms = {
           telegram = {
-            enabled = false;
+            enabled = true;
           };
         };
       };
@@ -102,10 +107,20 @@ in {
     description = "Hermes Agent Web Dashboard";
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
+    path = with pkgs; [
+      inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default
+      git
+      bash
+      coreutils
+      nix
+      searxng
+      qmd
+    ];
     environment = {
       HOME = "/mnt/local/appdata/hermes";
     };
     serviceConfig = {
+      EnvironmentFile = config.age.secrets.ai-api-keys.path;
       ExecStart = "${inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/hermes dashboard --port 8643 --host 127.0.0.1 --no-open --skip-build";
       User = "hermes";
       Group = "users";
@@ -129,4 +144,66 @@ in {
   };
 
   networking.firewall.allowedTCPPorts = [ 8642 ];
+
+  # ── Git Repository Initialization for Hermes AppData ──────────────
+  systemd.services.hermes-git-init = {
+    description = "Initialize Git repository for Hermes AppData (SOUL, skills, memories, workspace)";
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      User = "hermes";
+      Group = "users";
+      WorkingDirectory = "/mnt/local/appdata/hermes";
+    };
+    script = ''
+      if [ ! -d .git ]; then
+        ${pkgs.git}/bin/git init
+        ${pkgs.git}/bin/git config user.name "Hermes Bot"
+        ${pkgs.git}/bin/git config user.email "hermes@agent"
+        
+        cat <<'EOF' > .gitignore
+.env
+*.env
+*.age
+.hermes/audio_cache/
+.hermes/image_cache/
+.hermes/logs/
+.hermes/state.db*
+.hermes/.update_check
+EOF
+
+        ${pkgs.git}/bin/git add .gitignore .hermes/SOUL.md .hermes/skills .hermes/memories .hermes/cron .hermes/hooks workspace 2>/dev/null || true
+        ${pkgs.git}/bin/git commit -m "chore: initial hermes appdata snapshot (SOUL, skills, memories, workspace)" || true
+      fi
+    '';
+  };
+
+  # ── Hourly Git Auto-commit for Hermes Traceability ───────────────
+  systemd.services.hermes-git-autocommit = {
+    description = "Auto-commit Hermes AppData changes (skills, memories, workspace)";
+    serviceConfig = {
+      Type = "oneshot";
+      User = "hermes";
+      Group = "users";
+      WorkingDirectory = "/mnt/local/appdata/hermes";
+    };
+    script = ''
+      if [ -d .git ]; then
+        ${pkgs.git}/bin/git add .gitignore .hermes/SOUL.md .hermes/skills .hermes/memories .hermes/cron .hermes/hooks workspace 2>/dev/null || true
+        if ! ${pkgs.git}/bin/git diff --cached --quiet; then
+          ${pkgs.git}/bin/git commit -m "auto: snapshot hermes appdata changes [$(date -Iseconds)]"
+        fi
+      fi
+    '';
+  };
+
+  systemd.timers.hermes-git-autocommit = {
+    description = "Hourly timer for Hermes AppData git auto-commit";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "hourly";
+      Persistent = true;
+    };
+  };
 }

@@ -37,7 +37,7 @@ in {
         enabled = true;
         platforms = {
           telegram = {
-            enabled = true;
+            enabled = false;
           };
         };
       };

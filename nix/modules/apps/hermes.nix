@@ -21,7 +21,7 @@ in {
     # ── Declarative Settings ───────────────────────────────────────────
     settings = {
       model = {
-        default = "deepseek/deepseek-v4-flash-0731";
+        default = "deepseek/deepseek-v4-flash-latest";
         provider = "openrouter";
         base_url = "https://openrouter.ai/api/v1";
         api_mode = "chat_completions";
@@ -50,6 +50,14 @@ in {
         enabled = true;
         port = 8642;
       };
+      tts = {
+        provider = "edge-tts";
+        providers = {
+          edge-tts = {
+            voice = "en-US-AvaNeural";
+          };
+        };
+      };
     };
 
     # ── Dependency Groups ──────────────────────────────────────────────
@@ -61,6 +69,12 @@ in {
       searxng
       qmd
       git
+      python3
+      bash
+      coreutils
+      jq
+      curl
+      nix
     ];
 
 
@@ -93,10 +107,14 @@ in {
     ];
   };
 
-  # Ensure the appdata directory exists with correct ownership
+  # Ensure the appdata directory and workspace subdirectories exist with correct ownership
   systemd.tmpfiles.rules = [
     "d /mnt/local/appdata/hermes 2770 hermes users -"
     "d /mnt/local/appdata/hermes/workspace 2770 hermes users -"
+    "d /mnt/local/appdata/hermes/workspace/wiki 2770 hermes users -"
+    "d /mnt/local/appdata/hermes/workspace/repos 2770 hermes users -"
+    "d /mnt/local/appdata/hermes/workspace/tmp 2770 hermes users -"
+    "d /mnt/local/appdata/hermes/workspace/shared 2770 hermes users -"
   ];
 
   # Ensure the hermes user has POSIX permission to read/write files owned by the users group
@@ -171,11 +189,47 @@ in {
 .hermes/logs/
 .hermes/state.db*
 .hermes/.update_check
+workspace/tmp/
+workspace/shared/
+workspace/repos/
 EOF
 
         ${pkgs.git}/bin/git add .gitignore .hermes/SOUL.md .hermes/skills .hermes/memories .hermes/cron .hermes/hooks workspace 2>/dev/null || true
         ${pkgs.git}/bin/git commit -m "chore: initial hermes appdata snapshot (SOUL, skills, memories, workspace)" || true
       fi
+    '';
+  };
+
+  # ── Pre-clone Repositories into Hermes Workspace ──────────────────
+  systemd.services.hermes-repos-init = {
+    description = "Pre-clone target repositories (nixos-config, tools, geoforge) into Hermes workspace repos";
+    after = [ "network.target" "hermes-git-init.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      User = "hermes";
+      Group = "users";
+      WorkingDirectory = "/mnt/local/appdata/hermes/workspace/repos";
+    };
+    script = ''
+      REPOS=("nixos-config" "tools" "geoforge")
+      for repo in "''${REPOS[@]}"; do
+        TARGET="/mnt/local/appdata/hermes/workspace/repos/$repo"
+        LOCAL_SRC="/home/tlhanken/workspace/$repo"
+        REMOTE_URL="https://github.com/tlhanken/$repo.git"
+
+        if [ ! -d "$TARGET/.git" ]; then
+          echo "Initializing Hermes workspace repository for $repo..."
+          if [ -d "$LOCAL_SRC/.git" ]; then
+            ${pkgs.git}/bin/git clone "$LOCAL_SRC" "$TARGET"
+            ${pkgs.git}/bin/git -C "$TARGET" remote set-url origin "$REMOTE_URL" 2>/dev/null || true
+          else
+            ${pkgs.git}/bin/git clone "$REMOTE_URL" "$TARGET" 2>/dev/null || true
+          fi
+          ${pkgs.git}/bin/git -C "$TARGET" config user.name "Hermes Bot" 2>/dev/null || true
+          ${pkgs.git}/bin/git -C "$TARGET" config user.email "hermes@agent" 2>/dev/null || true
+        fi
+      done
     '';
   };
 

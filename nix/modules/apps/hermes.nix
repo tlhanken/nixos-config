@@ -21,7 +21,7 @@ in {
     # ── Declarative Settings ───────────────────────────────────────────
     settings = {
       model = {
-        default = "deepseek/deepseek-v4-flash-latest";
+        default = "deepseek/deepseek-v4-flash-0731";
         provider = "openrouter";
         base_url = "https://openrouter.ai/api/v1";
         api_mode = "chat_completions";

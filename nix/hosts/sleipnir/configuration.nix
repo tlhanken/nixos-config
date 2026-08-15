@@ -50,7 +50,11 @@
   # Boot & Filesystems
   # ============================================================================
   # Temporary fix for accelerometer data rotating desktop when in tent mode on framework 12
-  boot.initrd.kernelModules = [ "pinctrl_tigerlake" ];
+  boot.initrd.kernelModules = [ "pinctrl_tigerlake" "i915" ];
+  boot.kernelModules = [ "thunderbolt" ];
+  
+  # Enable IOMMU for proper Thunderbolt 4 / USB4 PCIe tunneling and DisplayPort Alt Mode
+  boot.kernelParams = [ "intel_iommu=on" "iommu=pt" ];
 
   # ============================================================================
   # Hardware & Kernel
@@ -64,9 +68,9 @@
     uefiCapsuleSettings.DisableCapsuleUpdateOnDisk = true;
   };
 
-  # Razer Support
-  hardware.openrazer.enable = true;
-  hardware.openrazer.users = [ "tlhanken" ];
+  # TODO: Re-enable hardware.openrazer when openrazer patch lands for Linux 6.12+ (or switch boot.kernelPackages to LTS 6.6)
+  hardware.openrazer.enable = false;
+  # hardware.openrazer.users = [ "tlhanken" ];
 
   # Sensors & Rotation
   hardware.sensor.iio.enable = true;
@@ -84,6 +88,11 @@
   my.mounts.legacyPaths.enable = true;
   my.mounts.ai = {
     enable = true;
+    writable = true;
+  };
+  my.mounts.hermes = {
+    enable = true;
+    mode = "remote";
     writable = true;
   };
 

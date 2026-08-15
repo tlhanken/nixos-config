@@ -8,12 +8,13 @@
     settings = {
       server = {
         port = 8888;
-        bind_address = "127.0.0.1"; # localhost only — not exposed externally
+        bind_address = "0.0.0.0";
         secret_key = "$SEARX_SECRET_KEY";
       };
       search = {
         safe_search = 0;
         default_lang = "en";
+        formats = [ "html" "json" ];
       };
       # Curated engine list for agent research use
       engines = [
@@ -32,4 +33,6 @@
     # File contents should be:  SEARX_SECRET_KEY=<hex string>
     environmentFile = "/run/agenix/searxng-secrets";
   };
+
+  networking.firewall.allowedTCPPorts = [ 8888 ];
 }

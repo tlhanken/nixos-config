@@ -4,11 +4,29 @@ let
   qmd = pkgs.callPackage ../../packages/qmd.nix { };
   scraplingSitePackages =
     "${config.home.homeDirectory}/.local/share/uv/tools/scrapling/lib/python3.12/site-packages";
+
+  hermesAgent = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+    extraDependencyGroups = [ "edge-tts" "voice" "messaging" "web" ];
+  };
+
+  hermesDesktop = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.desktop;
+
+  hermesDesktopItem = pkgs.makeDesktopItem {
+    name = "hermes-cli";
+    desktopName = "Hermes AI (CLI)";
+    genericName = "AI Assistant";
+    exec = "${hermesAgent}/bin/hermes";
+    icon = "utilities-terminal";
+    comment = "Autonomous AI Agent with voice, web search, and code execution";
+    categories = [ "Utility" "Development" "System" ];
+    keywords = [ "AI" "Hermes" "Assistant" "LLM" "CLI" "Agent" ];
+    terminal = true;
+  };
 in {
   home.packages = with pkgs; [
-    (inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-      extraDependencyGroups = [ "edge-tts" "voice" ];
-    })
+    hermesAgent
+    hermesDesktop
+    hermesDesktopItem
     searxng
     hermes-mod
     qmd

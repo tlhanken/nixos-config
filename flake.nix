@@ -55,12 +55,11 @@
     };
     hermes-agent = {
       url = "github:NousResearch/hermes-agent";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nixos-anywhere = {
       url = "github:nix-community/nixos-anywhere";
       inputs.disko.follows = "disko";
-      inputs.flake-parts.follows = "flake-parts";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.nixos-stable.follows = "nixpkgs";
       inputs.treefmt-nix.follows = "treefmt-nix";

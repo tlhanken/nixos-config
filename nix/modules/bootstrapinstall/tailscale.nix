@@ -60,13 +60,16 @@ in {
         sleep 2
 
         # check if we are already authenticated to tailscale
-        status="$(${tailscale}/bin/tailscale status -json | ${jq}/bin/jq -r .BackendState)"
-        if [ $status = "Running" ]; then # if so, then do nothing
+        status="$(${tailscale}/bin/tailscale status --json 2>/dev/null | ${jq}/bin/jq -r .BackendState 2>/dev/null || true)"
+        if [ "$status" = "Running" ] || [ "$status" = "Starting" ]; then
           exit 0
         fi
 
         # otherwise authenticate with tailscale
-        ${tailscale}/bin/tailscale up -authkey ${auth_key} --ssh
+        key="${auth_key}"
+        if [ -n "$key" ]; then
+          ${tailscale}/bin/tailscale up --authkey "$key" --ssh || true
+        fi
       '';
     };
 

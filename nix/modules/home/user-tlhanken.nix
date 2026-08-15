@@ -79,6 +79,7 @@ in {
         clock-format = "12h";
         text-scaling-factor = 0.8;
         icon-theme = "Adwaita";
+        color-scheme = "prefer-dark";
       };
       "org/gnome/desktop/peripherals/touchpad" = {
         tap-to-click = true;

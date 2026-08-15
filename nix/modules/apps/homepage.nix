@@ -1,13 +1,17 @@
 { lib, ... }:
 let
+  net = import ../../lib/network.nix;
   port = 8082;
   hosts = [
     "localhost"
     "127.0.0.1"
     "well-of-mimir-2"
-    "well-of-mimir-2.fenrir-altered.ts.net"
+    net.hosts.well-of-mimir-2.magicDns
+    net.hosts.well-of-mimir-2.ip
   ];
-  allowedHosts = lib.concatStringsSep "," (map (h: "${h}:${toString port}") hosts);
+  allowedHosts = lib.concatStringsSep "," (
+    lib.concatMap (h: [ h "${h}:${toString port}" ]) hosts
+  );
 in
 {
   services.homepage-dashboard = {
@@ -28,7 +32,7 @@ in
         resources = {
           cpu = true;
           memory = true;
-          disk = [ "/" "/mnt/local" ];
+          disk = "/";
           expanded = true;
         };
       }
@@ -49,14 +53,14 @@ in
         "Media" = [
           {
             "Jellyfin" = {
-              href = "http://galar.fenrir-altered.ts.net:8096";
+              href = "http://${net.hosts.galar.magicDns}:8096";
               description = "Media server";
               icon = "jellyfin.png";
             };
           }
           {
             "Immich" = {
-              href = "http://well-of-mimir-2.fenrir-altered.ts.net:2283";
+              href = "http://${net.hosts.well-of-mimir-2.magicDns}:2283";
               description = "Photo library";
               icon = "immich.png";
             };
@@ -66,10 +70,31 @@ in
       {
         "Tools" = [
           {
+            "Vaultwarden" = {
+              href = "https://${net.hosts.well-of-mimir-2.magicDns}:8443";
+              description = "Password Manager";
+              icon = "vaultwarden.png";
+            };
+          }
+          {
+            "Nextcloud" = {
+              href = "https://nextcloud.local";
+              description = "Cloud Storage & Sync";
+              icon = "nextcloud.png";
+            };
+          }
+          {
             "IT Tools" = {
-              href = "http://well-of-mimir-2.fenrir-altered.ts.net:8400";
+              href = "http://${net.hosts.well-of-mimir-2.magicDns}:8400";
               description = "Developer utilities";
               icon = "it-tools.png";
+            };
+          }
+          {
+            "SearXNG" = {
+              href = "http://${net.hosts.well-of-mimir-2.magicDns}:8888";
+              description = "Private Search Engine";
+              icon = "searxng.png";
             };
           }
         ];
@@ -78,21 +103,34 @@ in
         "AI" = [
           {
             "Open-WebUI" = {
-              href = "http://well-of-mimir-2.fenrir-altered.ts.net:8080";
+              href = "http://${net.hosts.well-of-mimir-2.magicDns}:8080";
               description = "LLM Chat Interface";
-              icon = "si-openai";
+              icon = "open-webui.png";
             };
           }
           {
             "ComfyUI" = {
-              href = "http://well-of-mimir-2.fenrir-altered.ts.net:8188";
+              href = "http://${net.hosts.well-of-mimir-2.magicDns}:8188";
               description = "Stable Diffusion UI";
-              icon = "si-stabilityai";
+              icon = "comfyui.png";
+            };
+          }
+          {
+            "Hermes" = {
+              href = "http://${net.hosts.well-of-mimir-2.magicDns}:8642";
+              description = "Agent UI";
+              icon = "mdi-robot-outline";
             };
           }
         ];
       }
     ];
+  };
+
+  # Docker socket access — resources widget needs Docker stats for CPU/memory/disk
+  systemd.services.homepage-dashboard.serviceConfig = {
+    SupplementaryGroups = [ "docker" ];
+    BindReadOnlyPaths = [ "/var/run/docker.sock:/var/run/docker.sock" ];
   };
 
   # Reverse proxy: http://well-of-mimir/ → homepage at localhost:8082

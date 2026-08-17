@@ -31,8 +31,16 @@ Establish capability standards, modular option contracts, and placement rules fo
 
 ### 4. Fleet Dashboard (`homepage.nix`)
 - **Capability**: Single-pane-of-glass dashboard displaying status and links for all hosted services across the fleet.
-- **Contract**: **MUST** dynamically expose active services (ComfyUI, Hermes, Immich, Jellyfin, SearXNG, Vaultwarden, IT-Tools).
+- **Contract**: **MUST** dynamically expose active services (ComfyUI, Forgejo, Hermes, Immich, Jellyfin, SearXNG, Vaultwarden, IT-Tools).
 
 ### 5. Password Management (`vaultwarden.nix`)
 - **Capability**: Bitwarden-compatible password vault server.
 - **Contract**: **MUST** store data on encrypted persistent storage with automated backup integration.
+
+### 6. Code Hosting (`forgejo.nix`)
+- **Capability**: Self-hosted, lightweight Git server with web UI, pull requests, issue tracking, and repository management.
+- **Contract**:
+  - **MUST** store state on persistent local storage (`/mnt/local/appdata/forgejo`).
+  - **MUST** expose HTTP web UI on port `3000` and SSH daemon on port `2222`.
+  - **MUST** be registered on the Fleet Dashboard (`homepage.nix`).
+

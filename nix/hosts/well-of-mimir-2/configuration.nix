@@ -25,6 +25,7 @@ in
     inputs.self.modules.apps.nginx
     inputs.self.modules.apps.homepage
     inputs.self.modules.apps.it-tools
+    inputs.self.modules.apps.forgejo
     inputs.self.modules.apps.immich
     # inputs.self.modules.apps.nextcloud
     inputs.self.modules.apps.comfyui

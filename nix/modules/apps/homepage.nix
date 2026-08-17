@@ -70,6 +70,13 @@ in
       {
         "Tools" = [
           {
+            "Forgejo" = {
+              href = "http://${net.hosts.well-of-mimir-2.magicDns}:3000";
+              description = "Git service & code hosting";
+              icon = "forgejo.png";
+            };
+          }
+          {
             "Vaultwarden" = {
               href = "https://${net.hosts.well-of-mimir-2.magicDns}:8443";
               description = "Password Manager";

@@ -57,7 +57,7 @@ in {
         "<Super>l"
         "XF86ScreenSaver"
       ];
-      "org/cinnamon/desktop/keybindings/vm".looking-glass-key = ["<Super>F12"];
+      "org/cinnamon/desktop/keybindings".looking-glass-keybinding = ["<Super>F12"];
     })
     (lib.mkIf gnomeSession {
       "org/gnome/desktop/background" = lib.mkIf hasDesktopBg {

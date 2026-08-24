@@ -14,6 +14,15 @@ Define encryption standards, key management policies, and access control invaria
 ### 2. Secrets Operations Contract
 - Creating or updating encrypted secrets **MUST** use `just edit-secret <secret_name>`.
 - Adding new host or user keys **MUST** be followed by a full rekey (`just rekey-secrets`) to ensure all encrypted secret files grant access to updated key sets.
+- AI Agents **MUST NOT** decrypt or edit `.age` secret files directly. AI Agents **MUST** configure `.nix` modules to use `EnvironmentFile` / agenix secret paths, and instruct the user to edit secrets manually via `just edit-secret <name>`.
+
+### 3. Secret File Inventory (Variable Names Only)
+| Encrypted File | Managed Environment Variables |
+|---|---|
+| `ai-api-keys.age` | `OPENROUTER_API_KEY`, `OPENAI_API_KEY`, `WEBUI_SECRET_KEY`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_ALLOWED_USERS` |
+| `github-token.age` | `GITHUB_TOKEN` |
+| `searxng-secrets.age` | `SEARXNG_SECRET_KEY` |
+| `tailscale_key.age` | `TAILSCALE_AUTH_KEY` |
 
 ## System Security & Access Control
 

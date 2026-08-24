@@ -25,7 +25,7 @@ in
         START_SSH_SERVER = true;
       };
       service = {
-        DISABLE_REGISTRATION = false;
+        DISABLE_REGISTRATION = true;
       };
       repository = {
         DEFAULT_PRIVATE = "private";

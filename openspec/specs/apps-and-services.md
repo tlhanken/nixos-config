@@ -31,7 +31,7 @@ Establish capability standards, modular option contracts, and placement rules fo
 
 ### 4. Fleet Dashboard (`homepage.nix`)
 - **Capability**: Single-pane-of-glass dashboard displaying status and links for all hosted services across the fleet.
-- **Contract**: **MUST** dynamically expose active services (ComfyUI, Forgejo, Hermes, Immich, Jellyfin, SearXNG, Vaultwarden, IT-Tools).
+- **Contract**: **MUST** dynamically expose active services (ComfyUI, Forgejo, Hermes, Immich, Jellyfin, Ollama / Open-WebUI, SearXNG, Vaultwarden, IT-Tools).
 
 ### 5. Password Management (`vaultwarden.nix`)
 - **Capability**: Bitwarden-compatible password vault server.
@@ -42,5 +42,19 @@ Establish capability standards, modular option contracts, and placement rules fo
 - **Contract**:
   - **MUST** store state on persistent local storage (`/mnt/local/appdata/forgejo`).
   - **MUST** expose HTTP web UI on port `3000` and SSH daemon on port `2222`.
+  - **MUST** be registered on the Fleet Dashboard (`homepage.nix`).
+
+### 7. Local LLM Backend (`ollama.nix`)
+- **Capability**: Serves local large language model inference via Ollama API on port `11434`.
+- **Contract**:
+  - State and application metadata **MUST** live on `/mnt/local/appdata/ollama`.
+  - LLM weights **MUST** be stored on the shared AI dataset (`/mnt/ai/models/llm`).
+
+### 8. Web Chat Interface (`open-webui.nix`)
+- **Capability**: Provides a web interface for interacting with local LLMs hosted on Ollama.
+- **Contract**:
+  - State **MUST** live on `/mnt/local/appdata/open-webui`.
+  - **MUST** expose Web UI on port `8080`.
+  - **MUST** connect to local Ollama instance on `http://127.0.0.1:11434`.
   - **MUST** be registered on the Fleet Dashboard (`homepage.nix`).
 

@@ -170,6 +170,23 @@ just edit-secret <name>   # e.g. just edit-secret tailscale-key
 just rekey-secrets
 ```
 
+#### Secret Key Inventory (Variable Names Only)
+
+| Secret File (`encrypted/*.age`) | Managed Keys (Environment Variables) |
+|---|---|
+| `ai-api-keys.age` | `OPENROUTER_API_KEY`, `OPENAI_API_KEY`, `WEBUI_SECRET_KEY`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_ALLOWED_USERS` |
+| `github-token.age` | `GITHUB_TOKEN` |
+| `searxng-secrets.age` | `SEARXNG_SECRET_KEY` |
+| `tailscale_key.age` | `TAILSCALE_AUTH_KEY` |
+
+#### AI Agent Secret Handling Policy (Mandatory)
+1. **No Direct Secret Editing**: AI agents must **NEVER** attempt to decrypt or edit `.age` secret files directly. Decryption and editing of encrypted secret files is strictly reserved for the user.
+2. **Zero Secret Exposure**: AI agents must **NEVER** ask for, accept, print, or log real secret values in the response window or command output.
+3. **User-Led Workflow**: When a new secret is required:
+   - The AI configures the `.nix` code to reference the environment variable or `EnvironmentFile`.
+   - The AI provides the user with the exact variable name and a terminal command to generate any random keys (e.g. `openssl rand -hex 32`).
+   - The user runs `just edit-secret <name>` in their own terminal to insert the secret and runs `just rekey-secrets` when ready.
+
 ### Adding New Hosts
 
 1. Create `nix/hosts/<hostname>/configuration.nix`:

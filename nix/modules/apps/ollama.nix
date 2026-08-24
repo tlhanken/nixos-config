@@ -13,6 +13,7 @@ in {
     # App metadata only; weights live on /mnt/ai when enabled.
     home = "/mnt/local/appdata/ollama";
     user = "ollama";
+    models = lib.mkIf ai.enable "${ai.mountPoint}/models/llm";
   };
 
   environment.variables = lib.mkIf ai.enable {

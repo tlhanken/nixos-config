@@ -58,3 +58,12 @@ Establish capability standards, modular option contracts, and placement rules fo
   - **MUST** connect to local Ollama instance on `http://127.0.0.1:11434`.
   - **MUST** be registered on the Fleet Dashboard (`homepage.nix`).
 
+### 9. Photo & Media Asset Management (`immich.nix`)
+- **Capability**: High-performance photo and video backup, facial recognition, visual CLIP search, and multi-user photo management.
+- **Contract**:
+  - **MUST** store all application data, thumbnails, and database assets under `/mnt/local/appdata/immich`.
+  - **MUST** expose HTTP web interface on port `2283`.
+  - Curated external collections **MUST** reside under `/mnt/local/photos/<username>` with `0775` permissions granted to group `users`.
+  - Native upload store **MUST** organize new assets under `/mnt/local/appdata/immich/library/<storageLabel>/{{y}}/{{MM}}/{{filename}}`.
+  - **MUST** be registered on the Fleet Dashboard (`homepage.nix`).
+

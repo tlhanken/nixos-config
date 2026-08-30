@@ -371,6 +371,12 @@ in {
           where = "/mnt/well-of-mimir/media";
           mountConfig = {Options = "ro,noauto,x-systemd.mount-timeout=5,noatime,nodiratime,actimeo=60,soft,_netdev";};
         }
+        {
+          type = "nfs";
+          what = "${servers.legacy_nas}:/volume1/homes/tlhanken/Photos";
+          where = "/mnt/well-of-mimir/photos";
+          mountConfig = {Options = "ro,noauto,x-systemd.mount-timeout=5,noatime,nodiratime,actimeo=60,soft,_netdev";};
+        }
       ];
       systemd.automounts = [
         {
@@ -378,10 +384,17 @@ in {
           wantedBy = ["multi-user.target"];
           automountConfig = {TimeoutIdleSec = "600";};
         }
+        {
+          where = "/mnt/well-of-mimir/photos";
+          wantedBy = ["multi-user.target"];
+          automountConfig = {TimeoutIdleSec = "600";};
+        }
       ];
 
       systemd.tmpfiles.rules = [
-        "d /mnt/well-of-mimir 0755 root root -"
+        "d /mnt/well-of-mimir        0755 root root -"
+        "d /mnt/well-of-mimir/media  0755 root root -"
+        "d /mnt/well-of-mimir/photos 0755 root root -"
       ];
     })
   ];

@@ -103,6 +103,7 @@
         ai = {
           type = "zfs_fs";
           mountpoint = "/mnt/local/ai";
+          options."com.sun:auto-snapshot" = "false";
         };
         appdata = {
           type = "zfs_fs";

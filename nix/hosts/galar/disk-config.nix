@@ -134,14 +134,17 @@
         vault = {
           type = "zfs_fs";
           mountpoint = "/mnt/local/vault";
+          options."com.sun:auto-snapshot" = "true";
         };
         media = {
           type = "zfs_fs";
           mountpoint = "/mnt/local/media";
+          options."com.sun:auto-snapshot" = "false";
         };
         ai = {
           type = "zfs_fs";
           mountpoint = "/mnt/local/ai";
+          options."com.sun:auto-snapshot" = "false";
         };
       };
     };

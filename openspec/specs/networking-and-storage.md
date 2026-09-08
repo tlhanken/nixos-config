@@ -37,3 +37,19 @@ The `my.mounts` framework provides a unified option schema for cross-host datase
 ### NFS Security & Access Rules
 - NFS exports **MUST** restrict client access strictly to designated Tailscale IPs specified in `lib/network.nix`.
 - Mount operations **MUST NOT** block system boot if a remote storage server is temporarily unreachable.
+
+## ZFS Dataset Snapshot Contracts
+
+Fleet hosts running ZFS enable automated snapshots via `services.zfs.autoSnapshot` in `nixos/host-shared.nix`. To avoid disk exhaustion from high-churn binary files while guaranteeing point-in-time recovery for critical state, datasets **MUST** adhere to the following snapshot policies:
+
+### 1. Opt-Out Datasets (`com.sun:auto-snapshot = false`)
+- **Deterministic Stores (`/nix`)**: Nix derivations are reproducible from source flakes. Auto-snapshots **MUST NOT** be enabled to prevent defeating `nix-collect-garbage`.
+- **Media Libraries (`my.mounts.media` on `galar`)**: Bulk video and music assets **MUST NOT** be automatically snapshotted to avoid churn and lockup of storage during high-volume downloads or transcoding.
+- **AI Model Weights (`my.mounts.ai` on `well-of-mimir-2`)**: Multi-gigabyte LLM and diffusion model weights **MUST NOT** be automatically snapshotted so deleted models can immediately reclaim NVMe disk space.
+
+### 2. Opt-In & Inherited Datasets (`com.sun:auto-snapshot = true`)
+- **System Configuration (`/`)**: Root filesystem snapshots provide fast rollback against failed updates or breaking system changes.
+- **User Home Directories (`/home`)**: User dotfiles, desktop configurations, and local files **MUST** maintain active auto-snapshots.
+- **Vault Data (`my.mounts.vault` on `galar` and `well-of-mimir-2`)**: Persistent documents, long-term archives, and personal files **MUST** maintain active auto-snapshots.
+- **Application State (`/mnt/local/appdata/*` on `well-of-mimir-2`)**: Databases, personal photo uploads (Immich), git repositories (Forgejo), agent memories (Hermes), and password stores (Vaultwarden) **MUST** maintain active automated snapshots.
+

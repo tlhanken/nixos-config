@@ -1,4 +1,4 @@
-pkgs: pkgs.buildNpmPackage rec {
+{ pkgs, ... }: pkgs.buildNpmPackage rec {
   pname = "hermes-mod";
   version = "0.2.0";
   src = pkgs.fetchurl {

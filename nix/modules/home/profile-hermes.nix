@@ -1,6 +1,6 @@
 { pkgs, inputs, lib, config, ... }:
 let
-  hermes-mod = import ./hermes-mod.nix pkgs;
+  hermes-mod = pkgs.callPackage ../../packages/hermes-mod.nix { };
   qmd = pkgs.callPackage ../../packages/qmd.nix { };
   scraplingSitePackages =
     "${config.home.homeDirectory}/.local/share/uv/tools/scrapling/lib/python3.12/site-packages";
@@ -9,7 +9,8 @@ let
     extraDependencyGroups = [ "edge-tts" "voice" "messaging" "web" ];
   };
 
-  hermesDesktop = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.desktop;
+  # TODO: Re-enable hermesDesktop once nixpkgs-unstable fixes electron 43.4.1 node headers hash mismatch (node-v43.4.1-headers.tar.gz)
+  # hermesDesktop = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.desktop;
 
   hermesDesktopItem = pkgs.makeDesktopItem {
     name = "hermes-cli";
@@ -25,7 +26,7 @@ let
 in {
   home.packages = with pkgs; [
     hermesAgent
-    hermesDesktop
+    # hermesDesktop
     hermesDesktopItem
     searxng
     hermes-mod

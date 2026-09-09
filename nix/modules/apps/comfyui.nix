@@ -4,7 +4,7 @@
 
   # nix-comfyui pins tbb_2021_11; nixpkgs 25.11 renamed it to tbb_2021.
   pkgsComfyui = import inputs.nixpkgs {
-    inherit (pkgs) system;
+    system = pkgs.stdenv.hostPlatform.system;
     config = pkgs.config;
     overlays = [
       (final: prev: {

@@ -17,6 +17,7 @@ Tracked improvements not yet implemented.
 ## Hermes (sleipnir / `profile-hermes`)
 
 - [ ] Verify Hermes voice mode end-to-end — `extraDependencyGroups = [ "edge-tts" "voice" ]`, `portaudio`, and `LD_LIBRARY_PATH` to the HM profile lib dir (workaround for Python 3.13+ `find_library` not using ldconfig)
+- [ ] Re-enable `hermesDesktop` in `profile-hermes.nix` once upstream nixpkgs fixes the Electron 43.4.1 node headers hash mismatch (`node-v43.4.1-headers.tar.gz`)
 
 ## Claude Desktop
 
@@ -24,4 +25,4 @@ Tracked improvements not yet implemented.
 
 ## Packaging
 
-- [ ] Promote `nix/modules/home/hermes-mod.nix` to a flake `packages.*.hermes-mod` output when convenient
+- [x] Promote `nix/modules/home/hermes-mod.nix` to a flake `packages.*.hermes-mod` output (moved to `nix/packages/hermes-mod.nix`)

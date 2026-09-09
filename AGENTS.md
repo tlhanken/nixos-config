@@ -89,7 +89,6 @@ Prefer `inputs.self.*` in host and user configs (not `flake.*`); both can work i
 ```
 ├── flake.nix                       # Minimal flake delegating to Blueprint
 ├── justfile                        # Common task recipes
-├── garnix.yaml                     # Garnix CI configuration
 ├── docs/                           # Documentation
 └── nix/
     ├── devshell.nix / devshells/   # Dev shell definitions
@@ -223,7 +222,7 @@ All setup guides, migration guides, and other documentation go in `nix/guides/`.
 ### Nix Settings
 
 - Flakes and nix-command enabled by default
-- Binary caches: `nix-community.cachix.org`, `cache.garnix.io`
+- Binary caches: `nix-community.cachix.org`
 - Auto-optimise store enabled
 - `nh` (NixOS Helper) configured with 7-day cleanup keeping last 5 generations
 - Nixpkgs channel: `nixos-25.11` (stable), with `nixos-unstable` available as overlay source

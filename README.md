@@ -52,9 +52,8 @@ The script will automatically SSH in, wipe the disks, format everything, generat
 
 ## Setup (First Time)
 
-1. **GitHub** — fork/clone this repo
-2. **Garnix** — link your GitHub account at [garnix.io](https://garnix.io) and connect the repo for CI builds
-3. **Garnix GitHub App** — install the app, grant repo access, and add any required secrets to the repo's GitHub settings
+1. **GitHub** — clone or fork this repository
+2. **Secrets** — ensure your agenix SSH keys are in place (see [AGENTS.md](AGENTS.md#secrets-management-agenix))
 
 ## Structure
 

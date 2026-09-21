@@ -23,4 +23,5 @@ in {
   "encrypted/tailscale_key.age".publicKeys = all;
   "encrypted/ai-api-keys.age".publicKeys = all;
   "encrypted/searxng-secrets.age".publicKeys = all;
+  "encrypted/gods-eye-view-secrets.age".publicKeys = all;
 }

@@ -1,3 +1,4 @@
+{ lib, ... }:
 {
   age.identityPaths = ["/etc/ssh/ssh_host_ed25519_key"];
   # Secrets
@@ -19,5 +20,11 @@
       mode = "0440";
       group = "users";
     };
-  };
+  } // (lib.optionalAttrs (builtins.pathExists ./secret_files/encrypted/gods-eye-view-secrets.age) {
+    gods-eye-view-secrets = {
+      file = ./secret_files/encrypted/gods-eye-view-secrets.age;
+      mode = "0440";
+      group = "users";
+    };
+  });
 }

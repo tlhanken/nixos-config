@@ -67,3 +67,13 @@ Establish capability standards, modular option contracts, and placement rules fo
   - Native upload store **MUST** organize new assets under `/mnt/local/appdata/immich/library/<storageLabel>/{{y}}/{{MM}}/{{filename}}`.
   - **MUST** be registered on the Fleet Dashboard (`homepage.nix`).
 
+### 10. Spatial Intelligence & 3D Earth Console (`gods-eye-view.nix`)
+- **Capability**: Explorable real-time 3D Earth console aggregating live aircraft telemetry (ADS-B), vessel beacons (AIS), satellite elements, earthquakes, and CCTV.
+- **Contract**:
+  - Application **MUST** be packaged deterministically in `/nix/store` with Node.js 24 and pre-locked npm dependencies.
+  - Ephemeral runtime **MUST** use RAM `tmpfs` (`/run/gods-eye-view`) with zero persistent writes or ZFS snapshot bloat on `/mnt/local/appdata`.
+  - **MUST** run under dedicated unprivileged user `gods-eye-view` with strict systemd filesystem isolation (`ProtectSystem = "strict"`, `ProtectHome = true`).
+  - **MUST** reverse-proxy port `4173` via Nginx with WebSocket support enabled.
+  - **MUST** support keyless operation out-of-the-box and optionally load agenix credentials via conditional `EnvironmentFile`.
+  - **MUST** be registered on the Fleet Dashboard (`homepage.nix`).
+

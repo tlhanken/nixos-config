@@ -104,6 +104,13 @@ in
               icon = "searxng.png";
             };
           }
+          {
+            "God's Eye View" = {
+              href = "http://${net.hosts.well-of-mimir-2.magicDns}:4173";
+              description = "Real-time 3D Earth Console";
+              icon = "mdi-earth";
+            };
+          }
         ];
       }
       {

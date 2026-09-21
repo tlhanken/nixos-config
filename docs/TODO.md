@@ -26,3 +26,17 @@ Tracked improvements not yet implemented.
 ## Packaging
 
 - [x] Promote `nix/modules/home/hermes-mod.nix` to a flake `packages.*.hermes-mod` output (moved to `nix/packages/hermes-mod.nix`)
+
+## God's Eye View (`well-of-mimir-2`)
+
+- [ ] Add optional API keys for extended intelligence tools:
+  - `just edit-secret gods-eye-view-secrets` (alias `just es gods-eye-view-secrets`)
+  - Variables to add when keys are acquired:
+    - `GOOGLE_MAPS_API_KEY`: Photorealistic 3D Earth globe tiles
+    - `CESIUM_ION_TOKEN`: High-resolution terrain, 3D buildings, and imagery
+    - `OPENAI_API_KEY`: Real-time voice interaction via microphone button in dock
+    - `AISSTREAM_API_KEY`: Live global maritime vessel & ship tracking
+    - `OPENSKY_CLIENT_ID` / `OPENSKY_CLIENT_SECRET`: Real-time aircraft ADS-B tracking
+  - Rekey secrets: `just rekey-secrets` (alias `just rs`)
+  - Deploy update: `just remote-switch well-of-mimir-2`
+- [ ] Upstream updates: Run `just update-gods-eye-view` (alias `just ugev`) to check GitHub, compute new SRI and npm dependency hashes, and update [gods-eye-view.nix](file:///home/tlhanken/workspace/nixos-config/nix/modules/apps/gods-eye-view.nix).

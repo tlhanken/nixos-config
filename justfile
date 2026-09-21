@@ -67,5 +67,11 @@ rekey-secrets:
 edit-secret SECRET:
     @agenix -e encrypted/{{SECRET}}.age
 
+# Update God's Eye View to latest upstream commit and refresh npm hashes
+[group("Apps")]
+update-gods-eye-view:
+    @./scripts/update-gods-eye-view.sh
+
 alias rs := rekey-secrets
 alias es := edit-secret
+alias ugev := update-gods-eye-view

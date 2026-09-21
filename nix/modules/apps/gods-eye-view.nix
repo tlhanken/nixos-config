@@ -1,3 +1,16 @@
+# God's Eye View (bilawalsidhu/gods-eye-view)
+#
+# Upstream repository: https://github.com/bilawalsidhu/gods-eye-view
+# Update upstream commit & hashes:
+#   Run: `just update-gods-eye-view` (alias: `just ugev`)
+#
+# Secrets (in encrypted/gods-eye-view-secrets.age via `just es gods-eye-view-secrets`):
+#   GOOGLE_MAPS_API_KEY    - Google Photorealistic 3D Tiles
+#   CESIUM_ION_TOKEN       - Cesium ion terrain, 3D buildings & satellite imagery
+#   OPENAI_API_KEY         - Realtime voice interaction (Mic button in dock)
+#   AISSTREAM_API_KEY      - Global maritime vessel / ship tracking
+#   OPENSKY_CLIENT_ID      - Aircraft ADS-B feed client ID
+#   OPENSKY_CLIENT_SECRET  - Aircraft ADS-B feed client secret
 { pkgs, lib, config, ... }:
 let
   net = import ../../lib/network.nix;
@@ -8,8 +21,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "bilawalsidhu";
       repo = "gods-eye-view";
-      rev = "de2a41927b54b3776615a5c0ad13b133f6e42f76";
-      hash = "sha256-MVWXcFtrFhYI6YDK0NVOfaFozCDp4Tsm5WLBAnh3yC8=";
+      rev = "0dbde1e36c0177b7664b47702d77ba50f11ddadc";
+      hash = "sha256-1yRQydKux+EJdzyP8TcAJNW5Og4e8hOeMfnL6ebK5Zk=";
     };
 
     nodejs = pkgs.nodejs_24;

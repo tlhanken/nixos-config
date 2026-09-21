@@ -9,7 +9,7 @@ let
     extraDependencyGroups = [ "edge-tts" "voice" "messaging" "web" ];
   };
 
-  # TODO: Re-enable hermesDesktop once nixpkgs-unstable fixes electron 43.4.1 node headers hash mismatch (node-v43.4.1-headers.tar.gz)
+  # TODO: Re-enable hermesDesktop once upstream nixpkgs fixes electron node headers hash mismatch (node-v43.6.0-headers.tar.gz)
   # hermesDesktop = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.desktop;
 
   hermesDesktopItem = pkgs.makeDesktopItem {

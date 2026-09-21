@@ -6,3 +6,5 @@
 - [x] 4. Register God's Eye View in `nix/modules/apps/homepage.nix` under Tools with `mdi-earth` icon.
 - [x] 5. Update `openspec/specs/apps-and-services.md` with God's Eye View capabilities and contracts.
 - [x] 6. Run `just check` (`nix flake check`) and build evaluation to verify configuration sanity.
+- [x] 7. Resolve port collision and configure writable tmpfs runtime (`/run/gods-eye-view`) with extended WebSocket timeouts.
+- [x] 8. Add automated updater script `scripts/update-gods-eye-view.sh` and `just update-gods-eye-view` recipe (alias: `just ugev`).

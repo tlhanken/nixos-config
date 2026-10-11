@@ -21,7 +21,6 @@ Define encryption standards, key management policies, and access control invaria
 |---|---|
 | `ai-api-keys.age` | `OPENROUTER_API_KEY`, `OPENAI_API_KEY`, `WEBUI_SECRET_KEY`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_ALLOWED_USERS` |
 | `github-token.age` | `GITHUB_TOKEN` |
-| `searxng-secrets.age` | `SEARXNG_SECRET_KEY` |
 | `tailscale_key.age` | `TAILSCALE_AUTH_KEY` |
 
 ## System Security & Access Control

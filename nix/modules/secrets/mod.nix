@@ -15,11 +15,6 @@
       mode = "0440";
       group = "users";
     };
-    searxng-secrets = {
-      file = ./secret_files/encrypted/searxng-secrets.age;
-      mode = "0440";
-      group = "users";
-    };
   } // (lib.optionalAttrs (builtins.pathExists ./secret_files/encrypted/gods-eye-view-secrets.age) {
     gods-eye-view-secrets = {
       file = ./secret_files/encrypted/gods-eye-view-secrets.age;

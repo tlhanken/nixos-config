@@ -32,9 +32,9 @@ in
     inputs.self.modules.apps.ollama
     inputs.self.modules.apps.open-webui
     inputs.self.modules.apps.hermes
-    inputs.self.modules.apps.searxng
     inputs.self.modules.apps.vaultwarden
     inputs.self.modules.apps.gods-eye-view
+    inputs.self.modules.apps.firecrawl
   ];
 
   # ============================================================================

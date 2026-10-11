@@ -1,12 +1,13 @@
 { pkgs, inputs, lib, config, ... }:
 let
+  net = import ../../lib/network.nix;
   hermes-mod = pkgs.callPackage ../../packages/hermes-mod.nix { };
   qmd = pkgs.callPackage ../../packages/qmd.nix { };
   scraplingSitePackages =
     "${config.home.homeDirectory}/.local/share/uv/tools/scrapling/lib/python3.12/site-packages";
 
   hermesAgent = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-    extraDependencyGroups = [ "edge-tts" "voice" "messaging" "web" ];
+    extraDependencyGroups = [ "edge-tts" "voice" "messaging" "web" "firecrawl" ];
   };
 
   # TODO: Re-enable hermesDesktop once upstream nixpkgs fixes electron node headers hash mismatch (node-v43.6.0-headers.tar.gz)
@@ -28,7 +29,6 @@ in {
     hermesAgent
     # hermesDesktop
     hermesDesktopItem
-    searxng
     hermes-mod
     qmd
     # PortAudio — required by sounddevice (Hermes voice mode). find_library
@@ -45,7 +45,8 @@ in {
     PLAYWRIGHT_BROWSERS_PATH = "${pkgs.playwright-driver.browsers}";
     PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = "1";
     PYTHONPATH = scraplingSitePackages;
-    SEARXNG_URL = "http://127.0.0.1:8888";
+    FIRECRAWL_API_URL = "http://${net.hosts.well-of-mimir-2.magicDns}:3002";
+    FIRECRAWL_API_KEY = "self-hosted";
     # Makes ctypes.util.find_library discover profile-installed shared libs
     # (e.g. libportaudio.so) via ld's -L search.
     LD_LIBRARY_PATH = "/etc/profiles/per-user/${config.home.username}/lib";

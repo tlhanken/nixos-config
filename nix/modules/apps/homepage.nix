@@ -98,10 +98,10 @@ in
             };
           }
           {
-            "SearXNG" = {
-              href = "http://${net.hosts.well-of-mimir-2.magicDns}:8888";
-              description = "Private Search Engine";
-              icon = "searxng.png";
+            "Firecrawl" = {
+              href = "http://${net.hosts.well-of-mimir-2.magicDns}:3002";
+              description = "Web Scraping & Crawl API";
+              icon = "mdi-spider-web";
             };
           }
           {

@@ -21,12 +21,12 @@ in {
     # ── Declarative Settings ───────────────────────────────────────────
     settings = {
       model = {
-        default = "deepseek/deepseek-v4-flash-0731";
+        default = "deepseek/deepseek-v4.1-flash";
         provider = "openrouter";
         base_url = "https://openrouter.ai/api/v1";
         api_mode = "chat_completions";
       };
-      toolsets = [ "bash" "filesystem" "searxng" ];
+      toolsets = [ "terminal" "file" "web" ];
       terminal = {
         # The agent boots into the root of its appdata (where SOUL.md lives)
         cwd = "/mnt/local/appdata/hermes";
@@ -49,6 +49,8 @@ in {
       web = {
         enabled = true;
         port = 8642;
+        search_backend = "firecrawl";
+        extract_backend = "firecrawl";
       };
       tts = {
         provider = "edge-tts";
@@ -61,12 +63,11 @@ in {
     };
 
     # ── Dependency Groups ──────────────────────────────────────────────
-    extraDependencyGroups = [ "edge-tts" "voice" "messaging" "web" ];
+    extraDependencyGroups = [ "edge-tts" "voice" "messaging" "web" "firecrawl" ];
 
     # ── Packages & Dependencies ────────────────────────────────────────
     # Inject tools directly into the agent's isolated PATH
     extraPackages = with pkgs; [
-      searxng
       qmd
       git
       python3
@@ -84,8 +85,9 @@ in {
     # or installed directly into the hermes user's environment. 
     # Hardcoding a path to /home/tlhanken breaks isolation.
     environment = {
-      # Point Hermes at the local SearXNG instance for free web search
-      SEARXNG_URL = "http://127.0.0.1:8888";
+      # Point Hermes at the local Firecrawl instance for web search & extraction
+      FIRECRAWL_API_URL = "http://127.0.0.1:3002";
+      FIRECRAWL_API_KEY = "self-hosted";
       
       # Git Bot Identity
       GIT_AUTHOR_NAME = "Hermes Bot";
@@ -97,14 +99,18 @@ in {
 
   environment.localBinInPath = true;
 
-  # ── Systemd Sandbox Escapes ─────────────────────────────────────────
-  systemd.services.hermes-agent.serviceConfig = {
-    # Mount external paths into the agent's sandboxed appdata directory.
-    # The '-' prefix means systemd won't fail if the source path doesn't exist.
-    BindPaths = [
-      # Expose Nix daemon so Hermes can run `nix build` and execute code
-      "-/nix/var/nix/daemon-socket/socket"
-    ];
+  # ── Systemd Service Ordering & Sandbox Escapes ──────────────────────
+  systemd.services.hermes-agent = {
+    after = [ "network.target" "firecrawl.service" ];
+    wants = [ "firecrawl.service" ];
+    serviceConfig = {
+      # Mount external paths into the agent's sandboxed appdata directory.
+      # The '-' prefix means systemd won't fail if the source path doesn't exist.
+      BindPaths = [
+        # Expose Nix daemon so Hermes can run `nix build` and execute code
+        "-/nix/var/nix/daemon-socket/socket"
+      ];
+    };
   };
 
   # Ensure the appdata directory and workspace subdirectories exist with correct ownership
@@ -123,7 +129,7 @@ in {
   # ── Hermes Web Dashboard Service ────────────────────────────────────
   systemd.services.hermes-dashboard = {
     description = "Hermes Agent Web Dashboard";
-    after = [ "network.target" ];
+    after = [ "network.target" "firecrawl.service" ];
     wantedBy = [ "multi-user.target" ];
     path = with pkgs; [
       inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -131,11 +137,12 @@ in {
       bash
       coreutils
       nix
-      searxng
       qmd
     ];
     environment = {
       HOME = "/mnt/local/appdata/hermes";
+      FIRECRAWL_API_URL = "http://127.0.0.1:3002";
+      FIRECRAWL_API_KEY = "self-hosted";
     };
     serviceConfig = {
       EnvironmentFile = config.age.secrets.ai-api-keys.path;

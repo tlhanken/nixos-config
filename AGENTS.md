@@ -31,6 +31,7 @@ just test           # Test current host (volatile, no persistence)
 just switch         # Switch current host to new config
 
 just remote-switch <host>             # Deploy to remote host via Tailscale
+just remote-test <host>               # Test on remote host (volatile, reboot reverts)
 just install <ip> <config> <host>     # Install NixOS on new host with nixos-anywhere
 
 just rekey-secrets  # Rekey all agenix secrets (alias: rs)
@@ -176,7 +177,6 @@ just rekey-secrets
 | `ai-api-keys.age` | `OPENROUTER_API_KEY`, `OPENAI_API_KEY`, `WEBUI_SECRET_KEY`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_ALLOWED_USERS` |
 | `github-token.age` | `GITHUB_TOKEN` |
 | `gods-eye-view-secrets.age` | `GOOGLE_MAPS_API_KEY`, `CESIUM_ION_TOKEN`, `OPENAI_API_KEY`, `AISSTREAM_API_KEY`, `OPENSKY_CLIENT_ID`, `OPENSKY_CLIENT_SECRET` |
-| `searxng-secrets.age` | `SEARXNG_SECRET_KEY` |
 | `tailscale_key.age` | `TAILSCALE_AUTH_KEY` |
 
 #### AI Agent Secret Handling Policy (Mandatory)

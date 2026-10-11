@@ -25,13 +25,19 @@ Establish capability standards, modular option contracts, and placement rules fo
   - **MUST** expose standard options (`my.comfyui.enable`, `cpuOnly`, `sharedModels`, `expose`).
   - Models **MUST** be stored on the shared AI dataset (`/mnt/ai/comfyui/models`) to prevent duplicate storage bloat.
 
-### 3. Search & Information Ingress (`searxng.nix`)
-- **Capability**: Serves privacy-preserving search results.
-- **Contract**: **MUST** expose an HTTP API endpoint to allow programmatic search integration for local AI agents.
+### 3. Unified Web Search & Extraction (`firecrawl.nix`)
+- **Capability**: Autonomous web extraction, crawling, clean LLM-ready markdown rendering, and search scraping.
+- **Contract**:
+  - **MUST** be deployed on host `well-of-mimir-2` under high-compute & AI service placement invariants.
+  - Multi-container stack (api, playwright-service, redis, rabbitmq, nuq-postgres) **MUST** be orchestrated via Docker Compose managed by systemd.
+  - State and queue persistence **MUST** reside under `/mnt/local/appdata/firecrawl`.
+  - **MUST** expose API on port `3002`.
+  - **MUST** integrate with Hermes Agent as unified backend for both `web_search` and `web_extract`.
+  - **MUST** be registered on the Fleet Dashboard (`homepage.nix`).
 
 ### 4. Fleet Dashboard (`homepage.nix`)
 - **Capability**: Single-pane-of-glass dashboard displaying status and links for all hosted services across the fleet.
-- **Contract**: **MUST** dynamically expose active services (ComfyUI, Forgejo, Hermes, Immich, Jellyfin, Ollama / Open-WebUI, SearXNG, Vaultwarden, IT-Tools).
+- **Contract**: **MUST** dynamically expose active services (ComfyUI, Forgejo, Hermes, Immich, Jellyfin, Ollama / Open-WebUI, Firecrawl, Vaultwarden, IT-Tools, God's Eye View).
 
 ### 5. Password Management (`vaultwarden.nix`)
 - **Capability**: Bitwarden-compatible password vault server.
@@ -76,4 +82,3 @@ Establish capability standards, modular option contracts, and placement rules fo
   - **MUST** reverse-proxy port `4173` via Nginx with WebSocket support enabled.
   - **MUST** support keyless operation out-of-the-box and optionally load agenix credentials via conditional `EnvironmentFile`.
   - **MUST** be registered on the Fleet Dashboard (`homepage.nix`).
-

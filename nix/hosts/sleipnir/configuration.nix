@@ -23,7 +23,6 @@
     inputs.self.modules.common.common
     inputs.self.modules.apps.steam
     inputs.self.modules.apps.rust
-    inputs.self.modules.apps.searxng
     inputs.self.modules.apps.it-tools
   ];
 

@@ -1,6 +1,6 @@
 { pkgs, inputs, config, lib, ... }:
 let
-  qmd = pkgs.callPackage ../../packages/qmd.nix { };
+  qmd = inputs.qmd.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in {
   imports = [
     inputs.hermes-agent.nixosModules.default
@@ -80,10 +80,6 @@ in {
 
 
 
-    # ── Scrapling ──────────────────────────────────────────────────────
-    # TODO: Scrapling needs to be packaged via Nix (extraPythonPackages) 
-    # or installed directly into the hermes user's environment. 
-    # Hardcoding a path to /home/tlhanken breaks isolation.
     environment = {
       # Point Hermes at the local Firecrawl instance for web search & extraction
       FIRECRAWL_API_URL = "http://127.0.0.1:3002";

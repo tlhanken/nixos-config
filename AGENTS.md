@@ -13,6 +13,7 @@ This is a NixOS configuration repository for multiple home devices using the **B
 - **Specs & Configuration**: System specifications live under `openspec/specs/` and configuration lives in `openspec/config.yaml`.
 - **Change Proposals**: Multi-step or non-trivial architectural and feature changes should be drafted as change proposals under `openspec/changes/`.
 - **Validation**: All changes proposed or applied by agents must pass `just check` (`nix flake check`) cleanly before completion.
+- **Package Ledger Maintenance**: Any out-of-flake or custom package requiring fixed hashes MUST be registered in `docs/PACKAGE_LEDGER.md` with an automated update script under `scripts/update-<pkg>.sh` and a corresponding recipe in `justfile`. Agents must NEVER introduce untracked hardpins.
 
 
 ## Common Commands
@@ -29,6 +30,10 @@ just metadata       # Display flake metadata
 just build          # Build current host config
 just test           # Test current host (volatile, no persistence)
 just switch         # Switch current host to new config
+
+just update         # Update all flake inputs AND out-of-flake ledger apps
+just update-flake   # Update only flake inputs in flake.lock (alias: uf)
+just update-apps    # Update only out-of-flake ledger apps (alias: ua)
 
 just remote-switch <host>             # Deploy to remote host via Tailscale
 just remote-test <host>               # Test on remote host (volatile, reboot reverts)

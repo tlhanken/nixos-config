@@ -17,11 +17,11 @@ Tracked improvements not yet implemented.
 ## Hermes (sleipnir / `profile-hermes`)
 
 - [ ] Verify Hermes voice mode end-to-end — `extraDependencyGroups = [ "edge-tts" "voice" ]`, `portaudio`, and `LD_LIBRARY_PATH` to the HM profile lib dir (workaround for Python 3.13+ `find_library` not using ldconfig)
-- [ ] Re-enable `hermesDesktop` in `profile-hermes.nix` once upstream nixpkgs fixes the Electron 43.4.1 node headers hash mismatch (`node-v43.4.1-headers.tar.gz`)
+- [x] Re-enable `hermesDesktop` in `profile-hermes.nix` (Electron 43.7.7 node headers resolved upstream)
 
 ## Claude Desktop
 
-- [ ] Re-enable `claude-desktop.nix` in `profile-productivity.nix` once `claude-desktop-debian` builds cleanly again (patch step / `addTrustedFolder` failures in recent versions)
+- [x] Re-enable `claude-desktop.nix` in `profile-productivity.nix` (`claude-desktop-debian` follows `nixpkgs-unstable`)
 
 ## Packaging
 
@@ -39,4 +39,12 @@ Tracked improvements not yet implemented.
     - `OPENSKY_CLIENT_ID` / `OPENSKY_CLIENT_SECRET`: Real-time aircraft ADS-B tracking
   - Rekey secrets: `just rekey-secrets` (alias `just rs`)
   - Deploy update: `just remote-switch well-of-mimir-2`
-- [ ] Upstream updates: Run `just update-gods-eye-view` (alias `just ugev`) to check GitHub, compute new SRI and npm dependency hashes, and update [gods-eye-view.nix](file:///home/tlhanken/workspace/nixos-config/nix/modules/apps/gods-eye-view.nix).
+- [x] Upstream updates: Managed via `just update-gods-eye-view` (alias `just ugev`) or fleetwide `just update` / `just update-apps`.
+
+## Hardware (`sleipnir`)
+
+- [ ] Re-enable `hardware.openrazer` in `nix/hosts/sleipnir/configuration.nix` once upstream OpenRazer patches `hid_report_raw_event` for Linux 6.12+ (or switch host to LTS 6.6 kernel)
+
+## Maintenance & Insecure Packages
+
+- [ ] Audit and remove `nixpkgs.config.permittedInsecurePackages` (`docker-28.5.2`, `electron-39.8.10`) in `nix/modules/nixos/host-shared.nix` when upstream dependencies update

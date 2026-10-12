@@ -4,7 +4,7 @@ let
     inherit inputs lib;
     system = pkgs.stdenv.hostPlatform.system;
   };
-  openspec = import ./openspec.nix { inherit pkgs lib; };
+  openspec = inputs.openspec.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in {
   home.packages = with pkgs; [
     unstable.code-cursor-fhs

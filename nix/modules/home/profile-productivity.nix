@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  imports = [ /* ./claude-desktop.nix */ ];
+  imports = [ ./claude-desktop.nix ];
   
   programs.firefox = {
     enable = true;

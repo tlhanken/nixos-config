@@ -67,7 +67,7 @@
     uefiCapsuleSettings.DisableCapsuleUpdateOnDisk = true;
   };
 
-  # TODO: Re-enable hardware.openrazer when openrazer patch lands for Linux 6.12+ (or switch boot.kernelPackages to LTS 6.6)
+  # TODO: Re-enable hardware.openrazer when patch lands for Linux 6.12+ (hid_report_raw_event 6th argument API change)
   hardware.openrazer.enable = false;
   # hardware.openrazer.users = [ "tlhanken" ];
 

@@ -31,11 +31,7 @@
     # NixOs Inputs
     agenix = {
       url = "github:ryantm/agenix";
-      # TODO: Enable once darwin is setup
-      inputs.darwin.follows = "";
-      inputs.home-manager.follows = "home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.systems.follows = "systems";
     };
     disko = {
       url = "github:nix-community/disko";
@@ -47,7 +43,7 @@
     };
     claude-desktop-debian = {
       url = "github:aaddrick/claude-desktop-debian";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nix-comfyui = {
       url = "github:dyscorv/nix-comfyui";
@@ -55,6 +51,14 @@
     };
     hermes-agent = {
       url = "github:NousResearch/hermes-agent";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    openspec = {
+      url = "github:fission-ai/openspec";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    qmd = {
+      url = "github:tobi/qmd";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nixos-anywhere = {

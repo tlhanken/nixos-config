@@ -22,3 +22,9 @@ Establish a modular, declarative NixOS fleet configuration that auto-discovers h
 
 ### 4. Agent Execution Standard
 - All AI coding agents (Antigravity, Hermes, Claude Code) **MUST** use OpenSpec (`openspec/specs/` and `openspec/changes/`) for change planning, specification verification, and task execution.
+
+### 5. Dependency Management & Package Ledger Contracts
+- **Flake-First Invariant**: All dependencies with Git repositories or Nix Flake interfaces **MUST** be defined in `flake.nix` with appropriate `inputs.<name>.follows`.
+- **Zero Silent Pins**: No custom package, fetcher, or derivation with fixed cryptographic hashes (`rev`, `hash`, `npmDepsHash`) may exist without registration in the central Package Ledger (`docs/PACKAGE_LEDGER.md`).
+- **Mandatory Automated Updaters**: Every ledger-registered package **MUST** provide an automated update script (`scripts/update-<name>.sh`) and an associated `justfile` recipe.
+- **Update Workflow**: The root task runner `just update` **MUST** update all flake inputs (`flake.lock`) and execute the automated updaters for all ledger-registered packages (`just update-apps`).

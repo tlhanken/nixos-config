@@ -24,9 +24,13 @@ show:
 metadata:
     nix flake metadata
 
-# Update all flake inputs
+# Update all flake inputs and out-of-flake applications
 [group("Flake")]
-update:
+update: update-flake update-apps
+
+# Update only flake inputs in flake.lock
+[group("Flake")]
+update-flake:
     nix flake update
 
 # Build the specified configuration (defaults to '.')
@@ -72,11 +76,23 @@ rekey-secrets:
 edit-secret SECRET:
     @agenix -e encrypted/{{SECRET}}.age
 
+# Update all out-of-flake custom applications and packages
+[group("Apps")]
+update-apps:
+    @./scripts/update-apps.sh
+
 # Update God's Eye View to latest upstream commit and refresh npm hashes
 [group("Apps")]
 update-gods-eye-view:
     @./scripts/update-gods-eye-view.sh
 
+# Update Hermes-Mod to latest npm version and refresh npm hashes
+[group("Apps")]
+update-hermes-mod:
+    @./scripts/update-hermes-mod.sh
+
 alias rs := rekey-secrets
 alias es := edit-secret
 alias ugev := update-gods-eye-view
+alias uf := update-flake
+alias ua := update-apps

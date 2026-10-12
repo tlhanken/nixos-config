@@ -33,11 +33,11 @@ Establish capability standards, modular option contracts, and placement rules fo
   - State and queue persistence **MUST** reside under `/mnt/local/appdata/firecrawl`.
   - **MUST** expose API on port `3002`.
   - **MUST** integrate with Hermes Agent as unified backend for both `web_search` and `web_extract`.
-  - **MUST** be registered on the Fleet Dashboard (`homepage.nix`).
+  - Operates as a headless backend service; **MUST NOT** be registered on the Fleet Dashboard (`homepage.nix`).
 
 ### 4. Fleet Dashboard (`homepage.nix`)
 - **Capability**: Single-pane-of-glass dashboard displaying status and links for all hosted services across the fleet.
-- **Contract**: **MUST** dynamically expose active services (ComfyUI, Forgejo, Hermes, Immich, Jellyfin, Ollama / Open-WebUI, Firecrawl, Vaultwarden, IT-Tools, God's Eye View).
+- **Contract**: **MUST** dynamically expose active services (ComfyUI, Forgejo, Hermes, Immich, Jellyfin, Ollama / Open-WebUI, Vaultwarden, IT-Tools, God's Eye View).
 
 ### 5. Password Management (`vaultwarden.nix`)
 - **Capability**: Bitwarden-compatible password vault server.

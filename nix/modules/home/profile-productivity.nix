@@ -1,4 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
+let
+  pkgsUnstable = import inputs.nixpkgs-unstable {
+    system = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfree = true;
+  };
+in
 {
   imports = [ ./claude-desktop.nix ];
   
@@ -18,7 +24,7 @@
     baobab
 
     # Productivity
-    bitwarden-desktop
+    pkgsUnstable.bitwarden-desktop
     google-chrome
     libreoffice-qt6-fresh
     obsidian

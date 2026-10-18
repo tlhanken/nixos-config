@@ -15,10 +15,10 @@ This document serves as the canonical inventory of all packages and applications
 
 ## Package Inventory
 
-| Package | Source File | Upstream | Pin Type | Current Target | Hash Dependencies | Update Recipe |
+| Package | Source File | Upstream | Pin Type | Tracking Target | Hash Dependencies | Update Recipe |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **`gods-eye-view`** | [`nix/modules/apps/gods-eye-view.nix`](../nix/modules/apps/gods-eye-view.nix) | GitHub ([`bilawalsidhu/gods-eye-view`](https://github.com/bilawalsidhu/gods-eye-view)) | Git commit | `591f299d11f38a61...` | `hash` (SRI), `npmDepsHash` | `just update-gods-eye-view` (`just ugev`) |
-| **`hermes-mod`** | [`nix/packages/hermes-mod.nix`](../nix/packages/hermes-mod.nix) | npm registry ([`hermes-mod`](https://www.npmjs.com/package/hermes-mod)) | npm release tarball | `0.2.0` | tarball `hash` (sha256), `npmDepsHash`, `hermes-mod-package-lock.json` | `just update-hermes-mod` |
+| **`gods-eye-view`** | [`nix/modules/apps/gods-eye-view.nix`](../nix/modules/apps/gods-eye-view.nix) | GitHub ([`bilawalsidhu/gods-eye-view`](https://github.com/bilawalsidhu/gods-eye-view)) | Git commit | Upstream `main` branch | `hash` (SRI), `npmDepsHash` | `just update-gods-eye-view` (`just ugev`) |
+| **`hermes-mod`** | [`nix/packages/hermes-mod.nix`](../nix/packages/hermes-mod.nix) | npm registry ([`hermes-mod`](https://www.npmjs.com/package/hermes-mod)) | npm release tarball | Latest npm release | tarball `hash` (sha256), `npmDepsHash`, `hermes-mod-package-lock.json` | `just update-hermes-mod` |
 
 > **Note on Graduated Packages**:
 > - **`openspec`** and **`qmd`** have been moved to native Flake inputs (`inputs.openspec` and `inputs.qmd` in `flake.nix`). They are now tracked automatically in `flake.lock` via `just update` (`nix flake update`) and no longer require out-of-flake ledger maintenance.

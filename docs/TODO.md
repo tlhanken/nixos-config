@@ -9,8 +9,8 @@ Tracked improvements not yet implemented.
 
 ## AI stack on sleipnir (re-enable when ready)
 
-- [ ] `inputs.self.modules.apps.ollama` (models → `/mnt/ai/models/llm` via `my.mounts.ai`)
-- [ ] `inputs.self.modules.apps.open-webui`
+- [ ] `inputs.self.modules.apps.ollama` (models → `/mnt/ai/models/llm` via `my.mounts.ai` — hosted on `well-of-mimir-2` for now)
+- [ ] `inputs.self.modules.apps.open-webui` (hosted on `well-of-mimir-2` for now)
 - [x] `inputs.self.modules.apps.comfyui` on sleipnir (requires `nix-comfyui` input)
 - [x] `my.mounts.ai` — `/mnt/ai` shared store (galar local, sleipnir NFS)
 
@@ -43,8 +43,8 @@ Tracked improvements not yet implemented.
 
 ## Hardware (`sleipnir`)
 
-- [ ] Re-enable `hardware.openrazer` in `nix/hosts/sleipnir/configuration.nix` once upstream OpenRazer patches `hid_report_raw_event` for Linux 6.12+ (or switch host to LTS 6.6 kernel)
+- [ ] Re-enable `hardware.openrazer` in `nix/hosts/sleipnir/configuration.nix` once upstream OpenRazer patches `hid_report_raw_event` for Linux 6.12+ (verified still failing on 6.12.93, or switch host to LTS 6.6 kernel)
 
 ## Maintenance & Insecure Packages
 
-- [ ] Audit and remove `nixpkgs.config.permittedInsecurePackages` (`docker-28.5.2`, `electron-39.8.10`) in `nix/modules/nixos/host-shared.nix` when upstream dependencies update
+- [x] Audit and remove `nixpkgs.config.permittedInsecurePackages` (`docker-28.5.2`, `electron-39.8.10`) in `nix/modules/nixos/host-shared.nix` and `profile-ai-unstable.nix` (resolved with Docker 29 and Electron 41)

@@ -151,7 +151,7 @@ in
     wantedBy = [ "multi-user.target" ];
 
     path = [
-      pkgs.docker
+      (pkgs.docker_29 or pkgs.docker)
       pkgs.docker-compose
     ];
 

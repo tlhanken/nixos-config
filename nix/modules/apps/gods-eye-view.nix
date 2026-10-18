@@ -21,13 +21,13 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "bilawalsidhu";
       repo = "gods-eye-view";
-      rev = "591f299d11f38a612629a274463196d57ae3862e";
-      hash = "sha256-xWNoBYDNEue0ChB+lxL5QX6tqWzXPWVyOnWAPgARG78=";
+      rev = "93ea088f4556a5a65b3292a2d15142d5a6c562bc";
+      hash = "sha256-HPJQ8X9okWYyl1H2c9f3M/K+pCV5+6gRdf7BLW8p4rc=";
     };
 
     nodejs = pkgs.nodejs_24;
 
-    npmDepsHash = "sha256-EA+l5DyP6eI6rKBKppgC1o8FueYTzAoiv2PafKqOwLE=";
+    npmDepsHash = "sha256-2Fq4/qZAomP1AzEZBI2Q3eW9CZTYRUZTu/18WCbXXHI=";
 
     env = {
       PUPPETEER_SKIP_DOWNLOAD = "true";

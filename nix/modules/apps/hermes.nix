@@ -4,6 +4,9 @@ let
 in {
   imports = [
     inputs.hermes-agent.nixosModules.default
+    # Muninn: adds its package to services.hermes-agent.extraPythonPackages (entry-point
+    # discovery, no symlink) and defaults settings.memory.provider to "muninn".
+    inputs.muninn.nixosModules.default
   ];
 
   services.hermes-agent = {

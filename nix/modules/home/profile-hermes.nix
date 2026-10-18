@@ -5,6 +5,12 @@ let
   qmd = inputs.qmd.packages.${pkgs.stdenv.hostPlatform.system}.default;
   hermesAgent = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
     extraDependencyGroups = [ "edge-tts" "voice" "messaging" "web" "firecrawl" ];
+    # Sleipnir consumes the Hermes package directly rather than through
+    # services.hermes-agent, so inputs.muninn.nixosModules.default cannot reach it and
+    # the package has to be attached here by hand. Same effect: the package's
+    # site-packages joins Hermes' PYTHONPATH, which is what makes the
+    # hermes_agent.memory_providers entry point discoverable.
+    extraPythonPackages = [ inputs.muninn.packages.${pkgs.stdenv.hostPlatform.system}.default ];
   };
 
   hermesDesktop = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.desktop;

@@ -12,12 +12,16 @@ Establish capability standards, modular option contracts, and placement rules fo
 ## Service Capabilities & Contracts
 
 ### 1. Autonomous AI Agent (`hermes.nix`)
-- **Capability**: Provides a sandboxed environment for autonomous AI task execution, multi-platform messaging gateways, and interactive web interface.
+- **Capability**: Provides a sandboxed environment for autonomous AI task execution, multi-platform messaging gateways, interactive web interface, and persistent wiki knowledge base.
 - **Contract**:
   - State and agent workspaces **MUST** reside on persistent storage exported via NFS to allow remote editing from developer workstations.
   - **MUST** enable the Web Portal (`settings.web.enabled = true`) on port `8642`.
   - **MUST** enable the Telegram messaging gateway (`settings.gateway.platforms.telegram.enabled = true`) with secret environment loading.
-  - Python runtime environment **MUST** include `messaging` and `web` dependency groups.
+  - Python runtime environment **MUST** include `messaging`, `web`, and `firecrawl` dependency groups.
+  - **MUST** configure **Muninn** (`inputs.muninn.nixosModules.default`) as the default memory provider (`settings.memory.provider = "muninn"`).
+  - **MUST** include `"memory"` in `settings.toolsets` to ensure Muninn's wiki and memory tools are exposed to the agent.
+  - **MUST** configure `QMD_WIKI_DIR` pointing to the persistent workspace wiki directory (`/mnt/local/appdata/hermes/workspace/wiki`).
+  - Web dashboard service **MUST** run with the effective package containing Muninn in `PYTHONPATH`.
 
 ### 2. Image Generation Pipeline (`comfyui.nix`)
 - **Capability**: Runs model inference for image generation pipelines.

@@ -3,23 +3,11 @@ let
   net = import ../../lib/network.nix;
   hermes-mod = pkgs.callPackage ../../packages/hermes-mod.nix { };
   qmd = inputs.qmd.packages.${pkgs.stdenv.hostPlatform.system}.default;
-  hermesAgent = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-    extraDependencyGroups = [ "edge-tts" "voice" "messaging" "web" "firecrawl" ];
-    # Sleipnir consumes the Hermes package directly rather than through
-    # services.hermes-agent, so inputs.muninn.nixosModules.default cannot reach it and
-    # the package has to be attached here by hand. Same effect: the package's
-    # site-packages joins Hermes' PYTHONPATH, which is what makes the
-    # hermes_agent.memory_providers entry point discoverable.
-    extraPythonPackages = [ inputs.muninn.packages.${pkgs.stdenv.hostPlatform.system}.default ];
-  };
-
-  hermesDesktop = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.desktop;
-
   hermesDesktopItem = pkgs.makeDesktopItem {
     name = "hermes-cli";
     desktopName = "Hermes AI (CLI)";
     genericName = "AI Assistant";
-    exec = "${hermesAgent}/bin/hermes";
+    exec = "${config.programs.hermes-agent.package}/bin/hermes";
     icon = "utilities-terminal";
     comment = "Autonomous AI Agent with voice, web search, and code execution";
     categories = [ "Utility" "Development" "System" ];
@@ -27,9 +15,24 @@ let
     terminal = true;
   };
 in {
+  imports = [
+    inputs.hermes-agent.homeManagerModules.default
+    # Muninn: wires the package into services.hermes-agent.extraPythonPackages
+    # and sets services.hermes-agent.settings.memory.provider = "muninn"
+    inputs.muninn.homeManagerModules.default
+  ];
+
+  programs.hermes-agent = {
+    enable = true;
+    desktop.enable = true;
+  };
+
+  services.hermes-agent = {
+    enable = true;
+    extraDependencyGroups = [ "edge-tts" "voice" "messaging" "web" "firecrawl" ];
+  };
+
   home.packages = with pkgs; [
-    hermesAgent
-    hermesDesktop
     hermesDesktopItem
     hermes-mod
     qmd

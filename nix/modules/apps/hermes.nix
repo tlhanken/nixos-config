@@ -1,6 +1,9 @@
 { pkgs, inputs, config, lib, ... }:
 let
   qmd = inputs.qmd.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  hermesPkg = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+    inherit (config.services.hermes-agent) extraDependencyGroups extraPythonPackages;
+  };
 in {
   imports = [
     inputs.hermes-agent.nixosModules.default
@@ -29,7 +32,7 @@ in {
         base_url = "https://openrouter.ai/api/v1";
         api_mode = "chat_completions";
       };
-      toolsets = [ "terminal" "file" "web" ];
+      toolsets = [ "terminal" "file" "web" "memory" ];
       terminal = {
         # The agent boots into the root of its appdata (where SOUL.md lives)
         cwd = "/mnt/local/appdata/hermes";
@@ -87,6 +90,7 @@ in {
       # Point Hermes at the local Firecrawl instance for web search & extraction
       FIRECRAWL_API_URL = "http://127.0.0.1:3002";
       FIRECRAWL_API_KEY = "self-hosted";
+      QMD_WIKI_DIR = "/mnt/local/appdata/hermes/workspace/wiki";
       
       # Git Bot Identity
       GIT_AUTHOR_NAME = "Hermes Bot";
@@ -131,7 +135,7 @@ in {
     after = [ "network.target" "firecrawl.service" ];
     wantedBy = [ "multi-user.target" ];
     path = with pkgs; [
-      inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default
+      hermesPkg
       git
       bash
       coreutils
@@ -142,10 +146,11 @@ in {
       HOME = "/mnt/local/appdata/hermes";
       FIRECRAWL_API_URL = "http://127.0.0.1:3002";
       FIRECRAWL_API_KEY = "self-hosted";
+      QMD_WIKI_DIR = "/mnt/local/appdata/hermes/workspace/wiki";
     };
     serviceConfig = {
       EnvironmentFile = config.age.secrets.ai-api-keys.path;
-      ExecStart = "${inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/hermes dashboard --port 8643 --host 127.0.0.1 --no-open --skip-build";
+      ExecStart = "${hermesPkg}/bin/hermes dashboard --port 8643 --host 127.0.0.1 --no-open --skip-build";
       User = "hermes";
       Group = "users";
       WorkingDirectory = "/mnt/local/appdata/hermes";

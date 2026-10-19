@@ -21,10 +21,12 @@ Define user environment standards, profile composition rules, and developer tool
   - **MUST** provide AI coding tools (Claude Code, Gemini CLI, Cursor FHS, Antigravity IDE FHS).
 
 ### 3. Agent Integration Profile (`profile-hermes.nix`)
-- **Capability**: Desktop launcher, native Electron GUI application, and runtime environment for the Hermes AI workspace agent.
+- **Capability**: Desktop launcher, native Electron GUI application, and runtime environment for the Hermes AI workspace agent with persistent wiki memory.
 - **Contract**:
-  - **MUST** include the native `hermes-desktop` Electron application package (`inputs.hermes-agent.packages.${system}.desktop`).
-  - **MUST** provide desktop launchers and configuration state without interfering with standard user home directory files.
+  - **MUST** configure `programs.hermes-agent` (`enable = true`, `desktop.enable = true`) to provide both CLI and native Electron desktop application.
+  - **MUST** import `inputs.muninn.homeManagerModules.default` and `inputs.hermes-agent.homeManagerModules.default` to declaratively select Muninn as the memory provider (`settings.memory.provider = "muninn"`).
+  - **MUST** wire Muninn into `extraPythonPackages` for entry-point discovery across interactive shells and desktop sessions.
+  - **MUST** provide desktop launchers and declarative configuration state without runtime edits to `~/.hermes/config.yaml`.
 
 ### 4. Custom Package Maintenance
 - Custom packages (`openspec.nix`, `hermes-mod.nix`) **MUST** use explicit dependency locking (e.g. `package-lock.json` injection) to ensure deterministic builds.

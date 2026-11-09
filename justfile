@@ -91,8 +91,14 @@ update-gods-eye-view:
 update-hermes-mod:
     @./scripts/update-hermes-mod.sh
 
+# Update OpenRig to latest npm version and refresh npm hashes
+[group("Apps")]
+update-openrig:
+    @./scripts/update-openrig.sh
+
 alias rs := rekey-secrets
 alias es := edit-secret
 alias ugev := update-gods-eye-view
+alias uorig := update-openrig
 alias uf := update-flake
 alias ua := update-apps

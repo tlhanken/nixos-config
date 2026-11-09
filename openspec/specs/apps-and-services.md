@@ -86,3 +86,15 @@ Establish capability standards, modular option contracts, and placement rules fo
   - **MUST** reverse-proxy port `4173` via Nginx with WebSocket support enabled.
   - **MUST** support keyless operation out-of-the-box and optionally load agenix credentials via conditional `EnvironmentFile`.
   - **MUST** be registered on the Fleet Dashboard (`homepage.nix`).
+
+### 11. Multi-Agent Coordination Daemon (`openrig.nix`)
+- **Capability**: Provides an autonomous multi-agent harness, persistent task control plane, and web dashboard for coordinating agent teams (Pi, Claude Code, and Codex).
+- **Contract**:
+  - **MUST** be deployed on host `well-of-mimir-2` under high-compute & AI placement invariants.
+  - State, SQLite databases, and agent workspaces **MUST** reside under `/mnt/local/appdata/openrig`.
+  - Systemd service **MUST** run with `KillMode = "process"` so daemon restarts do not kill active agent `tmux` sessions.
+  - Service user **MUST** be a member of the `kvm` group for hardware-accelerated Gondolin micro-VM sandboxing via `/dev/kvm`.
+  - **MUST** expose HTTP web dashboard and RPC control plane on port `3030`.
+  - **MUST** ingest agenix AI API keys via `EnvironmentFile` when available.
+  - **MUST** be registered on the Fleet Dashboard (`homepage.nix`).
+

@@ -129,6 +129,13 @@ in
               icon = "mdi-robot-outline";
             };
           }
+          {
+            "OpenRig" = {
+              href = "http://${net.hosts.well-of-mimir-2.magicDns}:3030";
+              description = "Multi-Agent Coordination Daemon";
+              icon = "mdi-account-group";
+            };
+          }
         ];
       }
     ];

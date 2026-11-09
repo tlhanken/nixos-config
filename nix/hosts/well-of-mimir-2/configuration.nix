@@ -35,6 +35,7 @@ in
     inputs.self.modules.apps.vaultwarden
     inputs.self.modules.apps.gods-eye-view
     inputs.self.modules.apps.firecrawl
+    inputs.self.modules.apps.openrig
   ];
 
   # ============================================================================
@@ -112,6 +113,12 @@ in
     expose = "tailscale";
     dataDir = "/mnt/local/appdata/comfyui";
     useStateDirectory = false;
+  };
+
+  # OpenRig: Multi-Agent Coordination Daemon
+  services.openrig = {
+    enable = true;
+    port = 3030;
   };
 
   # ============================================================================

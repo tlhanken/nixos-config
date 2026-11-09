@@ -18,7 +18,7 @@ Define user environment standards, profile composition rules, and developer tool
   - **MUST** provide core runtimes (Node.js, Python 3, `uv`).
   - **MUST** include OpenSpec CLI (`openspec`) for AI agent workflow management.
   - **MUST** configure Jujutsu (`jj`) VCS aliases and VS Code extensions for Nix, Rust, and Python.
-  - **MUST** provide AI coding tools (Claude Code, Gemini CLI, Cursor FHS, Antigravity IDE FHS).
+  - **MUST** provide AI coding tools (Claude Code, Gemini CLI, Cursor FHS, Antigravity IDE FHS, Pi Coding Agent, OpenRig CLI, and tmux).
 
 ### 3. Agent Integration Profile (`profile-hermes.nix`)
 - **Capability**: Desktop launcher, native Electron GUI application, and runtime environment for the Hermes AI workspace agent with persistent wiki memory.

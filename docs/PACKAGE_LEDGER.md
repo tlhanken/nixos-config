@@ -19,9 +19,10 @@ This document serves as the canonical inventory of all packages and applications
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **`gods-eye-view`** | [`nix/modules/apps/gods-eye-view.nix`](../nix/modules/apps/gods-eye-view.nix) | GitHub ([`bilawalsidhu/gods-eye-view`](https://github.com/bilawalsidhu/gods-eye-view)) | Git commit | Upstream `main` branch | `hash` (SRI), `npmDepsHash` | `just update-gods-eye-view` (`just ugev`) |
 | **`hermes-mod`** | [`nix/packages/hermes-mod.nix`](../nix/packages/hermes-mod.nix) | npm registry ([`hermes-mod`](https://www.npmjs.com/package/hermes-mod)) | npm release tarball | Latest npm release | tarball `hash` (sha256), `npmDepsHash`, `hermes-mod-package-lock.json` | `just update-hermes-mod` |
+| **`openrig`** | [`nix/packages/openrig.nix`](../nix/packages/openrig.nix) | npm registry ([`@openrig/cli`](https://www.npmjs.com/package/@openrig/cli)) | npm release tarball | Latest npm release | tarball `hash` (sha256), `npmDepsHash`, `openrig-package-lock.json` | `just update-openrig` (`just uorig`) |
 
 > **Note on Graduated Packages**:
-> - **`openspec`** and **`qmd`** have been moved to native Flake inputs (`inputs.openspec` and `inputs.qmd` in `flake.nix`). They are now tracked automatically in `flake.lock` via `just update` (`nix flake update`) and no longer require out-of-flake ledger maintenance.
+> - **`openspec`**, **`qmd`**, and **`pi`** are tracked as native Flake inputs (`inputs.openspec`, `inputs.qmd`, and `inputs.pi` in `flake.nix`). They are tracked automatically in `flake.lock` via `just update` (`nix flake update`) and do not require out-of-flake ledger maintenance.
 
 ---
 
@@ -41,6 +42,7 @@ just update-apps  # alias: just ua
 ```bash
 just update-gods-eye-view  # alias: just ugev
 just update-hermes-mod
+just update-openrig        # alias: just uorig
 ```
 
 ---

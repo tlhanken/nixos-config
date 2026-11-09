@@ -5,6 +5,8 @@ let
     system = pkgs.stdenv.hostPlatform.system;
   };
   openspec = inputs.openspec.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  pi = inputs.pi.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  openrig = pkgs.callPackage ../../packages/openrig.nix { };
 in {
   home.packages = with pkgs; [
     unstable.code-cursor-fhs
@@ -14,8 +16,11 @@ in {
     nodejs
     python3
     uv
+    tmux
 
     openspec
+    pi
+    openrig
   ];
 
   programs.gemini-cli.enable = true;

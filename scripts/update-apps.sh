@@ -31,6 +31,10 @@ echo ">>> Checking Hermes-Mod..."
 "$SCRIPT_DIR/update-hermes-mod.sh" || FAILED=1
 
 echo ""
+echo ">>> Checking OpenRig..."
+"$SCRIPT_DIR/update-openrig.sh" || FAILED=1
+
+echo ""
 echo "========================================================"
 if [ "$FAILED" -eq 0 ]; then
   echo "All out-of-flake packages checked successfully."

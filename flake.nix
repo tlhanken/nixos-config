@@ -61,6 +61,10 @@
       url = "github:tobi/qmd";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    pi = {
+      url = "github:earendil-works/pi/stable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     # Muninn — the Hermes memory provider (formerly the hermes-plugins/qmd-wiki copy in
     # tools, reached through a symlink). The follows edge is what keeps exactly one
     # hermes-agent in the graph: without it, Muninn's own pin could name a different

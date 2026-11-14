@@ -1,18 +1,18 @@
 { pkgs, lib ? pkgs.lib, ... }:
 pkgs.buildNpmPackage rec {
   pname = "openrig";
-  version = "0.7.10";
+  version = "0.7.14";
 
   src = pkgs.fetchurl {
     url = "https://registry.npmjs.org/@openrig/cli/-/cli-${version}.tgz";
-    hash = "sha256-xVr/fnx9FCnm0S7olUCWEAW8se/W5wF3UwcRVbGVJzI=";
+    hash = "sha256-hm+3NLMsGMepONbx7b2kTFH84ch+5MRIOaijCD0quiU=";
   };
 
   postPatch = ''
     cp ${./openrig-package-lock.json} package-lock.json
   '';
 
-  npmDepsHash = "sha256-JEDeqf4CHbSiXZTgMCi8mPs6MdSdgf0wcsYX9VUAnws=";
+  npmDepsHash = "sha256-qgzwX0bRNhiuc+74OV5KygELF1iZdQVf+dc1g5V5eIc=";
 
   dontNpmBuild = true;
 

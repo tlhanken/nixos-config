@@ -20,9 +20,9 @@ pkgs.buildNpmPackage rec {
 
   postInstall = ''
     wrapProgram $out/bin/rig \
-      --prefix PATH : ${lib.makeBinPath [ pkgs.tmux pkgs.git pkgs.openssh ]}
+      --prefix PATH : ${lib.makeBinPath [ pkgs.procps pkgs.lsof pkgs.tmux pkgs.git pkgs.openssh ]}
     wrapProgram $out/bin/openrig-tui \
-      --prefix PATH : ${lib.makeBinPath [ pkgs.tmux pkgs.git pkgs.openssh ]}
+      --prefix PATH : ${lib.makeBinPath [ pkgs.procps pkgs.lsof pkgs.tmux pkgs.git pkgs.openssh ]}
   '';
 
   meta = with lib; {

@@ -64,6 +64,8 @@ in {
 
       path = [
         pi
+        pkgs.procps
+        pkgs.lsof
         pkgs.tmux
         pkgs.git
         pkgs.openssh

@@ -30,6 +30,12 @@ in {
       default = true;
       description = "Whether to open the OpenRig port in the firewall.";
     };
+
+    webUi = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Whether to enable the OpenRig web dashboard UI on the daemon port.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -76,6 +82,7 @@ in {
       environment = {
         HOME = cfg.stateDir;
         OPENRIG_HOME = "${cfg.stateDir}/.openrig";
+        OPENRIG_UI_ENABLED = lib.boolToString cfg.webUi;
       };
 
       serviceConfig = {

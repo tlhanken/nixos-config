@@ -24,7 +24,7 @@ Implement a split AI agent architecture across the fleet:
   ```
 
 ### 2. Package Ledger Integration (`docs/PACKAGE_LEDGER.md`, `nix/packages/openrig.nix`)
-- Create `nix/packages/openrig.nix` wrapping `@openrig/cli` from the npm registry with Node 22, `tmux`, and `git`.
+- Create `nix/packages/openrig.nix` wrapping `@openrig/cli` from the npm registry with Node 22, `procps` (`ps`), `lsof`, `tmux`, `git`, and `openssh` in runtime `PATH`.
 - Create `scripts/update-openrig.sh` to automate npm release inspection and hash generation.
 - Add `update-openrig` recipe to `justfile` and chain into `scripts/update-apps.sh`.
 - Register `openrig` in `docs/PACKAGE_LEDGER.md`.
@@ -37,9 +37,11 @@ Implement a split AI agent architecture across the fleet:
 - Create a NixOS service module `services.openrig`:
   - `enable`: Boolean option to activate the daemon.
   - `port`: Web dashboard / RPC control port (default: 3030).
+  - `host`: Optional explicit bind host (`null` by default, using OpenRig's loopback `127.0.0.1` + Tailscale multi-bind mode).
+  - `webUi`: Boolean option (default: `true`) exported as `OPENRIG_UI_ENABLED` to serve the web UI declaratively on port `3030`.
   - `stateDir`: Dedicated state and workspace directory (`/mnt/local/appdata/openrig`).
   - `environmentFiles`: Ingests `config.age.secrets.ai-api-keys.path`.
-  - `systemd.services.openrig-daemon`: Systemd unit configured with `KillMode=process` (preventing daemon restarts from killing persistent `tmux` agent sessions), running with KVM hardware virtualization access (`/dev/kvm`) for Gondolin micro-VM sandboxing.
+  - `systemd.services.openrig`: Systemd unit ordered `after`/`wants` `tailscaled.service`, configured with `KillMode=process` (preventing daemon restarts from killing persistent `tmux` agent sessions), `pi` + `procps` + `lsof` + `tmux` + `git` + `openssh` + `qemu` in `path` (and `pi` in `environment.systemPackages`), and `kvm` group membership (`/dev/kvm`) for Gondolin micro-VM sandboxing.
 - Import `inputs.self.modules.apps.openrig` in `nix/hosts/well-of-mimir-2/configuration.nix`.
 - Add OpenRig dashboard bookmark to Homepage ([`apps/homepage.nix`](../nix/modules/apps/homepage.nix)).
 

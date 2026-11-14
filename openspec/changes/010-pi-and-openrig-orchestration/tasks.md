@@ -5,7 +5,7 @@
   - [x] 1.2 Lock `pi` input in `flake.lock` <!-- id: 1.2 -->
 
 - [x] 2. Package Ledger Integration (`docs/PACKAGE_LEDGER.md`, `nix/packages/openrig.nix`) <!-- id: 2 -->
-  - [x] 2.1 Create `nix/packages/openrig.nix` derivation wrapping `@openrig/cli` with Node 22, `tmux`, and `git` <!-- id: 2.1 -->
+  - [x] 2.1 Create `nix/packages/openrig.nix` derivation wrapping `@openrig/cli` with Node 22, `procps`, `lsof`, `tmux`, `git`, and `openssh` <!-- id: 2.1 -->
   - [x] 2.2 Create automated update script `scripts/update-openrig.sh` <!-- id: 2.2 -->
   - [x] 2.3 Add `update-openrig` (alias: `uorig`) recipe to `justfile` and register in `scripts/update-apps.sh` <!-- id: 2.3 -->
   - [x] 2.4 Register `openrig` in `docs/PACKAGE_LEDGER.md` with upstream tracking details <!-- id: 2.4 -->
@@ -15,8 +15,8 @@
   - [x] 3.2 Add `openrig` package and `pkgs.tmux` to `home.packages` for local/remote orchestration <!-- id: 3.2 -->
 
 - [x] 4. Server Application Module (`nix/modules/apps/openrig.nix`) <!-- id: 4 -->
-  - [x] 4.1 Define NixOS service module `services.openrig` with port, stateDir, and secrets options <!-- id: 4.1 -->
-  - [x] 4.2 Configure systemd unit `openrig-daemon.service` with `KillMode=process` and KVM hardware access <!-- id: 4.2 -->
+  - [x] 4.1 Define NixOS service module `services.openrig` with `port`, `host` (`null` default for loopback + Tailscale multi-bind), `webUi` (`OPENRIG_UI_ENABLED`), `stateDir`, and secrets options <!-- id: 4.1 -->
+  - [x] 4.2 Configure systemd unit `openrig.service` ordered after `tailscaled.service` with `KillMode=process`, `pi`/`procps`/`lsof` in `path` (and `pi` in `systemPackages`), and KVM hardware access <!-- id: 4.2 -->
   - [x] 4.3 Import `inputs.self.modules.apps.openrig` into `nix/hosts/well-of-mimir-2/configuration.nix` <!-- id: 4.3 -->
   - [x] 4.4 Add OpenRig service entry to `apps/homepage.nix` for Tailscale dashboard access <!-- id: 4.4 -->
 

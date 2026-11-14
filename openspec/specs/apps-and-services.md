@@ -92,7 +92,10 @@ Establish capability standards, modular option contracts, and placement rules fo
 - **Contract**:
   - **MUST** be deployed on host `well-of-mimir-2` under high-compute & AI placement invariants.
   - State, SQLite databases, and agent workspaces **MUST** reside under `/mnt/local/appdata/openrig`.
-  - Systemd service **MUST** run with `KillMode = "process"` so daemon restarts do not kill active agent `tmux` sessions.
+  - Systemd service **MUST** run with `KillMode = "process"` so daemon restarts do not kill active agent `tmux` sessions, and **MUST** order `after`/`wants` `tailscaled.service`.
+  - Unless `services.openrig.host` is explicitly set, the daemon **MUST** use OpenRig's default multi-bind mode (`127.0.0.1` loopback + active Tailscale interface) without requiring an explicit bearer token over Tailscale.
+  - **MUST** enable the web dashboard UI declaratively via `OPENRIG_UI_ENABLED` (`services.openrig.webUi = true`) so port `3030` serves the UI out-of-the-box.
+  - Daemon and wrapper `PATH` **MUST** include `pi`, `procps` (`ps`), and `lsof` for `PiRuntimeAdapter` RPC seat spawning and process/database liveness checks.
   - Service user **MUST** be a member of the `kvm` group for hardware-accelerated Gondolin micro-VM sandboxing via `/dev/kvm`.
   - **MUST** expose HTTP web dashboard and RPC control plane on port `3030`.
   - **MUST** ingest agenix AI API keys via `EnvironmentFile` when available.

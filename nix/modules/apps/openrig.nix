@@ -1,7 +1,8 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, inputs, ... }:
 let
   cfg = config.services.openrig;
   openrig = pkgs.callPackage ../../packages/openrig.nix { };
+  pi = inputs.pi.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in {
   options.services.openrig = {
     enable = lib.mkEnableOption "OpenRig multi-agent orchestration daemon";
@@ -13,9 +14,9 @@ in {
     };
 
     host = lib.mkOption {
-      type = lib.types.str;
-      default = "0.0.0.0";
-      description = "Host address for OpenRig to bind on.";
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      description = "Optional explicit bind host for OpenRig; null uses OpenRig's default loopback + Tailscale multi-bind.";
     };
 
     stateDir = lib.mkOption {
@@ -58,9 +59,11 @@ in {
     systemd.services.openrig = {
       description = "OpenRig Multi-Agent Coordination Daemon";
       wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
+      after = [ "network.target" "tailscaled.service" ];
+      wants = [ "tailscaled.service" ];
 
       path = [
+        pi
         pkgs.tmux
         pkgs.git
         pkgs.openssh
@@ -78,7 +81,7 @@ in {
         User = "openrig";
         Group = "openrig";
         WorkingDirectory = cfg.stateDir;
-        ExecStart = "${openrig}/bin/rig daemon start --port ${toString cfg.port} --host ${cfg.host} --db ${cfg.stateDir}/openrig.db";
+        ExecStart = "${openrig}/bin/rig daemon start --port ${toString cfg.port}${lib.optionalString (cfg.host != null) " --host ${cfg.host}"} --db ${cfg.stateDir}/openrig.db";
         ExecStop = "${openrig}/bin/rig daemon stop";
         Restart = "on-failure";
         RestartSec = 5;
@@ -87,6 +90,6 @@ in {
       };
     };
 
-    environment.systemPackages = [ openrig pkgs.tmux ];
+    environment.systemPackages = [ openrig pi pkgs.tmux ];
   };
 }
